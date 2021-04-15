@@ -4,7 +4,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>category</th>
+                <th>Category</th>
                 <th>Avatar</th>
                 <th>Status</th>
                 <th>Hot</th>
@@ -16,7 +16,7 @@
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->c_name }}</td>
-                        <td>{{ $item->parent['c_name'] }}</td>
+                        <td>{{ ($item->parent['c_name'] ?? '[N\A]') }}</td>
                         <td><img src="{{ pare_url_file($item->c_avatar) }}" alt="" width="150px" height="100px"> </td>
                         <td>
                             @if ($item->c_status==1)
@@ -42,5 +42,5 @@
             @endif
         </tbody>
     </table>
-    {!! $categorys->appends($query ?? [])->links() !!}
+    {!! $categorys->appends($query ?? [])->links('pagination::bootstrap-4') !!}
 </div>

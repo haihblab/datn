@@ -23,7 +23,7 @@ class AdminCategoryController extends Controller
                     'messages'  => 'Update status thành công !'
                 ]);
             }
-            $categorys = Category::query()->where('c_name','like',$a.'%')->orderBy('id', 'DESC')->paginate(20);
+            $categorys = Category::query()->where('c_slug','like',$a.'%')->orderBy('id', 'DESC')->paginate(20);
             $query  = $request->query();
             $html = view('admin.category.data',compact('categorys','query'))->render();
             return response([
