@@ -353,34 +353,34 @@
                 </a>
             </li>
 
-            {{--  <li class="{{ Request::is('admin-pmbh/type-product*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin-datn/type-product*') ? 'active' : '' }}">
                 <a href="{{ route('admin.typeproduct.index') }}">
                     <i class="fa fa-spinner"></i> <span>TyPe Product</span>
                 </a>
             </li>
-            <li class="{{ Request::is('admin-pmbh/attribute*') ? 'active' : '' }}">
+            {{--  <li class="{{ Request::is('admin-datn/attribute*') ? 'active' : '' }}">
                 <a href="{{ route('admin.attribute.index') }}">
                     <i class="glyphicon glyphicon-asterisk"></i> <span>Attribute</span>
                 </a>
             </li>
-            <li class="{{ Request::is('admin-pmbh/product*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin-datn/product*') ? 'active' : '' }}">
                 <a href="{{ route('admin.product.index') }}">
                     <i class="fa fa-fw fa-anchor"></i> <span>Product</span>
                 </a>
             </li>
-            <li class="{{ Request::is('admin-pmbh/user*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin-datn/user*') ? 'active' : '' }}">
                 <a href="{{ route('admin.user.index') }}">
                     <i class="fa fa-users"></i> <span>User</span>
                 </a>
             </li>
-            <li class="{{ Request::is('admin-pmbh/transaction*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin-datn/transaction*') ? 'active' : '' }}">
                 <a href="{{ route('admin.transaction.index') }}">
                     <i class="fa fa-cart-arrow-down"></i> <span>Transaction</span>
                 </a>
             </li>
 
             <li class="header">Hệ Thống</li>
-            <li class="{{ Request::is('admin-pmbh/slide*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin-datn/slide*') ? 'active' : '' }}">
                 <a href="{{ route('admin.slide.index') }}">
                     <i class="fa fa-circle-o text-red"></i> <span>Slide</span>
                 </a>
