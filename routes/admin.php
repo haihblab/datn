@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAttributeController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminTypeProductController;
@@ -34,6 +35,17 @@ Route::group(['prefix' => 'admin-datn'], function() {
         Route::get('delete/{id}',[AdminTypeProductController::class,'delete'])->name('admin.typeproduct.delete');
         Route::get('active/{id}',[AdminTypeProductController::class,'active'])->name('admin.typeproduct.active');
         Route::get('hot/{id}',[AdminTypeProductController::class,'hot'])->name('admin.typeproduct.hot');
+    });
+
+    Route::group(['prefix' => 'attribute'], function() {
+        Route::get('/',[AdminAttributeController::class,'index'])->name('admin.attribute.index');
+        Route::get('create',[AdminAttributeController::class,'create'])->name('admin.attribute.create');
+        Route::post('create',[AdminAttributeController::class,'store'])->name('admin.attribute.store');
+
+        Route::get('update/{id}',[AdminAttributeController::class,'edit'])->name('admin.attribute.edit');
+        Route::post('update/{id}',[AdminAttributeController::class,'update'])->name('admin.attribute.update');
+
+        Route::get('delete/{id}',[AdminAttributeController::class,'delete'])->name('admin.attribute.delete');
     });
 });
 

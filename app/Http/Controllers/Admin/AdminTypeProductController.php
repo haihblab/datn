@@ -34,7 +34,7 @@ class AdminTypeProductController extends Controller
         }
         TypeProduct::create($data);
 
-        \Session::flash('toastr',[
+        $request->session()->flash('toastr',[
             'type'      => 'success',
             'message'   => 'Insert thành công !'
             ]);
@@ -60,18 +60,18 @@ class AdminTypeProductController extends Controller
         }
 
         $type_product->update($data);
-        \Session::flash('toastr',[
+        $request->session()->flash('toastr',[
             'type'      => 'success',
             'message'   => 'Update thành công !'
             ]);
         return redirect()->back();
     }
 
-    public function delete($id){
+    public function delete(Request $request,$id){
         $type_product = TypeProduct::findOrfail($id);
         if($type_product){
             $type_product->delete();
-            \Session::flash('toastr',[
+            $request->session()->flash('toastr',[
                 'type'      => 'success',
                 'message'   => 'Delete thành công !'
                 ]);

@@ -50,7 +50,7 @@ class AdminCategoryController extends Controller
             }
         }
         Category::create($data);
-        \Session::flash('toastr',[
+        $request->session()->flash('toastr',[
             'type'      => 'success',
             'message'   => 'Insert thành công !'
         ]);
@@ -74,6 +74,10 @@ class AdminCategoryController extends Controller
             }
         }
         $category->update($data);
+        $request->session()->flash('toastr',[
+            'type'      => 'success',
+            'message'   => 'update thành công !'
+        ]);
         return redirect()->back();
     }
 

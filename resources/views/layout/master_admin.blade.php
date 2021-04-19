@@ -358,12 +358,13 @@
                     <i class="fa fa-spinner"></i> <span>TyPe Product</span>
                 </a>
             </li>
-            {{--  <li class="{{ Request::is('admin-datn/attribute*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin-datn/attribute*') ? 'active' : '' }}">
                 <a href="{{ route('admin.attribute.index') }}">
                     <i class="glyphicon glyphicon-asterisk"></i> <span>Attribute</span>
                 </a>
             </li>
-            <li class="{{ Request::is('admin-datn/product*') ? 'active' : '' }}">
+
+            {{--  <li class="{{ Request::is('admin-datn/product*') ? 'active' : '' }}">
                 <a href="{{ route('admin.product.index') }}">
                     <i class="fa fa-fw fa-anchor"></i> <span>Product</span>
                 </a>
