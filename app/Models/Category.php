@@ -17,8 +17,16 @@ class Category extends Model
     public function children(){
         return $this->hasMany(Category::class,'c_parent_id');
     }
-    public function childrenRecursive()
-    {
+    public function childrenRecursive(){
         return $this->children()->with('childrenRecursive');
+    }
+    public function typeproducts(){
+        return $this->hasmany(TypeProduct::class,'tp_category_id');
+    }
+    public function attributes(){
+        return $this->hasmany(Attribute::class,'atb_category_id');
+    }
+    public function products(){
+        return $this->hasMany(Product::class,'pro_category_id');
     }
 }

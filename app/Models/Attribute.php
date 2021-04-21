@@ -32,5 +32,8 @@ class Attribute extends Model
     public function category(){
         return $this->belongsTo(Category::class,'atb_category_id');
     }
+    public function products(){
+        return $this->belongsToMany(Product::class,'attribute_product','ap_attribute_id','ap_product_id');
+    }
 
 }
