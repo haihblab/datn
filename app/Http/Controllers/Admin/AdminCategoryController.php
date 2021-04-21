@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminCategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -40,7 +41,7 @@ class AdminCategoryController extends Controller
         return view('admin.category.create',compact('categorys'));
     }
 
-    public function store(Request $request){
+    public function store(AdminCategoryRequest $request){
         $data = $request->except('_token','c_avatar');
         $data['c_slug']         = Str::slug($request->c_name);
         if ($request->c_avatar) {
@@ -63,7 +64,7 @@ class AdminCategoryController extends Controller
         return view('admin.category.update',compact('category','categorys'));
     }
 
-    public function update(Request $request,$id){
+    public function update(AdminCategoryRequest $request,$id){
         $category = Category::findOrfail($id);
         $data = $request->except('_token','c_avatar');
         $data['c_slug']         = Str::slug($request->c_name);

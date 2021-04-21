@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin-datn'], function() {
         Route::post('create',[AdminAttributeController::class,'store'])->name('admin.attribute.store');
 
         Route::get('update/{id}',[AdminAttributeController::class,'edit'])->name('admin.attribute.edit');
-        Route::post('update/{id}',[AdminAttributeController::class,'update'])->name('admin.attribute.update');
+        Route::post('update/{id}',[AdminAttributeController::class,'update']);
 
         Route::get('delete/{id}',[AdminAttributeController::class,'delete'])->name('admin.attribute.delete');
     });
