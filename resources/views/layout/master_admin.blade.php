@@ -364,12 +364,12 @@
                 </a>
             </li>
 
-            {{--  <li class="{{ Request::is('admin-datn/product*') ? 'active' : '' }}">
+            <li class="{{ Request::is('admin-datn/product*') ? 'active' : '' }}">
                 <a href="{{ route('admin.product.index') }}">
                     <i class="fa fa-fw fa-anchor"></i> <span>Product</span>
                 </a>
             </li>
-            <li class="{{ Request::is('admin-datn/user*') ? 'active' : '' }}">
+            {{--  <li class="{{ Request::is('admin-datn/user*') ? 'active' : '' }}">
                 <a href="{{ route('admin.user.index') }}">
                     <i class="fa fa-users"></i> <span>User</span>
                 </a>
@@ -386,6 +386,7 @@
                     <i class="fa fa-circle-o text-red"></i> <span>Slide</span>
                 </a>
             </li>  --}}
+
           </ul>
         </section>
         <!-- /.sidebar -->

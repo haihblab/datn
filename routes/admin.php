@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAttributeController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminTypeProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,21 @@ Route::group(['prefix' => 'admin-datn'], function() {
         Route::post('update/{id}',[AdminAttributeController::class,'update']);
 
         Route::get('delete/{id}',[AdminAttributeController::class,'delete'])->name('admin.attribute.delete');
+    });
+
+    Route::group(['prefix' => 'product'], function() {
+        Route::get('/',[AdminProductController::class,'index'])->name('admin.product.index');
+        Route::get('create',[AdminProductController::class,'create'])->name('admin.product.create');
+        Route::post('create',[AdminProductController::class,'store'])->name('admin.product.store');
+
+        Route::get('update/{id}',[AdminProductController::class,'edit'])->name('admin.product.edit');
+        Route::post('update/{id}',[AdminProductController::class,'update'])->name('admin.product.update');
+
+        Route::get('delete/{id}',[AdminProductController::class,'delete'])->name('admin.product.delete');
+        Route::get('active/{id}',[AdminProductController::class,'active'])->name('admin.product.active');
+        Route::get('hot/{id}',[AdminProductController::class,'hot'])->name('admin.product.hot');
+
+        Route::get('delete-image/{id}',[AdminProductController::class,'deleteImage'])->name('admin.product.delete_image');
     });
 });
 
