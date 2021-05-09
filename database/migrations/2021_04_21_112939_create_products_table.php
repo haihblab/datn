@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('pro_name')->unique();
             $table->string('pro_slug')->index()->unique();
-            $table->unsignedBigInteger('pro_category_id')->default(0);
-            $table->unsignedBigInteger('pro_type_product_id')->default(0);
+            $table->unsignedBigInteger('pro_category_id');
+            $table->unsignedBigInteger('pro_type_product_id');
             $table->unsignedBigInteger('pro_user_id')->default(0);
             $table->integer('pro_price')->default(0)->comment('giá');
             $table->tinyInteger('pro_sale')->default(0)->comment('giảm giá');
@@ -35,6 +35,8 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('pro_country')->default(0)->comment('xuất xứ');
             $table->string('pro_energy')->nullable()->comment('năng lượng');
             $table->string('pro_resistant')->nullable()->comment('độ chịu nước');
+            $table->foreign('pro_category_id')->references('id')->on('categories');
+            $table->foreign('pro_type_product_id')->references('id')->on('type_products');
             $table->timestamps();
         });
     }

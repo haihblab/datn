@@ -15,8 +15,10 @@ class CreateAttributeProductTable extends Migration
     {
         Schema::create('attribute_product', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ap_product_id')->index()->default(0);
-            $table->unsignedBigInteger('ap_attribute_id')->index()->default(0);
+            $table->unsignedBigInteger('ap_product_id');
+            $table->unsignedBigInteger('ap_attribute_id');
+            $table->foreign('ap_product_id')->references('id')->on('products');
+            $table->foreign('ap_attribute_id')->references('id')->on('attributes');
         });
     }
 

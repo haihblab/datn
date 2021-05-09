@@ -17,7 +17,8 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->string('img_name')->nullable();
             $table->string('img_slug')->nullable();
-            $table->unsignedBigInteger('img_product_id')->default(0);
+            $table->unsignedBigInteger('img_product_id');
+            $table->foreign('img_product_id')->references('id')->on('products');
             $table->timestamps();
         });
     }

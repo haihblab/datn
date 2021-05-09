@@ -22,7 +22,8 @@ class CreateTypeProductsTable extends Migration
             $table->string('tp_description')->nullable();
             $table->tinyInteger('tp_hot')->default(0);
             $table->tinyInteger('tp_status')->default(1);
-            $table->unsignedBigInteger('tp_category_id')->default(0);
+            $table->unsignedBigInteger('tp_category_id');
+            $table->foreign('tp_category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
