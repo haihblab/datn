@@ -378,14 +378,14 @@
                 <a href="{{ route('admin.transaction.index') }}">
                     <i class="fa fa-cart-arrow-down"></i> <span>Transaction</span>
                 </a>
-            </li>
+            </li>  --}}
 
             <li class="header">Hệ Thống</li>
             <li class="{{ Request::is('admin-datn/slide*') ? 'active' : '' }}">
                 <a href="{{ route('admin.slide.index') }}">
                     <i class="fa fa-circle-o text-red"></i> <span>Slide</span>
                 </a>
-            </li>  --}}
+            </li>
 
           </ul>
         </section>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAttributeController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminSlideController;
 use App\Http\Controllers\Admin\AdminTypeProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,20 @@ Route::group(['prefix' => 'admin-datn'], function() {
         Route::get('hot/{id}',[AdminProductController::class,'hot'])->name('admin.product.hot');
 
         Route::get('delete-image/{id}',[AdminProductController::class,'deleteImage'])->name('admin.product.delete_image');
+    });
+
+    Route::group(['prefix' => 'slide'], function() {
+        Route::get('/',[AdminSlideController::class,'index'])->name('admin.slide.index');
+        Route::get('create',[AdminSlideController::class,'create'])->name('admin.slide.create');
+        Route::post('create',[AdminSlideController::class,'store'])->name('admin.slide.store');
+
+        Route::get('update/{id}',[AdminSlideController::class,'edit'])->name('admin.slide.edit');
+        Route::post('update/{id}',[AdminSlideController::class,'update'])->name('admin.slide.update');
+
+        Route::get('delete/{id}',[AdminSlideController::class,'delete'])->name('admin.slide.delete');
+        Route::get('active/{id}',[AdminSlideController::class,'active'])->name('admin.slide.active');
+
+        Route::get('delete-image/{id}',[AdminSlideController::class,'deleteImage'])->name('admin.slide.delete_image');
     });
 });
 
