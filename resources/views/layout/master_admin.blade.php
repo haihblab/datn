@@ -300,7 +300,7 @@
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      {{--  <a href="{{ route('get.logout.admin') }}" class="btn btn-default btn-flat">Sign out</a>  --}}
+                       <a href="{{ route('get.logout.admin') }}" class="btn btn-default btn-flat">Sign out</a> 
                     </div>
                   </li>
                 </ul>
@@ -369,16 +369,27 @@
                     <i class="fa fa-fw fa-anchor"></i> <span>Product</span>
                 </a>
             </li>
-            {{--  <li class="{{ Request::is('admin-datn/user*') ? 'active' : '' }}">
+             {{-- <li class="{{ Request::is('admin-datn/user*') ? 'active' : '' }}">
                 <a href="{{ route('admin.user.index') }}">
                     <i class="fa fa-users"></i> <span>User</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="{{ Request::is('admin-datn/transaction*') ? 'active' : '' }}">
                 <a href="{{ route('admin.transaction.index') }}">
                     <i class="fa fa-cart-arrow-down"></i> <span>Transaction</span>
                 </a>
-            </li>  --}}
+            </li> 
+
+            <li class="{{ Request::is('admin-datn/menu*') ? 'active' : '' }}">
+              <a href="{{ route('admin.menu.index') }}">
+                  <i class="fa fa-list"></i> <span>Menu</span>
+              </a>
+            </li>
+            <li class="{{ Request::is('admin-datn/article*') ? 'active' : '' }}">
+              <a href="{{ route('admin.article.index') }}">
+                  <i class="fa fa-circle-o-notch"></i> <span>Article</span>
+              </a>
+            </li>
 
             <li class="header">Hệ Thống</li>
             <li class="{{ Request::is('admin-datn/slide*') ? 'active' : '' }}">

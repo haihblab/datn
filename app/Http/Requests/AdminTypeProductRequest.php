@@ -24,16 +24,17 @@ class AdminTypeProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'tp_name'=>'required|max:190|min:3|unique:type_products',
+            'tp_name' => 'required|max:190|min:3|unique:type_products,tp_name,' . $this->id,
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
-            'tp_name.required'=>'Dữ Liệu không để trống',
-            'tp_name.unique'=>'Dữ Liệu đã tồn tại',
-            'tp_name.max'=>'dữ liệu không quá 190 ký tự',
-            'tp_name.min'=>'dữ liệu phải nhiều hơn 3 ký tự',
+            'tp_name.required' => 'Dữ Liệu không để trống',
+            'tp_name.unique' => 'Dữ Liệu đã tồn tại',
+            'tp_name.max' => 'dữ liệu không quá 190 ký tự',
+            'tp_name.min' => 'dữ liệu phải nhiều hơn 3 ký tự',
         ];
     }
 }

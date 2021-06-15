@@ -11,38 +11,41 @@ use Carbon\Carbon;
 
 class AdminCategoryController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $categorys = Category::query()->orderBy('id', 'DESC')->paginate(20);
-        if($request->ajax()){
+        if ($request->ajax()) {
             $a = $request->search;
-            if($a == null || $a == '' ){
+            if ($a == null || $a == '') {
                 $categorys = Category::query()->orderBy('id', 'DESC')->paginate(20);
                 $query  = $request->query();
-                $html = view('admin.category.data',compact('categorys','query'))->render();
+                $html = view('admin.category.data', compact('categorys', 'query'))->render();
                 return response([
                     'data'      => $html ?? null,
                     'messages'  => 'Update status thành công !'
                 ]);
             }
-            $categorys = Category::query()->where('c_slug','like',$a.'%')->orderBy('id', 'DESC')->paginate(20);
+            $categorys = Category::query()->where('c_slug', 'like', $a . '%')->orderBy('id', 'DESC')->paginate(20);
             $query  = $request->query();
-            $html = view('admin.category.data',compact('categorys','query'))->render();
+            $html = view('admin.category.data', compact('categorys', 'query'))->render();
             return response([
                 'data'      => $html ?? null,
                 'messages'  => 'Update status thành công !'
             ]);
         }
-        return view('admin.category.index',compact('categorys'));
+        return view('admin.category.index', compact('categorys'));
     }
 
-    public function create(){
+    public function create()
+    {
         $categorys = Category::all();
         // dd($categorys);
-        return view('admin.category.create',compact('categorys'));
+        return view('admin.category.create', compact('categorys'));
     }
 
-    public function store(AdminCategoryRequest $request){
-        $data = $request->except('_token','c_avatar');
+    public function store(AdminCategoryRequest $request)
+    {
+        $data = $request->except('_token', 'c_avatar');
         $data['c_slug']         = Str::slug($request->c_name);
         if ($request->c_avatar) {
             $image = upload_image('c_avatar');
@@ -51,22 +54,24 @@ class AdminCategoryController extends Controller
             }
         }
         Category::create($data);
-        $request->session()->flash('toastr',[
+        $request->session()->flash('toastr', [
             'type'      => 'success',
             'message'   => 'Insert thành công !'
         ]);
         return redirect()->back();
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $categorys = Category::all();
         $category = Category::findOrfail($id);
-        return view('admin.category.update',compact('category','categorys'));
+        return view('admin.category.update', compact('category', 'categorys'));
     }
 
-    public function update(AdminCategoryRequest $request,$id){
+    public function update(AdminCategoryRequest $request, $id)
+    {
         $category = Category::findOrfail($id);
-        $data = $request->except('_token','c_avatar');
+        $data = $request->except('_token', 'c_avatar');
         $data['c_slug']         = Str::slug($request->c_name);
         if ($request->c_avatar) {
             $image = upload_image('c_avatar');
@@ -75,14 +80,15 @@ class AdminCategoryController extends Controller
             }
         }
         $category->update($data);
-        $request->session()->flash('toastr',[
+        $request->session()->flash('toastr', [
             'type'      => 'success',
             'message'   => 'update thành công !'
         ]);
         return redirect()->back();
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $category = Category::findOrfail($id);
         $category->delete();
         return redirect()->back();
@@ -98,7 +104,7 @@ class AdminCategoryController extends Controller
         if ($request->ajax()) {
             $categorys     = Category::orderBy('id', 'DESC')->paginate(20);
             $query  = $request->query();
-            $html = view('admin.category.data',compact('categorys','query'))->render();
+            $html = view('admin.category.data', compact('categorys', 'query'))->render();
             return response([
                 'data'      => $html ?? null,
                 'messages'  => 'Update hot thành công !'
@@ -117,7 +123,7 @@ class AdminCategoryController extends Controller
         if ($request->ajax()) {
             $categorys     = Category::orderBy('id', 'DESC')->paginate(20);
             $query  = $request->query();
-            $html = view('admin.category.data',compact('categorys','query'))->render();
+            $html = view('admin.category.data', compact('categorys', 'query'))->render();
             return response([
                 'data'      => $html ?? null,
                 'messages'  => 'Update status thành công !'

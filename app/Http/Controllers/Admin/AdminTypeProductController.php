@@ -12,17 +12,20 @@ use Carbon\Carbon;
 
 class AdminTypeProductController extends Controller
 {
-    public function index(){
-        $type_products= TypeProduct::with('category:id,c_name')->orderBy('id', 'DESC')->paginate(20);
-        return view('admin.typeproduct.index',compact('type_products'));
+    public function index()
+    {
+        $type_products = TypeProduct::with('category:id,c_name')->orderBy('id', 'DESC')->paginate(20);
+        return view('admin.typeproduct.index', compact('type_products'));
     }
 
-    public function create(){
-        $categories = Category::where('c_parent_id',0)->get();
-        return view('admin.typeproduct.create',compact('categories'));
+    public function create()
+    {
+        $categories = Category::where('c_parent_id', 0)->get();
+        return view('admin.typeproduct.create', compact('categories'));
     }
 
-    public function store(AdminTypeProductRequest $request){
+    public function store(AdminTypeProductRequest $request)
+    {
         $data                   = $request->except('_token', 'tp_avatar');
         $data['tp_slug']         = Str::slug($request->tp_name);
 
@@ -34,20 +37,22 @@ class AdminTypeProductController extends Controller
         }
         TypeProduct::create($data);
 
-        $request->session()->flash('toastr',[
+        $request->session()->flash('toastr', [
             'type'      => 'success',
             'message'   => 'Insert thành công !'
-            ]);
+        ]);
         return redirect()->back();
     }
 
-    public function edit($id){
-        $categories = Category::where('c_parent_id',0)->get();
+    public function edit($id)
+    {
+        $categories = Category::where('c_parent_id', 0)->get();
         $type_product = TypeProduct::findOrfail($id);
-        return view('admin.typeproduct.update',compact('categories','type_product'));
+        return view('admin.typeproduct.update', compact('categories', 'type_product'));
     }
 
-    public function update(AdminTypeProductRequest $request, $id){
+    public function update(AdminTypeProductRequest $request, $id)
+    {
         $type_product = TypeProduct::findOrfail($id);
         $data                   = $request->except('_token', 'tp_avatar');
         $data['tp_slug']         = Str::slug($request->tp_name);
@@ -60,21 +65,22 @@ class AdminTypeProductController extends Controller
         }
 
         $type_product->update($data);
-        $request->session()->flash('toastr',[
+        $request->session()->flash('toastr', [
             'type'      => 'success',
             'message'   => 'Update thành công !'
-            ]);
+        ]);
         return redirect()->back();
     }
 
-    public function delete(Request $request,$id){
+    public function delete(Request $request, $id)
+    {
         $type_product = TypeProduct::findOrfail($id);
-        if($type_product){
+        if ($type_product) {
             $type_product->delete();
-            $request->session()->flash('toastr',[
+            $request->session()->flash('toastr', [
                 'type'      => 'success',
                 'message'   => 'Delete thành công !'
-                ]);
+            ]);
         }
         return redirect()->back();
     }
@@ -89,7 +95,7 @@ class AdminTypeProductController extends Controller
         if ($request->ajax()) {
             $type_products     = TypeProduct::orderBy('id', 'DESC')->paginate(20);
             $query  = $request->query();
-            $html = view('admin.typeproduct.data',compact('type_products','query'))->render();
+            $html = view('admin.typeproduct.data', compact('type_products', 'query'))->render();
             return response([
                 'data'      => $html ?? null,
                 'messages'  => 'Update hot thành công !'
@@ -108,7 +114,7 @@ class AdminTypeProductController extends Controller
         if ($request->ajax()) {
             $type_products     = TypeProduct::orderBy('id', 'DESC')->paginate(20);
             $query  = $request->query();
-            $html = view('admin.typeproduct.data',compact('type_products','query'))->render();
+            $html = view('admin.typeproduct.data', compact('type_products', 'query'))->render();
             return response([
                 'data'      => $html ?? null,
                 'messages'  => 'Update status thành công !'

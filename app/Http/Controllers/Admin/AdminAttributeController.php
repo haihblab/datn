@@ -11,74 +11,80 @@ use Illuminate\Support\Str;
 
 class AdminAttributeController extends Controller
 {
-    public function index(){
-        $attribute=Attribute::with('category:id,c_name')->orderBydesc('id')->get();
-        $viewData=[
-            'attribute'=>$attribute
+    public function index()
+    {
+        $attribute = Attribute::with('category:id,c_name')->orderBydesc('id')->get();
+        $viewData = [
+            'attribute' => $attribute
         ];
-        return view('admin.attribute.index',$viewData);
+        return view('admin.attribute.index', $viewData);
     }
 
-    public function create(){
-        $category=Category::where('c_parent_id',0)->get();
+    public function create()
+    {
+        $category = Category::where('c_parent_id', 0)->get();
         $arrType = new Attribute();
         // foreach($arrType->getType() as $key=> $item){
         //     dd($item['name']);
         // }
-        $viewData=[
-            'category'=>$category,
-            'arrType' =>$arrType
+        $viewData = [
+            'category' => $category,
+            'arrType' => $arrType
         ];
-        return view('admin.attribute.create',$viewData);
+        return view('admin.attribute.create', $viewData);
     }
 
-    public function store(AdminAttributeRequest $request){
+    public function store(AdminAttributeRequest $request)
+    {
         // Attribute::create($request->only('atb_name'));
         $data = $request->except('_token');
         $data['atb_slug'] = Str::slug($request->atb_name);
 
         Attribute::create($data);
 
-        $request->session()->flash('toastr',[
+        $request->session()->flash('toastr', [
             'type'      => 'success',
             'message'   => 'Insert thành công !'
-            ]);
+        ]);
         return redirect()->back();
     }
 
-    public function edit($id){
-        $category=Category::where('c_parent_id',0)->get();
-        $attribute=Attribute::find($id);
+    public function edit($id)
+    {
+        $category = Category::where('c_parent_id', 0)->get();
+        $attribute = Attribute::find($id);
         $arrType = new Attribute();
-        $viewData=[
-            'category'  =>$category,
-            'attribute' =>$attribute,
-            'arrType' =>$arrType
+        $viewData = [
+            'category'  => $category,
+            'attribute' => $attribute,
+            'arrType' => $arrType
         ];
-        return view('admin.attribute.update',$viewData);
+        return view('admin.attribute.update', $viewData);
     }
 
-    public function update(AdminAttributeRequest $request, $id){
+    public function update(AdminAttributeRequest $request, $id)
+    {
         $attribute = Attribute::findOrfail($id);
         $data = $request->except('_token');
         $data['atb_slug'] = Str::slug($request->atb_name);
 
         $attribute->update($data);
-        $request->session()->flash('toastr',[
+        $request->session()->flash('toastr', [
             'type'      => 'success',
             'message'   => 'Update thành công !'
-            ]);
+        ]);
         return redirect()->back();
     }
 
-    public function delete(Request $request, $id){
+    public function delete(Request $request, $id)
+    {
         $attribute = Attribute::findOrfail($id);
-        if($attribute){
+        if ($attribute) {
             $attribute->delete();
-            $request->session()->flash('toastr',[
+            $request->session()->flash('toastr', [
                 'type'      => 'success',
                 'message'   => 'Delete thành công !'
-                ]);
+            ]);
         }
         return redirect()->back();
     }

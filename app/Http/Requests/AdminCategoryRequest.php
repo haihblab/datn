@@ -24,15 +24,16 @@ class AdminCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'c_name'=>'required|max:190|min:3|unique:categories,c_name',
+            'c_name' => 'required|max:190|min:3|unique:categories,c_name,' . $this->id,
         ];
     }
-    public function messages(){
+    public function messages()
+    {
         return [
-            'c_name.required'=>'Dữ Liệu không để trống',
-            'c_name.unique'=>'Dữ Liệu đã tồn tại',
-            'c_name.max'=>'dữ liệu không quá 190 ký tự',
-            'c_name.min'=>'dữ liệu phải nhiều hơn 3 ký tự',
+            'c_name.required' => 'Dữ Liệu không để trống',
+            'c_name.unique' => 'Dữ Liệu đã tồn tại',
+            'c_name.max' => 'dữ liệu không quá 190 ký tự',
+            'c_name.min' => 'dữ liệu phải nhiều hơn 3 ký tự',
         ];
     }
 }
