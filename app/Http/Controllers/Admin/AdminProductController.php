@@ -270,4 +270,17 @@ class AdminProductController extends Controller
         }
         return $groupAttribute;
     }
+
+    public function getTypeProduct(Request $request, $categoryId)
+    {
+        $category = Category::find($categoryId);
+        if ($category->c_parent_id) {
+            $categoryId = $category->c_parent_id;
+        }
+        $typeproducts = TypeProduct::where('tp_category_id', $categoryId)->get();
+        $html = view('admin.product.data_type_product', compact('typeproducts'))->render();
+        return response([
+            'data' => $html ?? null,
+        ]);
+    }
 }

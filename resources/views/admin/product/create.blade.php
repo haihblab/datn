@@ -73,7 +73,7 @@
 
                             <div class="form-group {{ $errors->first('pro_category_id') ? 'has-error' : '' }}">
                                 <label>Danh Mục (*)</label>
-                                <select name="pro_category_id" class="form-control js-check-type" >
+                                <select name="pro_category_id" class="form-control js-check-type" data-url="{{route('admin.product.get.typeproduct')}}">
                                     @if (isset($categorys))
                                         @php
                                             get_category_parent($categorys)
@@ -87,7 +87,7 @@
 
                             <div class="form-group {{ $errors->first('pro_type_product_id') ? 'has-error' : '' }}">
                                 <label>Type Product (*)</label>
-                                <select name="pro_type_product_id" class="form-control">
+                                <select name="pro_type_product_id" class="form-control js-type-product">
                                     @if (isset($typeproducts))
                                         @foreach ($typeproducts as $item)
                                             <option value="{{ $item->id }}" >{{ $item->tp_name }}</option>
@@ -246,6 +246,7 @@
 @section('script')
     <script>
         $(function(){
+            
             $('#image').change(function(){
                 let reader = new FileReader();
                 reader.onload = (e) => {
@@ -264,12 +265,10 @@
 
 
 
-            {{--  $('.js-check-type').change(function(){
+            $('.js-check-type').change(function(){
                 let $this = $(this);
                 let idtype = this.value;
-                let URL =$this.attr('data-url');
-                console.log(idtype);
-
+                let URL = $this.attr('data-url') + '/' + idtype;
                 if(URL){
                     $.ajax({
                         url:URL,
@@ -277,15 +276,14 @@
                             id:idtype
                         },
                         success:function(results){
-                            console.log(results.data);
-                            //toastr.success(results.data);
+                            $('.js-type-product').html(results.data)
                         },
                         error:function(error){
                             console.log(error.messages);
                         }
                     });
                 }
-            });  --}}
+            });
         });
 
     </script>

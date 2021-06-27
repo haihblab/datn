@@ -75,6 +75,7 @@ Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->grou
             Route::get('hot/{id}', [AdminProductController::class, 'hot'])->name('admin.product.hot');
 
             Route::get('delete-image/{id}', [AdminProductController::class, 'deleteImage'])->name('admin.product.delete_image');
+            Route::get('get-type-product/{categoryId?}', [AdminProductController::class, 'getTypeProduct'])->name('admin.product.get.typeproduct');
         });
 
         Route::group(['prefix' => 'slide'], function () {
