@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminCategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -87,10 +88,22 @@ class AdminCategoryController extends Controller
         return redirect()->back();
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
-        $category = Category::findOrfail($id);
-        $category->delete();
+        $idChildrenCategorys = Category::whereIn('c_parent_id', [$id])->pluck('id')->push((int)$id)->all();
+        $products = Product::whereIn('pro_category_id', $idChildrenCategorys)->get();
+        if (!empty($products[0])) {
+            $request->session()->flash('toastr', [
+                'type'      => 'error',
+                'message'   => 'Đang có sản phẩm trong danh mục không thể xóa !'
+            ]);
+            return redirect()->back();
+        }
+        Category::destroy($idChildrenCategorys);
+        $request->session()->flash('toastr', [
+            'type'      => 'success',
+            'message'   => 'Delete thành công !'
+        ]);
         return redirect()->back();
     }
 
