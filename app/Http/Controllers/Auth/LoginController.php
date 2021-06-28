@@ -18,8 +18,16 @@ class LoginController extends Controller
         $data = $request->only('email', 'password');
         if (Auth::attempt($data)) {
             $request->session()->regenerate();
+            $request->session()->flash('toastr', [
+                'type'      => 'success',
+                'message'   => 'Đăng nhập thành công !'
+            ]);
             return redirect('/');
         }
+        $request->session()->flash('toastr', [
+            'type'      => 'error',
+            'message'   => 'Lỗi email hoặc mật khẩu !'
+        ]);
         return redirect()->back();
     }
 
