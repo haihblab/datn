@@ -25,5 +25,5 @@ Bạn vui lòng chờ từ 2-4 ngày sẽ có nhân viên giao hàng gọi đi�
 <p>Nếu có bất kì thắc mắc gì liên quan đến thông tin,dịch vụ.<br/>
 	Vui lòng liên hệ theo số Hotline:<a href="callto:0377708868" style="color: red">(+84) 0377708868</a> </p>
 	<p>Cảm ơn bạn đã ủng hộ Shop!</p>
-  <p><span style="font-weight: bold;">Hải AnhShop</span> Thân !</p>
+  <p><span style="font-weight: bold;">Hải Anh Watch</span> Thân !</p>
 </p>
