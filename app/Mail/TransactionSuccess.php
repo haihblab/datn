@@ -30,7 +30,9 @@ class TransactionSuccess extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('emails.email_success_transaction')
+        return $this->from(config('mail.MAIL_FROM_ADDRESS'), config('app.name'))
+            ->subject('Transaction')
+            ->view('emails.email_success_transaction')
             ->with(
                 [
                     'transactions'  => $this->transactions,

@@ -31,6 +31,8 @@ class SendPasswordLoginGoogle extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('emails.email_send_password_login_google')->with(['name' => $this->name, 'password' => $this->password]);
+        return $this->from(config('mail.MAIL_FROM_ADDRESS'), config('app.name'))
+            ->subject('Send Password')
+            ->view('emails.email_send_password_login_google')->with(['name' => $this->name, 'password' => $this->password]);
     }
 }
