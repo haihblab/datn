@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserRequestUpdateInfo extends FormRequest
 {
@@ -24,7 +25,10 @@ class UserRequestUpdateInfo extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3|max:50',
+            'email' => 'required|unique:users,email,' . Auth::id(),
+            'phone' => 'required|regex:/(0)[0-9]{9}/|max:10',
+            'address' => 'required'
         ];
     }
 }

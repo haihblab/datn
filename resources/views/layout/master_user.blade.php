@@ -5,10 +5,17 @@
         <title>Quản lý người dùng</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A project management Bootstrap theme by Medium Rare">
+        @if (session('toastr'))
+            <script>
+                var TYPE_MESSAGE = "{{ session('toastr.type') }}";
+                var MESSAGE = "{{ session('toastr.message') }}";
+            </script>
+        @endif
         <link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
         <link href="{{ asset('user/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('user/css.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('user/toastr.min.css') }}" rel="stylesheet" type="text/css" media="all" />
     </head>
     <body>
         <div class="layout layout-nav-side">
@@ -111,5 +118,28 @@
             <div class="layout-switcher-body">
             </div>
         </div>
+        <script src="https://codeseven.github.io/toastr/build/toastr.min.js"></script>
+        <script>
+            if(typeof TYPE_MESSAGE != "undefined"){
+                switch(TYPE_MESSAGE){
+                    case 'success':
+                        toastr.success(MESSAGE)
+                        break;
+                    case 'error':
+                        toastr.error(MESSAGE)
+                        break;
+                    case 'warning':
+                        toastr.warning(MESSAGE)
+                        break;
+                    case 'info':
+                        toastr.info(MESSAGE)
+                        break;
+                }
+            }
+            //$(function(){
+            //    $('#popup-messages').modal();
+            //});
+        </script>
     </body>
+
 </html>

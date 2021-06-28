@@ -12,7 +12,7 @@ class UserDashboardController extends Controller
     public function dashboard()
     {
         $email_user = Auth::user()->email;
-        $transaction_total = Transaction::count();
+        $transaction_total = Transaction::where('tst_email', $email_user)->count();
         $transaction_transported = Transaction::where('tst_status', config('contants.TRANSACTION_GET_STATUS.transported'))
             ->where('tst_email', $email_user)->count();
         $transaction_default = Transaction::where('tst_status', config('contants.TRANSACTION_GET_STATUS.default'))

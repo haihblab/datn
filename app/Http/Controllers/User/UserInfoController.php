@@ -21,7 +21,12 @@ class UserInfoController extends Controller
         $data               = $request->except('_token');
         $user               = User::find(Auth::id());
         $user->update($data);
-        $user->created_at   =  Carbon::now('Asia/Ho_Chi_Minh');
+        // $user->created_at   =  Carbon::now('Asia/Ho_Chi_Minh');
+        $request->session()->flash('toastr', [
+            'type'      => 'success',
+            'message'   => 'Cập nhật thành công !'
+        ]);
+        // dd($user);
         return redirect()->back();
     }
 }
