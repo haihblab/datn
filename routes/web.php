@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -37,6 +38,12 @@ Route::get('login', [LoginController::class, 'getFormLogin'])->name('get.login')
 Route::post('login', [LoginController::class, 'postLogin'])->middleware('guest');
 
 Route::get('logout', [LoginController::class, 'getLogout'])->name('get.logout');
+
+Route::get('forgot-password', [ForgotPasswordController::class, 'getFormForgot'])->name('get.FormForgot');
+Route::post('forgot-password', [ForgotPasswordController::class, 'postForgot'])->name('post.postForgot');
+Route::get('forgot-change-password', [ForgotPasswordController::class, 'getChangeForgotPassword'])->name('get.ChangeForgotPassword');
+Route::post('forgot-change-password', [ForgotPasswordController::class, 'postChangeForgotPassword'])->name('post.ChangeForgotPassword');
+
 
 Route::get('auth/google/url', [GoogleController::class, 'loginUrl'])->name('login.google');
 Route::get('auth/google/callback', [GoogleController::class, 'loginCallback'])->name('login.google.callback');

@@ -38,7 +38,7 @@
                                     </div>
                                 </form>
                                 <div class="btnThanhToan">
-                                    <button onclick="window.location.href='/account/reset-password'" style="background: #0e74c2;
+                                    <button onclick="window.location.href='/forgot-password'" style="background: #0e74c2;
                                     margin: auto;" class="tac" style="" name="payment" value="2" type="submit">
                                         <p class="ttu fHelveticaNeueB fs15">Quên Mật Khẩu</p>
                                         <p>(Bạn Muốn Lấy Lại Mẩu Khẩu)</p>
