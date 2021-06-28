@@ -54,6 +54,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('get.user.favourite') }}">Sản Phẩm Yêu Thích</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('get.user.change.password') }}">Thay Đổi password</a>
+                        </li>
                     </ul>
                     <hr>
 

@@ -12,6 +12,8 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
 
     Route::get('update-info', [UserInfoController::class, 'updateInfo'])->name('get.user.update_info');
     Route::post('update-info', [UserInfoController::class, 'saveUpdateInfo'])->name('post.user.update_info');
+    Route::get('change-password', [UserInfoController::class, 'getChangePassword'])->name('get.user.change.password');
+    Route::post('change-password', [UserInfoController::class, 'postChangePassword']);
 
     Route::get('transaction', [UserTransactionController::class, 'index'])->name('get.user.transaction');
 
