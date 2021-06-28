@@ -121,7 +121,9 @@
                                     </form>
                                 </div>
                             @else
-                                <p class="fsti pb10 tac" style="color: red">Bạn Chưa Verify Email ! Nên KHông Thể Mua .</p>
+                                <p class="fsti pb10 tac" style="color: rgb(0, 89, 255)">Bạn Chưa Verify Email ! Nên KHông Thể Mua .</p>
+                                <p>Click <a style="color: red" href="{{ route('get.user.update_info') }}">vào đây</a> để lấy lại link verify email !</p>
+
                             @endif
                         @else
                             <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">THÔNG TIN LIÊN HỆ</div>

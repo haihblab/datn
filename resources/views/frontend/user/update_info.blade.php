@@ -4,6 +4,9 @@
     </style>
 @section('content')
     <section class="py-4 py-lg-5" style="background: white;padding: 20px">
+    @if (!Auth::user()->email_verified_at)
+        <p>Click <a style="color: red" href="{{ route('get.reset.verifyemail') }}">vào đây</a> để lấy lại link verify email !</p>
+    @endif
         <h2>Cập nhật thông tin</h2>
         <div class="row mb-5">
             <div class="col-sm-12">

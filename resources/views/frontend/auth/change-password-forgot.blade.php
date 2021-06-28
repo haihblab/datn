@@ -27,7 +27,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="form">
+                        <div class="form" style="width: 60%;margin: auto;">
                             <form class="from_cart_register" method="post">
                                 @csrf
                                 <div class="item">

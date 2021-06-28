@@ -18,7 +18,7 @@
                     <div class="group">
                         <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">Forgot - Password</div>
                         <p class="fsti pb10 tac">Lưu ý: Các ô có dấu <span class="cRed">(*)</span> cần điền đầy đủ thông tin</p>
-                        <div class="form">
+                        <div class="form" style="width: 60%;margin: auto;">
                             <form class="from_cart_register" method="post">
                                 @csrf
                                 <div class="item">

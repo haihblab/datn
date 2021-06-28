@@ -18,36 +18,45 @@
                     <div class="group">
                         <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">ĐĂNG KÝ ĐỂ LÀM THÀNH VIÊN NÀO</div>
                         <p class="fsti pb10 tac">Lưu ý: Các ô có dấu <span class="cRed">(*)</span> cần điền đầy đủ thông tin</p>
-                        <div class="form">
+                        <div class="form" style="width: 60%;margin: auto;">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li class="cRed">{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <form class="from_cart_register" method="post">
                                 @csrf
                                 <div class="item">
                                     <p class="label">Họ Và Tên <span class="cRed">(*)</span></p>
                                     <input type="text" name="name" value="{{ old('name') }}" placeholder="Nhập Họ Và Tên" required />
-                                    @if ($errors->first('name'))
-                                        <span class="text-danger">{{ $errors->first('name') }}</span>
-                                    @endif
+                                    {{-- @if ($errors->first('name'))
+                                        <span class="text-danger cRed">{{ $errors->first('name') }}</span>
+                                    @endif --}}
                                 </div>
                                 <div class="item">
                                     <p class="label">Phone <span class="cRed">(*)</span></p>
                                     <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Nhập Số Điện Thoại" required />
-                                    @if ($errors->first('phone'))
-                                        <span class="text-danger" style="font-size: 10px">{{ $errors->first('phone') }}</span>
-                                    @endif
+                                    {{-- @if ($errors->first('phone'))
+                                        <span class="text-danger cRed" style="font-size: 10px">{{ $errors->first('phone') }}</span>
+                                    @endif --}}
                                 </div>
                                 <div class="item">
                                     <p class="label">Email <span class="cRed">(*)</span></p>
                                     <input type="text" name="email" value="{{ old('email') }}" placeholder="Nhập email" required />
-                                    @if ($errors->first('email'))
-                                        <span class="text-danger" style="font-size: 10px">{{ $errors->first('email') }}</span>
-                                    @endif
+                                    {{-- @if ($errors->first('email'))
+                                        <span class="text-danger cRed" style="font-size: 10px">{{ $errors->first('email') }}</span>
+                                    @endif --}}
                                 </div>
                                 <div class="item">
                                     <p class="label">Mật Khẩu <span class="cRed">(*)</span></p>
                                     <input type="password" name="password" value=""   placeholder="Nhập mật khẩu" required  />
-                                    @if ($errors->first('password'))
-                                        <span class="text-danger">{{ $errors->first('password') }}</span>
-                                    @endif
+                                    {{-- @if ($errors->first('password'))
+                                        <span class="text-danger cRed">{{ $errors->first('password') }}</span>
+                                    @endif --}}
                                 </div>
                                 <div class="cb h10"></div>
                                 <div class="btnThanhToan">

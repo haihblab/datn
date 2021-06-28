@@ -32,7 +32,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('register', [RegisterController::class, 'getFormRegister'])->name('get.register');
 Route::post('register', [RegisterController::class, 'postRegister']);
-Route::get('verify/{id}', [RegisterController::class, 'verifyEmail'])->name('get.verifyemail');
+Route::get('verify/{id}', [RegisterController::class, 'verifyEmail'])->name('get.verifyemail')->middleware('signed');
+
+Route::get('reset-verify', [RegisterController::class, 'resetVerifyEmail'])->name('get.reset.verifyemail');
 
 Route::get('login', [LoginController::class, 'getFormLogin'])->name('get.login')->middleware('guest');
 Route::post('login', [LoginController::class, 'postLogin'])->middleware('guest');
