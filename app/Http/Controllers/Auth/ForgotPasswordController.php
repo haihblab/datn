@@ -82,7 +82,7 @@ class ForgotPasswordController extends Controller
                     'type'      => 'success',
                     'message'   => 'Đổi password thành công'
                 ]);
-                return redirect()->back();
+                return redirect()->route('get.login');
             }
             $request->session()->flash('toastr', [
                 'type'      => 'error',

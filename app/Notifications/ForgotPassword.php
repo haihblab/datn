@@ -46,9 +46,8 @@ class ForgotPassword extends Notification implements ShouldQueue
         // $url = route('get.ChangeForgotPassword', ['email' => $this->email, 'token' => $this->token]);
         $url = route('get.ChangeForgotPassword') . '?email=' . $this->email . '&token=' . $this->token;
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', $url)
-            ->line('Thank you for using our application!');
+            ->action('Click Forgot Password', $url)
+            ->line('Token có thời hạn là 60 phút !');
     }
 
     /**
