@@ -27,5 +27,10 @@ return [
     'HOT' => [
         'hot' => 1,
         'none' => 0
+    ],
+    'ID_CATEGORY_DEFAULT' => [
+        'DHCH' => 1,
+        'KM' => 2,
+        'PKDH' => 3
     ]
 ];

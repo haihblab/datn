@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminTypeProductRequest;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -75,6 +76,14 @@ class AdminTypeProductController extends Controller
     public function delete(Request $request, $id)
     {
         $type_product = TypeProduct::findOrfail($id);
+        $product = Product::query()->where('pro_type_product_id', $id)->first();
+        if ($product) {
+            $request->session()->flash('toastr', [
+                'type'      => 'warning',
+                'message'   => 'Có sản phẩm phụ thuộc không thể xóa !'
+            ]);
+            return redirect()->back();
+        }
         if ($type_product) {
             $type_product->delete();
             $request->session()->flash('toastr', [

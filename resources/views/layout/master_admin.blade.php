@@ -472,6 +472,12 @@
                     case 'error':
                         toastr.error(MESSAGE)
                         break;
+                    case 'warning':
+                        toastr.warning(MESSAGE)
+                        break;
+                    case 'info':
+                        toastr.info(MESSAGE)
+                        break;
                 }
             }
             //$(function(){

@@ -63,7 +63,7 @@
                             </div>
                             <div class="form-group {{ $errors->first('pro_category_id') ? 'has-error' : '' }}">
                                 <label>Danh Mục (*)</label>
-                                <select name="pro_category_id" class="form-control">
+                                <select name="pro_category_id" class="form-control js-check-type" data-url="{{route('admin.product.get.typeproduct')}}" data-idProduct="{{ $product->id }}">
                                   <option value="">_Click_</option>
                                     @if (isset($categorys))
                                     @php
@@ -97,7 +97,7 @@
                             <div class="box-header">
                                 <h3 class="box-title">Attribute</h3>
                             </div>
-                            <div class="box-body">
+                            <div class="box-body js-attribute">
                                 {{--  @foreach ($attributes as $item)
                                     <div class="form-group col-sm-4">
                                         <div class="checkbox">
@@ -256,13 +256,35 @@
                 reader.readAsDataURL(this.files[0]);
             });
             //run js-select2-keyword
-            if($('.js-select2-keyword').length >0){
-                $('.js-select2-keyword').select2({
-                    placeholder :'Chọn Keyword',
-                    maximumSelectionLength : 3
-                });
+            // if($('.js-select2-keyword').length >0){
+            //     $('.js-select2-keyword').select2({
+            //         placeholder :'Chọn Keyword',
+            //         maximumSelectionLength : 3
+            //     });
 
-            }
+            // }
+
+            $('.js-check-type').change(function(){
+                let $this = $(this);
+                let idCategory = this.value;
+                let idProduct = $this.attr('data-idProduct');
+                let URL = $this.attr('data-url') + '/' + idCategory;
+                if(URL){
+                    $.ajax({
+                        url:URL,
+                        data:{
+                            idProduct:idProduct
+                        },
+                        success:function(results){
+                            $('.js-type-product').html(results.type_product)
+                            $('.js-attribute').html(results.attribute)
+                        },
+                        error:function(error){
+                            console.log(error.messages);
+                        }
+                    });
+                }
+            });
         });
 
     </script>

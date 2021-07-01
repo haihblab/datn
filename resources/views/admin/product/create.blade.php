@@ -105,7 +105,7 @@
                             <div class="box-header">
                                 <h3 class="box-title">Attribute</h3>
                             </div>
-                            <div class="box-body">
+                            <div class="box-body js-attribute">
                                 @if (isset($attributes))
                                     @foreach ($attributes as $key => $value)
                                         <div class="form-group col-sm-3">
@@ -267,16 +267,18 @@
 
             $('.js-check-type').change(function(){
                 let $this = $(this);
-                let idtype = this.value;
-                let URL = $this.attr('data-url') + '/' + idtype;
+                let idCategory = this.value;
+                let URL = $this.attr('data-url') + '/' + idCategory;
                 if(URL){
                     $.ajax({
                         url:URL,
-                        data:{
-                            id:idtype
-                        },
+                        // data:{
+                        //     idCategory:idCategory
+                        // },
                         success:function(results){
-                            $('.js-type-product').html(results.data)
+                            $('.js-type-product').html(results.type_product)
+                            $('.js-attribute').html(results.attribute)
+                            console.log(results)
                         },
                         error:function(error){
                             console.log(error.messages);

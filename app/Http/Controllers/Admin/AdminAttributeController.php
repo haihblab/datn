@@ -78,7 +78,14 @@ class AdminAttributeController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $attribute = Attribute::findOrfail($id);
+        $attribute = Attribute::with('products:id,pro_name')->where('id', $id)->first();
+        if (!empty($attribute->products[0])) {
+            $request->session()->flash('toastr', [
+                'type'      => 'warning',
+                'message'   => 'Có sản phẩm phụ thuộc nên không thể xóa !'
+            ]);
+            return redirect()->back();
+        }
         if ($attribute) {
             $attribute->delete();
             $request->session()->flash('toastr', [

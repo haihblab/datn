@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +23,8 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make(123),
                 'name' => 'Admin Supper',
                 'role' => 1,
-                'phone' => '0377708868'
+                'phone' => '0377708868',
+                'email_verified_at' => Carbon::now()
             ]
         );
 

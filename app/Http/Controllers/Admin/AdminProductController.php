@@ -262,7 +262,7 @@ class AdminProductController extends Controller
 
     public function syncAttributeGroup()
     {
-        $attributes = Attribute::get();
+        $attributes = Attribute::where('atb_category_id', config('contants.ID_CATEGORY_DEFAULT.DHCH'))->get();
         $groupAttribute = [];
         foreach ($attributes as $key => $attribute) {
             $aaa = $attribute->gettype($attribute->atb_type)['name'];
@@ -277,10 +277,34 @@ class AdminProductController extends Controller
         if ($category->c_parent_id) {
             $categoryId = $category->c_parent_id;
         }
+        $attributeOld = [];
+        if ($request->idProduct) {
+            $idProduct = $request->idProduct;
+            $attributeOld = DB::table('attribute_product')
+                ->where('ap_product_id', $idProduct)
+                ->pluck('ap_attribute_id')
+                ->toArray();
+        }
+
         $typeproducts = TypeProduct::where('tp_category_id', $categoryId)->get();
-        $html = view('admin.product.data_type_product', compact('typeproducts'))->render();
+        $attributes = $this->AttributeGroup(Attribute::where('atb_category_id', $categoryId)->get());
+        $type_product = view('admin.product.data_type_product', compact('typeproducts'))->render();
+        $attribute = view('admin.product.data_attribute', compact('attributes', 'attributeOld'))->render();
+
         return response([
-            'data' => $html ?? null,
+            'type_product' => $type_product ?? null,
+            'attribute' => $attribute ?? null,
+            'id' => $idProduct ?? null
         ]);
+    }
+
+    public function AttributeGroup($attributes)
+    {
+        $groupAttribute = [];
+        foreach ($attributes as $key => $attribute) {
+            $aaa = $attribute->gettype($attribute->atb_type)['name'];
+            $groupAttribute[$aaa][] = $attribute->toArray();
+        }
+        return $groupAttribute;
     }
 }
