@@ -391,6 +391,12 @@
               </a>
             </li>
 
+            <li class="{{ Request::is('admin-datn/rating*') ? 'active' : '' }}">
+                <a href="{{ route('admin.rating.index') }}">
+                    <i class="fa fa-commenting"></i> <span>Rating</span>
+                </a>
+            </li>
+
             <li class="header">Hệ Thống</li>
             <li class="{{ Request::is('admin-datn/slide*') ? 'active' : '' }}">
                 <a href="{{ route('admin.slide.index') }}">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequestMenu;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -54,10 +55,22 @@ class AdminMenuController extends Controller
         ]);
         return redirect()->back();
     }
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         $menu = Menu::find($id);
+        $article = Article::where('a_menu_id', $id)->first();
+        if ($article) {
+            $request->session()->flash('toastr', [
+                'type'      => 'warning',
+                'message'   => 'Có bài viết thuộc menu nên không thể xóa !'
+            ]);
+            return redirect()->back();
+        }
         if ($menu) $menu->delete();
+        $request->session()->flash('toastr', [
+            'type'      => 'success',
+            'message'   => 'Xóa menu thành công !'
+        ]);
         return redirect()->back();
     }
     public function active($id)

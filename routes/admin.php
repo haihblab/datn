@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminMenuController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminRatingController;
 use App\Http\Controllers\Admin\AdminSlideController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\AdminTypeProductController;
@@ -127,6 +128,13 @@ Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->grou
             Route::get('view/{id}', [AdminTransactionController::class, 'getTransactionDetail'])->name('admin.transaction.detail');
             Route::get('order-delete/{id}', [AdminTransactionController::class, 'order_detail_delete'])->name('admin.order_detail.delete');
             Route::get('action/{action}/{id}', [AdminTransactionController::class, 'getAction'])->name('admin.transaction.action');
+        });
+
+        Route::group(['prefix' => 'rating'], function () {
+            Route::get('/', [AdminRatingController::class, 'index'])->name('admin.rating.index');
+            Route::get('active/{id}', [AdminRatingController::class, 'active'])->name('admin.rating.active');
+            Route::get('delete/{id}', [AdminRatingController::class, 'delete'])->name('admin.rating.delete');
+            Route::get('view_detail/{id}', [AdminRatingController::class, 'viewDetail'])->name('admin.ajax.view.detail.rating');
         });
     });
 });
