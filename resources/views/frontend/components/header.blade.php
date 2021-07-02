@@ -16,7 +16,7 @@
             <li><a href="/" title="Home">Trang chủ</a></li>
             <li><a href="{{ route('get.article.index') }}" title="Tin tức">Tin tức đồng hồ</a></li>
             @if (Auth::check())
-                <li><a href="{{ route('get.user.dashboard') }}" title="Xem Profile">Xem Profile</a></li>
+                <li><a href="{{ route('get.user.dashboard') }}" title="Xem Profile">Xem Profile ({{Auth::user()->name}})</a></li>
                 <li><a href="{{ route('get.logout') }}" title="Đăng Xuất">Đăng Xuất</a></li>
             @else
                 <li><a href="{{ route('get.register') }}" title="Đăng Ký">Đăng Ký</a></li>

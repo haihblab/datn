@@ -526,12 +526,6 @@
                 $(this).css("background-color", "#ffffff");
                 var totals = parseInt($('.total-message').html());
                 if(totals > 0) {
-                    totals -= 1;
-                    if (totals == 0) {
-                        $('.total-message').css("display", "none");
-                    }
-
-                    $('.total-message').html(totals);
                     console.log(totals);
                     $.ajax({
                         url:URL,
@@ -539,6 +533,11 @@
                         success:function(results){
                             if(results.messages){
                                 toastr.info(results.messages);
+                                totals -= 1;
+                                if (totals == 0) {
+                                    $('.total-message').css("display", "none");
+                                }
+                                $('.total-message').html(totals);
                             }
                         }
                     });

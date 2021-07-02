@@ -98,12 +98,18 @@
         <script>
             if(typeof TYPE_MESSAGE != "undefined"){
                 switch(TYPE_MESSAGE){
-                    case 'success':
-                        toastr.success(MESSAGE)
-                        break;
-                    case 'error':
-                        toastr.error(MESSAGE)
-                        break;
+                case 'success':
+                    toastr.success(MESSAGE)
+                    break;
+                case 'error':
+                    toastr.error(MESSAGE)
+                    break;
+                case 'warning':
+                    toastr.warning(MESSAGE)
+                    break;
+                case 'info':
+                    toastr.info(MESSAGE)
+                    break;
                 }
             }
             //$(function(){

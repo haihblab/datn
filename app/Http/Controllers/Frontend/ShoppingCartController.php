@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\TransactionSuccess;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -142,6 +144,10 @@ class ShoppingCartController extends Controller
     public function postPay(Request $request)
     {
         if (\Cart::count() <= 0) {
+            $request->session()->flash('toastr', [
+                'type'      => 'warning',
+                'message'   => 'Không có sản phẩm nào để thanh toán !'
+            ]);
             return redirect('/');
         }
         DB::beginTransaction();
@@ -170,6 +176,7 @@ class ShoppingCartController extends Controller
             $transaction = Transaction::query()->create($data);
         } catch (\Throwable $th) {
             DB::rollBack();
+            return redirect()->route('get.home');
         }
         if ($transaction) {
             $shopping = \Cart::content();
@@ -189,11 +196,18 @@ class ShoppingCartController extends Controller
                     // DB::table('products')->where('id',$item->id)->decrement('pro_number',$item->qty);
                 } catch (\Throwable $th) {
                     DB::rollBack();
+                    return redirect()->route('get.home');
                 }
             }
             Mail::to($email)->send(new TransactionSuccess($shopping, $name));
         }
         DB::commit();
+        $dataMessage = [
+            'name' => $name,
+            'message' => 'Vừa mua sản phẩm.',
+            'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        ];
+        event(new NotificationEvent($dataMessage));
         return redirect()->route('get.success.list')->with(['success' => 'ok', 'email' => $email, 'address' => $address, 'name' => $name, 'phone' => $phone]);
     }
 

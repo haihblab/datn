@@ -33,7 +33,7 @@ class UserRatingController extends Controller
             }
             $dataMessage = [
                 'name' => Auth::user()->name,
-                'message' => 'Vừa tạo một comment !',
+                'message' => 'Vừa comment sản phẩm.',
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
             ];
             event(new NotificationEvent($dataMessage));
