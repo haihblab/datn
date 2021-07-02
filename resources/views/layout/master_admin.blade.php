@@ -63,85 +63,40 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-envelope-o"></i>
-                <span class="label label-success">4</span>
+              <li class="dropdown messages-menu" >
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="js-notification">
+                {{-- <i class="fa fa-envelope-o"></i> --}}
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-danger total-message" style="font-size: 14px !important;">{{Auth::user()->unreadNotifications->count()}}</span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header">You have 4 messages</li>
+                  <li class="header">You have {{Auth::user()->unreadNotifications->count()}} messages</li>
                   <li>
                     <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li>
-                        <!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <!-- end message -->
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            AdminLTE Design Team
-                            <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="{{ asset('admin/dist/img/user4-128x128.jpg') }}" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Developers
-                            <small><i class="fa fa-clock-o"></i> Today</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Sales Department
-                            <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="{{ asset('admin/dist/img/user4-128x128.jpg') }}" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Reviewers
-                            <small><i class="fa fa-clock-o"></i> 2 days</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li>
+                    <ul class="menu" id="js-menu-messages">
+                      @foreach (Auth::user()->notifications as $item)
+                        <li >
+                          <a href="{{route('ajax.read.notify',$item->id)}}" class="ajax-read-notify" @if (!$item->read_at)
+                            style="background-color: #dedede;"
+                          @endif>
+                            <div class="pull-left">
+                              <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
+                            </div>
+                            <h4>
+                              {{ $item->data['name'] }}
+                              <small><i class="fa fa-clock-o"></i>{{ $item->created_at }}</small>
+                            </h4>
+                            <p>{{ $item->data['message'] }}</p>
+                          </a>
+                        </li>
+                      @endforeach
                     </ul>
                   </li>
                   <li class="footer"><a href="#">See All Messages</a></li>
                 </ul>
               </li>
               <!-- Notifications: style can be found in dropdown.less -->
-              <li class="dropdown notifications-menu">
+              {{-- <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning">10</span>
@@ -181,9 +136,9 @@
                   </li>
                   <li class="footer"><a href="#">View all</a></li>
                 </ul>
-              </li>
+              </li> --}}
               <!-- Tasks: style can be found in dropdown.less -->
-              <li class="dropdown tasks-menu">
+              {{-- <li class="dropdown tasks-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-flag-o"></i>
                 <span class="label label-danger">9</span>
@@ -263,7 +218,7 @@
                     <a href="#">View all tasks</a>
                   </li>
                 </ul>
-              </li>
+              </li> --}}
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -469,27 +424,66 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script src="https://codeseven.github.io/toastr/build/toastr.min.js"></script>
-        <script>
-            if(typeof TYPE_MESSAGE != "undefined"){
-                switch(TYPE_MESSAGE){
-                    case 'success':
-                        toastr.success(MESSAGE)
-                        break;
-                    case 'error':
-                        toastr.error(MESSAGE)
-                        break;
-                    case 'warning':
-                        toastr.warning(MESSAGE)
-                        break;
-                    case 'info':
-                        toastr.info(MESSAGE)
-                        break;
-                }
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+        if(typeof TYPE_MESSAGE != "undefined"){
+            switch(TYPE_MESSAGE){
+                case 'success':
+                    toastr.success(MESSAGE)
+                    break;
+                case 'error':
+                    toastr.error(MESSAGE)
+                    break;
+                case 'warning':
+                    toastr.warning(MESSAGE)
+                    break;
+                case 'info':
+                    toastr.info(MESSAGE)
+                    break;
             }
-            //$(function(){
-            //    $('#popup-messages').modal();
-            //});
-        </script>
+        }
+        //$(function(){
+        //    $('#popup-messages').modal();
+        //});
+    </script>
+    <script type="text/javascript">
+
+    //   Pusher.logToConsole = true;
+      var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+      encrypted: true,
+      cluster: '{{ env('PUSHER_APP_CLUSTER') }}'
+      });
+
+      // console.log(totals);
+      var totals = parseInt($('.total-message').html());
+      if(totals == 0) {
+        $('.total-message').css("display", "none");
+      }
+      var channel = pusher.subscribe('NotificationEvent');
+          
+      channel.bind('send-message', function(data) {
+          console.log(data);
+        var totals = parseInt($('.total-message').html());
+          var newNotificationHtml = `
+          <li >
+            <a href="{{route('ajax.read.notify',$item->id)}}" class="ajax-read-notify" style="background-color: #dedede;">
+              <div class="pull-left">
+                <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
+              </div>
+              <h4>
+                ${data.dataMessage.name}
+                <small><i class="fa fa-clock-o"></i> ${data.dataMessage.created_at}</small>
+              </h4>
+              <p>${data.dataMessage.message}</p>
+            </a>
+          </li>
+          `;
+          totals += 1;
+          $('#js-menu-messages').prepend(newNotificationHtml);
+          $('.total-message').html(totals);
+          $('.total-message').css("display", "block");
+      });
+  </script>
 
     <script>
         $(document).ready(function(){
@@ -516,6 +510,42 @@
                 });
             })
         });
+
+        $(document).ready(function(){
+            $(document).on('click','#js-notification',function(e){
+                e.preventDefault();
+                // $('.total-message').html(0);
+                // console.log(1);
+            });
+        });
+
+        $(document).ready(function(){
+            $(document).on('click','.ajax-read-notify',function(e){
+                e.preventDefault();
+                let URL = $(this).attr('href');
+                $(this).css("background-color", "#ffffff");
+                var totals = parseInt($('.total-message').html());
+                if(totals > 0) {
+                    totals -= 1;
+                    if (totals == 0) {
+                        $('.total-message').css("display", "none");
+                    }
+
+                    $('.total-message').html(totals);
+                    console.log(totals);
+                    $.ajax({
+                        url:URL,
+                        type:"GET",
+                        success:function(results){
+                            if(results.messages){
+                                toastr.info(results.messages);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
     </script>
     <script>
         $(document).ready(function(){

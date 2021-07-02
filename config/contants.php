@@ -32,5 +32,6 @@ return [
         'DHCH' => 1,
         'KM' => 2,
         'PKDH' => 3
-    ]
+    ],
+    'ID_SUPPER_ADMIN_DEFAULT' => 1,
 ];

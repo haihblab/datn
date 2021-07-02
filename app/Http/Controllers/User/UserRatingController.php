@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Rating;
 use Carbon\Carbon;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class UserRatingController extends Controller
@@ -29,6 +31,12 @@ class UserRatingController extends Controller
                 $html = view('frontend.pages.product_detail.include._inc_rating_item_data', compact('rating'))->render();
                 $this->staticRatingProduct($request->product_id, $request->review);
             }
+            $dataMessage = [
+                'name' => Auth::user()->name,
+                'message' => 'Vừa tạo một comment !',
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+            ];
+            event(new NotificationEvent($dataMessage));
             return response([
                 'html'      => $html ?? null,
                 'messages'  => ' Đánh giá SP thành công !'
