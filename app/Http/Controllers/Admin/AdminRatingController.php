@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminRatingController extends Controller
 {
@@ -35,17 +36,32 @@ class AdminRatingController extends Controller
         return view('admin.rating.index', $viewData);
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
+        DB::beginTransaction();
         $rating = Rating::find($id);
         if ($rating) {
-            $product = Product::find($rating->r_product_id);
-            $product->pro_review_total--;
-            $product->pro_review_star -= $rating->r_number;
-            $product->save();
+            try {
+                $product = Product::find($rating->r_product_id);
+                $product->pro_review_total--;
+                $product->pro_review_star -= $rating->r_number;
+                $product->save();
 
-            $rating->delete();
+                $rating->delete();
+                DB::commit();
+                $request->session()->flash('toastr', [
+                    'type'      => 'success',
+                    'message'   => 'delete thành công !'
+                ]);
+                return redirect()->back();
+            } catch (\Exception $e) {
+                DB::rollBack();
+            }
         }
+        $request->session()->flash('toastr', [
+            'type'      => 'error',
+            'message'   => 'Không tồn tại rating !'
+        ]);
         return redirect()->back();
     }
 
