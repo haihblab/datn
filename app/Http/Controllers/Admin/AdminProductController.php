@@ -76,7 +76,9 @@ class AdminProductController extends Controller
     public function create()
     {
         $categorys = Category::select('id', 'c_name', 'c_parent_id')->get();
-        $typeproducts = TypeProduct::select('id', 'tp_name', 'tp_category_id')->get();
+        $typeproducts = TypeProduct::select('id', 'tp_name', 'tp_category_id')
+            ->where('tp_category_id', (int)config('contants.ID_CATEGORY_DEFAULT.DHCH'))
+            ->get();
         // $attributes = Attribute::select('id','atb_name')->get();
         $attributes = $this->syncAttributeGroup();
         $viewData = [

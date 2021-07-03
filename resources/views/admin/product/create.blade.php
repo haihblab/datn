@@ -278,7 +278,6 @@
                         success:function(results){
                             $('.js-type-product').html(results.type_product)
                             $('.js-attribute').html(results.attribute)
-                            console.log(results)
                         },
                         error:function(error){
                             console.log(error.messages);
