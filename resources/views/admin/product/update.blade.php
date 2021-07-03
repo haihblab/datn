@@ -77,7 +77,7 @@
                             </div>
                             <div class="form-group {{ $errors->first('pro_type_product_id') ? 'has-error' : '' }}">
                                 <label>Type Product (*)</label>
-                                <select name="pro_type_product_id" class="form-control">
+                                <select name="pro_type_product_id" class="form-control js-type-product">
                                     <option value="">__Click__</option>
                                     @if (isset($typeproducts))
                                         @foreach ($typeproducts as $item)
