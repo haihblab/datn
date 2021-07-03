@@ -19,7 +19,7 @@
             @foreach ($ratings as $item)
                 <tr>
                     <td>{{ ++$i .'--'. $item->id }}</td>
-                    <td>{{ $item->product->pro_name }}</td>
+                    <td><a href="{{ route('get.product.detail',$item->product->pro_slug.'-'.$item->product->id) }}" target="_blank">{{ $item->product->pro_name ?? "[N\A]" }}</a></td>
                     <td>{{ $item->user->name }}</td>
                     <td>
                         <div class="ratings">
