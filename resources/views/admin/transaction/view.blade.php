@@ -107,7 +107,7 @@
                                         <th>Price</th>
                                         <th>Qty</th>
                                         <th>Total</th>
-                                        <th >Action</th>
+                                        {{-- <th >Action</th> --}}
                                     </tr>
                                     @php
                                         $i=0;
@@ -124,9 +124,9 @@
                                             <td>{{ number_format($item->od_price,0,',','.') }} đ</td>
                                             <td>{{ $item->od_qty }}</td>
                                             <td>{{ number_format($item->od_price * $item->od_qty,0,',','.') }} đ</td>
-                                            <td>
+                                            {{-- <td>
                                                 <a href="{{ route('admin.order_detail.delete',$item->id) }}" class="btn btn-xs btn-danger js-delete-order-item">Delete</a>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -137,7 +137,7 @@
                 <div class="col-md-12">
                     <div class="box-footer" style="text-align: center;">
                         <a href="{{ route('admin.transaction.index') }}" class="btn btn-danger"><i class="fa fa-undo"></i> Trở Lại</a>
-                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
+                        {{-- <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button> --}}
                     </div>
                 </div>
         </form>
