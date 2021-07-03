@@ -17,6 +17,21 @@ class AdminProductController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->ajax()) {
+            if ($request->p_id) {
+                $product = Product::findOrfail((int)$request->p_id);
+            }
+            if ($request->p_hot == 1 || $request->p_hot == 2) {
+                $product->pro_hot       = !$product->pro_hot;
+                $product->updated_at    = Carbon::now();
+                $product->save();
+            }
+            if ($request->p_status == 1 || $request->p_status == 2) {
+                $product->pro_active       = !$product->pro_active;
+                $product->updated_at    = Carbon::now();
+                $product->save();
+            }
+        }
         $products = Product::with('category:id,c_name');
         $categorys = Category::all();
 
@@ -63,13 +78,24 @@ class AdminProductController extends Controller
         } else {
             $products->orderByDesc('id');
         }
-
         $products = $products->paginate(20);
         $viewData = [
             'products'      => $products,
             'categorys'     => $categorys,
             'query'         => $request->query()
         ];
+        if ($request->ajax()) {
+            $html = view('admin.product.data', $viewData)->render();
+            // if ($request->p_hot == 1 || $request->p_hot == 2 || $request->p_status == 1 || $request->p_status == 2) {
+            //     return response([
+            //         'data' => $html ?? null,
+            //         'messages'  => 'Update thành công !'
+            //     ]);
+            // }
+            return response([
+                'data' => $html ?? null,
+            ]);
+        }
         return view('admin.product.index', $viewData);
     }
 
@@ -187,43 +213,43 @@ class AdminProductController extends Controller
         return redirect()->back();
     }
 
-    public function hot(Request $request, $id)
-    {
-        $product                = Product::findOrfail($id);
-        $product->pro_hot       = !$product->pro_hot;
-        $product->updated_at    = Carbon::now();
-        $product->save();
+    // public function hot(Request $request, $id)
+    // {
+    //     $product                = Product::findOrfail($id);
+    //     $product->pro_hot       = !$product->pro_hot;
+    //     $product->updated_at    = Carbon::now();
+    //     $product->save();
 
-        if ($request->ajax()) {
-            $products     = Product::orderBy('id', 'DESC')->paginate(20);
-            $query  = $request->query();
-            $html = view('admin.product.data', compact('products', 'query'))->render();
-            return response([
-                'data'      => $html ?? null,
-                'messages'  => 'Update hot thành công !'
-            ]);
-        }
-        return redirect()->back();
-    }
+    //     if ($request->ajax()) {
+    //         $products     = Product::orderBy('id', 'DESC')->paginate(20);
+    //         $query  = $request->query();
+    //         $html = view('admin.product.data', compact('products', 'query'))->render();
+    //         return response([
+    //             'data'      => $html ?? null,
+    //             'messages'  => 'Update hot thành công !'
+    //         ]);
+    //     }
+    //     return redirect()->back();
+    // }
 
-    public function active(Request $request, $id)
-    {
-        $product                    = Product::findOrfail($id);
-        $product->pro_active        = !$product->pro_active;
-        $product->updated_at        = Carbon::now();
-        $product->save();
+    // public function active(Request $request, $id)
+    // {
+    //     $product                    = Product::findOrfail($id);
+    //     $product->pro_active        = !$product->pro_active;
+    //     $product->updated_at        = Carbon::now();
+    //     $product->save();
 
-        if ($request->ajax()) {
-            $products     = Product::orderBy('id', 'DESC')->paginate(20);
-            $query  = $request->query();
-            $html = view('admin.product.data', compact('products', 'query'))->render();
-            return response([
-                'data'      => $html ?? null,
-                'messages'  => 'Update status thành công !'
-            ]);
-        }
-        return redirect()->back();
-    }
+    //     if ($request->ajax()) {
+    //         $products     = Product::orderBy('id', 'DESC')->paginate(20);
+    //         $query  = $request->query();
+    //         $html = view('admin.product.data', compact('products', 'query'))->render();
+    //         return response([
+    //             'data'      => $html ?? null,
+    //             'messages'  => 'Update status thành công !'
+    //         ]);
+    //     }
+    //     return redirect()->back();
+    // }
 
     public function syncAlbumImageAndProduct($file, $productID)
     {

@@ -38,16 +38,16 @@
                     </td>
                     <td>
                         @if ($item->pro_hot==1)
-                            <a href="{{ route('admin.product.hot',$item->id) }}" class="label label-info status-active">Hot</a>
+                            <a href="{{ request()->fullUrlWithQuery(['p_hot'=>1, 'p_id' => $item->id, 'p_status' => -1]) }}" class="label label-info status-actives">Hot</a>
                         @else
-                             <a href="{{ route('admin.product.hot',$item->id) }}" class="label label-default status-active">None</a>
+                             <a href="{{ request()->fullUrlWithQuery(['p_hot'=>2, 'p_id' => $item->id, 'p_status' => -1]) }}" class="label label-default status-actives">None</a>
                         @endif
                     </td>
                     <td>
                         @if ($item->pro_active==1)
-                            <a href="{{ route('admin.product.active',$item->id) }}" class="label label-info status-active">Active</a>
+                            <a href="{{ request()->fullUrlWithQuery(['p_status'=>1, 'p_id' => $item->id, 'p_hot'=> -1]) }}" class="label label-info status-actives">Active</a>
                         @else
-                             <a href="{{ route('admin.product.active',$item->id) }}" class="label label-default status-active">Hide</a>
+                             <a href="{{ request()->fullUrlWithQuery(['p_status'=>2, 'p_id' => $item->id, 'p_hot'=> -1]) }}" class="label label-default status-actives">Hide</a>
                         @endif
                     </td>
                     <td>{{ $item->created_at }}</td>
