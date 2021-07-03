@@ -123,11 +123,9 @@
                 <div class="group">
                     <a href="javascript://" title="" class="titleHead">Sản phẩm</a>
                     <ul class="menuFoot">
-                        <li><a href="javascript://" title="Dong ho">Đồng hồ chính hãng</a></li>
-                        <li><a href="javascript://" title="Kính mát">Kính mắt thời trang</a></li>
-                        <li><a href="javascript://" title="Day dong ho">Dây đồng hồ</a></li>
-                        <li><a href="javascript://" title="Hop dong ho">Hộp đựng đồng hồ</a></li>
-                        <li><a href="javascript://" title="Bút ký cao cấp">Bút ký cao cấp</a></li>
+                        @foreach ($categories as $item)
+                            <li><a href="{{ route('get.category.list',$item->c_slug.'-'.$item->id) }}" title="{{ $item->c_name }}">{{ $item->c_name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
