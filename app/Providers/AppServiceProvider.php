@@ -28,7 +28,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
-        $categories = Category::with('children.products')->where('c_parent_id', 0)->get();
+        // $categories = Category::with('children.products')->where('c_parent_id', 0)->get();
+        $categories = Category::with(['children' => function ($q) {
+            return $q->where('c_status', (int)config('contants.STATUS.active'))->orderByDesc('c_hot');
+        }])->where('c_parent_id', 0)->get();
         // dd($categories);
         $product_typess = TypeProduct::with('product')->limit(3)->get();
         $cateImages = Category::where([['c_status', '=', 1], ['c_parent_id', '>', 0]])->limit(5)->get();

@@ -83,7 +83,7 @@
                             <div class="subMenu" style="width: 250px;">
                                 <div class="group">
                                     <div class="item">
-                                    @foreach ($categorys->childrenRecursive as $item)
+                                    @foreach ($categorys->children as $item)
                                         <a href="{{ route('get.category.list',$item->c_slug.'-'.$item->id) }}" title="{{ $item->c_name }}">{{ $item->c_name }}</a>
                                     @endforeach
                                     </div>

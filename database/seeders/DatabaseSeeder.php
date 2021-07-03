@@ -33,17 +33,17 @@ class DatabaseSeeder extends Seeder
                 [
                     'c_name' => 'Đồng Hồ Chính Hãng',
                     'c_parent_id' => 0,
-                    'c_slug' => 'dong-ho-chinh-hang-1',
+                    'c_slug' => 'dong-ho-chinh-hang',
                 ],
                 [
                     'c_name' => 'Kính Mắt',
                     'c_parent_id' => 0,
-                    'c_slug' => 'kinh-mat-2',
+                    'c_slug' => 'kinh-mat',
                 ],
                 [
                     'c_name' => 'Phụ Kiện Đồng Hồ',
                     'c_parent_id' => 0,
-                    'c_slug' => 'phu-kien-dong-ho-3',
+                    'c_slug' => 'phu-kien-dong-ho',
                 ],
             ]
         );
