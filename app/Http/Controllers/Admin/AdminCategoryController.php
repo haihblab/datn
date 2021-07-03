@@ -99,6 +99,18 @@ class AdminCategoryController extends Controller
             ]);
             return redirect()->back();
         }
+        if (
+            $id == config('contants.ID_CATEGORY_DEFAULT.DHCH')
+            || $id == config('contants.ID_CATEGORY_DEFAULT.KM')
+            || $id == config('contants.ID_CATEGORY_DEFAULT.PKDH')
+        ) {
+            $request->session()->flash('toastr', [
+                'type'      => 'error',
+                'message'   => 'Danh mục này không thể xóa !'
+            ]);
+            return redirect()->back();
+        }
+
         Category::destroy($idChildrenCategorys);
         $request->session()->flash('toastr', [
             'type'      => 'success',
