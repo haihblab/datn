@@ -34,4 +34,5 @@ return [
         'PKDH' => 3
     ],
     'ID_SUPPER_ADMIN_DEFAULT' => 1,
+    'PER_PAGE_DEFAULT_ADMIN' => 25
 ];

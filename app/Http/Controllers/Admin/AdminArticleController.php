@@ -17,7 +17,7 @@ class AdminArticleController extends Controller
     {
         $articles = Article::with('menu:id,mn_name')
             ->orderByDesc('id')
-            ->paginate(10);
+            ->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
         $viewData = [
             'articles'  => $articles
         ];

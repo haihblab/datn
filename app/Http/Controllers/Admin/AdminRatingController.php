@@ -17,7 +17,7 @@ class AdminRatingController extends Controller
             $rating = Rating::find($id);
             $rating->r_status = !$rating->r_status;
             $rating->save();
-            $ratings     = Rating::orderBy('id', 'DESC')->paginate(15);
+            $ratings     = Rating::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->all();
             $html = view('admin.rating.data', compact('ratings', 'query'))->render();
             return response([
@@ -28,7 +28,7 @@ class AdminRatingController extends Controller
         }
         $query = $request->query();
         $ratings = Rating::with('product:id,pro_name,pro_slug', 'user:id,name')
-            ->orderByDesc('id')->paginate(15);
+            ->orderByDesc('id')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
         $viewData = [
             'ratings'   => $ratings,
             'query' => $query
@@ -72,7 +72,7 @@ class AdminRatingController extends Controller
         $rating->save();
 
         if ($request->ajax()) {
-            $ratings     = Rating::orderBy('id', 'DESC')->paginate(15)->withQueryString();
+            $ratings     = Rating::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'))->withQueryString();
             $query  = $request->all();
             $html = view('admin.rating.data', compact('ratings', 'query'))->render();
             return response([

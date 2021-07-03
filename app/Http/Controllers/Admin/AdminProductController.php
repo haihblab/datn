@@ -78,7 +78,7 @@ class AdminProductController extends Controller
         } else {
             $products->orderByDesc('id');
         }
-        $products = $products->paginate(20);
+        $products = $products->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
         $viewData = [
             'products'      => $products,
             'categorys'     => $categorys,
@@ -221,7 +221,7 @@ class AdminProductController extends Controller
     //     $product->save();
 
     //     if ($request->ajax()) {
-    //         $products     = Product::orderBy('id', 'DESC')->paginate(20);
+    //         $products     = Product::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
     //         $query  = $request->query();
     //         $html = view('admin.product.data', compact('products', 'query'))->render();
     //         return response([
@@ -240,7 +240,7 @@ class AdminProductController extends Controller
     //     $product->save();
 
     //     if ($request->ajax()) {
-    //         $products     = Product::orderBy('id', 'DESC')->paginate(20);
+    //         $products     = Product::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
     //         $query  = $request->query();
     //         $html = view('admin.product.data', compact('products', 'query'))->render();
     //         return response([

@@ -12,7 +12,7 @@ class AdminSlideController extends Controller
 {
     public function index()
     {
-        $slides = Slide::orderByDesc('id')->paginate(10);
+        $slides = Slide::orderByDesc('id')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
         return view('admin.slide.index', compact('slides'));
     }
 
@@ -63,7 +63,7 @@ class AdminSlideController extends Controller
         $slide->save();
 
         if ($request->ajax()) {
-            $slides     = Slide::orderBy('id', 'DESC')->paginate(10);
+            $slides     = Slide::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->query();
             $html = view('admin.slide.data', compact('slides', 'query'))->render();
             return response([

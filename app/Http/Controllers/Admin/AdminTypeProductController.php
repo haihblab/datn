@@ -15,7 +15,7 @@ class AdminTypeProductController extends Controller
 {
     public function index()
     {
-        $type_products = TypeProduct::with('category:id,c_name')->orderBy('id', 'DESC')->paginate(20);
+        $type_products = TypeProduct::with('category:id,c_name')->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
         return view('admin.typeproduct.index', compact('type_products'));
     }
 
@@ -102,7 +102,7 @@ class AdminTypeProductController extends Controller
         $type_product->save();
 
         if ($request->ajax()) {
-            $type_products     = TypeProduct::orderBy('id', 'DESC')->paginate(20);
+            $type_products     = TypeProduct::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->query();
             $html = view('admin.typeproduct.data', compact('type_products', 'query'))->render();
             return response([
@@ -128,7 +128,7 @@ class AdminTypeProductController extends Controller
         $type_product->save();
 
         if ($request->ajax()) {
-            $type_products     = TypeProduct::orderBy('id', 'DESC')->paginate(20);
+            $type_products     = TypeProduct::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->query();
             $html = view('admin.typeproduct.data', compact('type_products', 'query'))->render();
             return response([

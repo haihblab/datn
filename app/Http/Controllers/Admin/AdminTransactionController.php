@@ -30,7 +30,7 @@ class AdminTransactionController extends Controller
         if ($status = $request->status) {
             $transactions->where('tst_status', $status);
         }
-        $transactions = $transactions->orderByDesc('id')->paginate(10);
+        $transactions = $transactions->orderByDesc('id')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
         $viewData = [
             'transactions'  =>  $transactions,
             'query'         =>  $request->query()

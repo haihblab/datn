@@ -14,11 +14,11 @@ class AdminCategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $categorys = Category::query()->orderBy('id', 'DESC')->paginate(20);
+        $categorys = Category::query()->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
         if ($request->ajax()) {
             $a = $request->search;
             if ($a == null || $a == '') {
-                $categorys = Category::query()->orderBy('id', 'DESC')->paginate(20);
+                $categorys = Category::query()->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
                 $query  = $request->query();
                 $html = view('admin.category.data', compact('categorys', 'query'))->render();
                 return response([
@@ -26,7 +26,7 @@ class AdminCategoryController extends Controller
                     'messages'  => 'Update status thành công !'
                 ]);
             }
-            $categorys = Category::query()->where('c_slug', 'like', $a . '%')->orderBy('id', 'DESC')->paginate(20);
+            $categorys = Category::query()->where('c_slug', 'like', $a . '%')->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->query();
             $html = view('admin.category.data', compact('categorys', 'query'))->render();
             return response([
@@ -127,7 +127,7 @@ class AdminCategoryController extends Controller
         $category->save();
 
         if ($request->ajax()) {
-            $categorys     = Category::orderBy('id', 'DESC')->paginate(20);
+            $categorys     = Category::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->query();
             $html = view('admin.category.data', compact('categorys', 'query'))->render();
             return response([
@@ -155,7 +155,7 @@ class AdminCategoryController extends Controller
         $category->save();
 
         if ($request->ajax()) {
-            $categorys     = Category::orderBy('id', 'DESC')->paginate(20);
+            $categorys     = Category::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->query();
             $html = view('admin.category.data', compact('categorys', 'query'))->render();
             return response([
@@ -170,7 +170,7 @@ class AdminCategoryController extends Controller
     //     if($request->ajax()){
     //         $a = $request->search;
     //         if($a == null || $a == '' ){
-    //             $categorys = Category::query()->orderBy('id', 'DESC')->paginate(2);
+    //             $categorys = Category::query()->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
     //             $query  = $request->query();
     //             $html = view('admin.category.data',compact('categorys','query'))->render();
     //             return response([
@@ -178,7 +178,7 @@ class AdminCategoryController extends Controller
     //                 'messages'  => 'Update status thành công !'
     //             ]);
     //         }
-    //         $categorys = Category::query()->where('c_name','like','%'.$a.'%')->orderBy('id', 'DESC')->paginate(2);
+    //         $categorys = Category::query()->where('c_name','like','%'.$a.'%')->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
     //         $query  = $request->query();
     //         $html = view('admin.category.data',compact('categorys','query'))->render();
     //         return response([
