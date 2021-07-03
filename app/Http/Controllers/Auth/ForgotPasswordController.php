@@ -73,26 +73,33 @@ class ForgotPasswordController extends Controller
         }
         $user = User::where('email', $email)->first();
         $reset_password = DB::table('password_resets')->where('email', $email)->first();
-        if ($reset_password->token == $token) {
-            if (Carbon::now()->diffInMinutes($reset_password->created_at) < 60) {
-                $user->update([
-                    "password" => Hash::make($password)
-                ]);
+        if ($reset_password) {
+            if ($reset_password->token == $token) {
+                if (Carbon::now()->diffInMinutes($reset_password->created_at) < 60) {
+                    $user->update([
+                        "password" => Hash::make($password)
+                    ]);
+                    $request->session()->flash('toastr', [
+                        'type'      => 'success',
+                        'message'   => 'Đổi password thành công'
+                    ]);
+                    return redirect()->route('get.login');
+                }
                 $request->session()->flash('toastr', [
-                    'type'      => 'success',
-                    'message'   => 'Đổi password thành công'
+                    'type'      => 'error',
+                    'message'   => 'Token đã hết hạn vui lòng làm mới lại !'
                 ]);
-                return redirect()->route('get.login');
+                return redirect()->back();
             }
             $request->session()->flash('toastr', [
                 'type'      => 'error',
-                'message'   => 'Token đã hết hạn vui lòng làm mới lại !'
+                'message'   => 'Token không trung khớp'
             ]);
             return redirect()->back();
         }
         $request->session()->flash('toastr', [
             'type'      => 'error',
-            'message'   => 'Token không trung khớp'
+            'message'   => 'Email không tồn tại'
         ]);
         return redirect()->back();
     }
