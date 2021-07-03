@@ -115,6 +115,13 @@ class AdminTypeProductController extends Controller
 
     public function active(Request $request, $id)
     {
+        $product = Product::query()->where('pro_type_product_id', $id)->first();
+        if ($product) {
+            return response([
+                'error'      => 'error',
+                'messages'   => 'Đang có sản phẩm phụ thuộc không thể ẩn !'
+            ]);
+        }
         $type_product           = TypeProduct::findOrfail($id);
         $type_product->tp_status = !$type_product->tp_status;
         $type_product->updated_at = Carbon::now();

@@ -556,11 +556,15 @@
                     url:URL,
                     type:"GET",
                     success:function(results){
-                        {{--  console.log(results.data);  --}}
-                        if(results.data){
+                        if(results.error) {
+                          toastr.error(results.messages);
+                        } else {
+                          if(results.data){
                             $("#js-data").html(results.data);
+                            toastr.success(results.messages);
+                          }
                         }
-                        toastr.success(results.messages);
+                        
                     }
                 });
             });

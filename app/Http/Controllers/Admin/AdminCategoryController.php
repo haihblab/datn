@@ -128,6 +128,15 @@ class AdminCategoryController extends Controller
 
     public function active(Request $request, $id)
     {
+        $idChildrenCategorys = Category::whereIn('c_parent_id', [$id])->pluck('id')->push((int)$id)->all();
+        $products = Product::whereIn('pro_category_id', $idChildrenCategorys)->get();
+        if (!empty($products[0])) {
+            return response([
+                'error'      => 'error',
+                'messages'   => 'Đang có sản phẩm trong danh mục không thể ẩn !'
+            ]);
+        }
+
         $category           = Category::findOrfail($id);
         $category->c_status = !$category->c_status;
         $category->updated_at = Carbon::now();
