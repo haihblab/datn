@@ -191,13 +191,26 @@ class AdminProductController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $product = Product::with('images', 'attributes')->findOrfail($id);
+        DB::beginTransaction();
+        $product = Product::with('images', 'attributes', 'ratings')->findOrfail($id);
         if ($product) {
-            foreach ($product->images as $item) {
-                $this->deleteImage($request, $item->id);
-            }
-            foreach ($product->attributes as $item) {
-                $product->attributes()->detach($item->id);
+            try {
+                foreach ($product->images as $item) {
+                    $this->deleteImage($request, $item->id);
+                }
+                foreach ($product->attributes as $item) {
+                    $product->attributes()->detach($item->id);
+                }
+                foreach ($product->ratings as $item) {
+                    $item->delete();
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $request->session()->flash('toastr', [
+                    'type'      => 'error',
+                    'message'   => 'Có lỗi xảy ra, liên hệ Admin !'
+                ]);
+                return redirect()->back();
             }
             // $attributeOld=DB::table('attribute_product')
             //     ->where('ap_product_id',$id)
@@ -205,7 +218,7 @@ class AdminProductController extends Controller
             //     ->toArray();
             $product->delete();
         }
-
+        DB::commit();
         $request->session()->flash('toastr', [
             'type'      => 'success',
             'message'   => 'Delete thành công !'

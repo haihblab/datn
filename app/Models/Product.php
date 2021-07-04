@@ -42,4 +42,9 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'user_favourite', 'uf_product_id', 'uf_user_id');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'r_product_id');
+    }
 }
