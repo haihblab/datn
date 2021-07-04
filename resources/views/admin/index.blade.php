@@ -19,7 +19,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Tổng Số Đơn Hàng</span>
-              {{--  <span class="info-box-number">{{ $totalTransactions }} <small><a href="{{ route('admin.transaction.index') }}">(Chi Tiết)</a></small></span>  --}}
+               <span class="info-box-number">{{ $totalTransactions }} <small><a href="{{ route('admin.transaction.index') }}">(Chi Tiết)</a></small></span> 
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Thành Viên</span>
-              {{--  <span class="info-box-number">{{ $totalUsers }} <small><a href="{{ route('admin.user.index') }}">(Chi Tiết)</a></small></span>  --}}
+               <span class="info-box-number">{{ $totalUsers }} <small><a href="{{ route('admin.user.index') }}">(Chi Tiết)</a></small></span> 
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
             <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
             <div class="info-box-content">
               <span class="info-box-text">Sản Phẩm</span>
-              {{--  <span class="info-box-number">{{ $totalProducts }} <small><a href="{{ route('admin.product.index') }}">(Chi Tiết)</a></small></span>  --}}
+               <span class="info-box-number">{{ $totalProducts }} <small><a href="{{ route('admin.product.index') }}">(Chi Tiết)</a></small></span> 
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
           </div>
         </div>
     </div>
-    {{--  <div class="row" style="margin-bottom: 20px">
+     {{-- <div class="row" style="margin-bottom: 20px">
         <div class="col-sm-8">
             <figure class="highcharts-figure">
                 <div id="container2" data-list-day="{{ $listDay }}" data-money-default="{{ $arrRevenueTransactionMonthDefault }}" data-money="{{ $arrRevenueTransactionMonth }}"></div>
@@ -66,6 +66,84 @@
             </figure>
         </div>
     </div>  --}}
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Doanh Thu</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body" style="">
+                    <div class="table-responsive">
+                        <span style="color: red">Không chọn gì mặc định lấy các ngày trong tháng và năm hiện tại.</span>
+                        <div class="box-title">
+                            <form action="" method="GET" class="form-inline">
+                                <select name="day" class="form-control">
+                                    <option value="" >_ Ngày trong tháng _</option>
+                                    @for ($i = 1; $i <=31; $i++)
+                                        <option value="{{$i}}" {{ Request::get('day') == $i ? "selected='selected'" : "" }}>Ngày {{$i}}</option>
+                                    @endfor
+                                </select>
+                                <select name="month" class="form-control">
+                                    <option value="">_ Tháng trong năm _</option>
+                                    @for ($i = 1; $i <=12; $i++)
+                                        <option value="{{$i}}" {{ Request::get('month') == $i ? "selected='selected'" : "" }}>Tháng {{$i}}</option>
+                                    @endfor
+                                </select>
+                                <select name="year" class="form-control">
+                                    <option value="">_ Năm _</option>
+                                    <option value="2019" {{ Request::get('year') == 2019 ? "selected='selected'" : "" }}>Năm 2019</option>
+                                    <option value="2020" {{ Request::get('year') == 2020 ? "selected='selected'" : "" }}>Năm 2020</option>
+                                    <option value="2021" {{ Request::get('year') == 2021 ? "selected='selected'" : "" }}>Năm 2021</option>
+                                    <option value="2022" {{ Request::get('year') == 2022 ? "selected='selected'" : "" }}>Năm 2022</option>
+                                    <option value="2023" {{ Request::get('year') == 2023 ? "selected='selected'" : "" }}>Năm 2023</option>
+                                </select>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-search"> </i> Search</button>
+                                {{--  <button type="submit" name="export" value="true" class="btn btn-info">
+                                    <i class="fa fa-save"> </i> Export
+                                </button>  --}}
+                            </form>
+                        </div>
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tổng Tiền</th>
+                                    <th>Ngày</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(isset($moneyTransaction))
+                                    @foreach ($moneyTransaction as $item)
+                                        <tr>
+                                            <td>{{ $item->id }}</td>
+                                            <td>{{ number_format($item->totalMoney,0,',','.') }} vnd</td>
+                                            <td> 
+                                                @if (!(empty(Request::get('year'))) && empty(Request::get('day')) && empty(Request::get('month')))
+                                                    Tháng {{ $item->day }} Năm {{Request::get('year')}}
+                                                @else
+                                                    {{ $item->day }}
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                        <tr>
+                                            <td>Tổng</td>
+                                            <td><span style="color: red">{{ number_format($totalMoneyTransaction,0,',','.') }} vnd</span></td>
+                                            <td></td>
+                                        </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-8">
             <div class="box box-info">
@@ -125,7 +203,7 @@
                     </div>
                 </div>
                 <div class="box-footer clearfix" style="">
-                    {{--  <a href="{{ route('admin.transaction.index') }}" class="btn btn-sm btn-info btn-flat pull-right">Danh Sách Đơn Hàng</a>  --}}
+                     <a href="{{ route('admin.transaction.index') }}" class="btn btn-sm btn-info btn-flat pull-right">Danh Sách Đơn Hàng</a> 
                 </div>
             </div>
         </div>
@@ -148,7 +226,7 @@
                                         <img src="{{ pare_url_file($item->pro_avatar) }}" alt="{{ $item->pro_name }}">
                                     </div>
                                     <div class="product-info">
-                                        <a href="javascript:void(0)" class="product-title">{{ $item->pro_name }}
+                                        <a href="{{route('get.product.detail',$item->slug . '-' . $item->id)}}" target="_blank" class="product-title">{{ $item->pro_name }}
                                         <span class="label label-warning pull-right">{{ number_format($item->pro_price,0,',','.') }} đ</span></a>
                                         <span class="product-description">
                                             {{ $item->pro_pay }} lượt mua
@@ -160,7 +238,7 @@
                     </ul>
                 </div>
                 <div class="box-footer text-center">
-                    {{--  <a href="{{ route('admin.product.index') }}" class="uppercase">View All Products</a>  --}}
+                     <a href="{{ route('admin.product.index') }}" class="uppercase">View All Products</a> 
                 </div>
             </div>
             <div class="box box-success">
@@ -181,7 +259,7 @@
                                     <img src="{{ pare_url_file($item->pro_avatar) }}" alt="{{ $item->pro_name }}">
                                 </div>
                                 <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title">{{ $item->pro_name }}
+                                    <a href="{{route('get.product.detail',$item->slug . '-' . $item->id)}}"  target="_blank" class="product-title">{{ $item->pro_name }}
                                     <span class="label label-warning pull-right">{{ number_format($item->pro_price,0,',','.') }} đ</span></a>
                                     <span class="product-description">
                                         <i class="fa fa-eye"></i>  {{ $item->pro_view }}
@@ -193,7 +271,7 @@
                     </ul>
                 </div>
                 <div class="box-footer text-center">
-                    {{--  <a href="{{ route('admin.product.index') }}" class="uppercase">Danh Sách Products</a>  --}}
+                     <a href="{{ route('admin.product.index') }}" class="uppercase">View All Products</a> 
                 </div>
             </div>
         </div>
@@ -201,7 +279,7 @@
 </section>
 @endsection
 
-{{--  @section('script')
+ @section('script')
     <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -259,11 +337,11 @@
             },
             yAxis: {
                 title: {
-                    text: 'Temperature'
+                    text: 'Số tiền'
                 },
                 labels: {
                     formatter: function () {
-                        return this.value + '°';
+                        return new Intl.NumberFormat().format(this.value) + ' VND';
                     }
                 }
             },
@@ -297,4 +375,4 @@
             ]
         });
     </script>
-@endsection  --}}
+@endsection 

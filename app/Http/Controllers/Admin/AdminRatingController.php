@@ -13,16 +13,25 @@ class AdminRatingController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $id = $request->idRating;
-            $rating = Rating::find($id);
-            $rating->r_status = !$rating->r_status;
-            $rating->save();
-            $ratings     = Rating::orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
+            if ($request->has('r_status')) {
+                $id = $request->r_id;
+                $rating = Rating::find($id);
+                if ($request->r_status == 1) {
+                    $rating->r_status = 0;
+                    $rating->save();
+                }
+                if ($request->r_status == 2) {
+                    $rating->r_status = 1;
+                    $rating->save();
+                }
+            }
+
+            $ratings     = Rating::with('product:id,pro_name,pro_slug', 'user:id,name')
+                ->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
             $query  = $request->all();
             $html = view('admin.rating.data', compact('ratings', 'query'))->render();
             return response([
                 'data'      => $html ?? null,
-                'messages'  => 'oke !',
                 'query' => $request->query()
             ]);
         }

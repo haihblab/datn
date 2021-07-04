@@ -126,7 +126,7 @@
 
                             @endif
                         @else
-                            <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">THÔNG TIN LIÊN HỆ</div>
+                            {{-- <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">THÔNG TIN LIÊN HỆ</div>
                             <p class="fsti pb10 tac">Lưu ý: Các ô có dấu <span class="cRed">(*)</span> cần điền đầy đủ thông tin</p>
                             <div class="form">
                                 <form class="from_cart_register" action="{{ route('post.shopping.pay') }}" method="post">
@@ -163,7 +163,9 @@
                                         </button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
+                            <p class="fsti pb10 tac" style="color: rgb(0, 89, 255)">Bạn Chưa Đăng nhập ! Nên KHông Thể Mua .</p>
+                            <p>Click <a style="color: red" href="{{ route('get.login') }}">vào đây</a> để lấy Đăng nhập !</p>
                         @endif
 
                     </div>

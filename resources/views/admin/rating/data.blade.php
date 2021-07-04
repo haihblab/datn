@@ -33,9 +33,9 @@
                     <td>{{ $item->updated_at }}</td>
                     <td>
                         @if ($item->r_status==1)
-                            <a href="{{ route('admin.rating.index') }}" data-id="{{ $item->id }}" class="label label-info status-actives">Active</a>
+                            <a href="{{ request()->fullUrlWithQuery(['r_status'=>1, 'r_id' => $item->id]) }}" data-id="{{ $item->id }}" class="label label-info status-actives">Active</a>
                         @else
-                                <a href="{{ route('admin.rating.index') }}" data-id="{{ $item->id }}" class="label label-default status-actives">Hide</a>
+                                <a href="{{ request()->fullUrlWithQuery(['r_status'=>2, 'r_id' => $item->id]) }}" data-id="{{ $item->id }}" class="label label-default status-actives">Hide</a>
                         @endif
                     </td>
                     <td>
@@ -49,3 +49,4 @@
         @endif
     </tbody>
 </table>
+<div>{!! $ratings->appends($query ?? [])->links() !!}</div>

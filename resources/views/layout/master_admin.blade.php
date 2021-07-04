@@ -75,21 +75,25 @@
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu" id="js-menu-messages">
                       @foreach (Auth::user()->notifications as $item)
-                        <li >
-                          <a href="{{route('ajax.read.notify',$item->id)}}" class="ajax-read-notify" @if (!$item->read_at)
-                            style="background-color: #dedede;"
-                          @endif>
-                            <div class="pull-left">
-                              <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
-                            </div>
-                            <h4>
-                              {{ $item->data['name'] }}
-                              <small><i class="fa fa-clock-o"></i>{{ $item->created_at }}</small>
-                            </h4>
-                            <p>{{ $item->data['message'] }}</p>
-                          </a>
-                        </li>
-                      @endforeach
+                      @if(!empty($item))
+
+                      <li >
+                        <a href="{{route('ajax.read.notify',$item->id)}}" class="ajax-read-notify" @if (!$item->read_at)
+                          style="background-color: #dedede;"
+                        @endif>
+                          <div class="pull-left">
+                            <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
+                          </div>
+                          <h4>
+                            {{ $item->data['name'] }}
+                            <small><i class="fa fa-clock-o"></i>{{ $item->created_at }}</small>
+                          </h4>
+                          <p>{{ $item->data['message'] }}</p>
+                        </a>
+                      </li>
+                      @endif
+
+                    @endforeach
                     </ul>
                   </li>
                   <li class="footer"><a href="#">See All Messages</a></li>

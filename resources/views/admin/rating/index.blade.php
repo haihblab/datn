@@ -43,7 +43,7 @@
               <div class="box-body table-responsive no-padding" id="js-datas">
                 @include('admin.rating.data')
               </div>
-              {!! $ratings->appends($query)->links() !!}
+              {{-- {!! $ratings->appends($query)->links() !!} --}}
 
               <!-- /.box-body -->
               <div></div>
@@ -98,30 +98,47 @@
             //     fetch_data(page, sort_type, column_name, query);
             // });
 
+            $(document).on('click', '.page-link', function(event){
+            event.preventDefault(); 
+            var page = $(this).attr('href').split('page=')[1];
+            let URL = $(this).attr('href');
+            console.log(URL)
+            fetch_data(URL);
+            });
+
             $(document).on('click','.status-actives',function(e){
                 e.preventDefault();
                 var URL = $(this).attr('href');
-                let idRating = $(this).attr('data-id');
-                var page = $(location).attr('search').split('page=')[1];
-                if(page == undefined) page = 1;
-                // console.log(page);
-                $.ajax({
-                    url:URL,
-                    'data' : {
-                        idRating : idRating,
-                        page : page
-                    },
-                    type:"GET",
-                    success:function(results){
-                        {{--  console.log(results.data);  --}}
-                        if(results.data){
-                            $("#js-datas").html(results.data);
-                            console.log(results)
-                        }
-                        toastr.success(results.messages);
-                    }
-                });
+                console.log(URL);
+                fetch_data(URL);
             });
+
+            
+
+            // $(document).on('click','.status-actives',function(e){
+            //     e.preventDefault();
+            //     var URL = $(this).attr('href');
+            //     let idRating = $(this).attr('data-id');
+            //     var page = $(location).attr('search').split('page=')[1];
+            //     if(page == undefined) page = 1;
+            //     // console.log(page);
+            //     $.ajax({
+            //         url:URL,
+            //         'data' : {
+            //             idRating : idRating,
+            //             page : page
+            //         },
+            //         type:"GET",
+            //         success:function(results){
+            //             {{--  console.log(results.data);  --}}
+            //             if(results.data){
+            //                 $("#js-datas").html(results.data);
+            //                 console.log(results)
+            //             }
+            //             toastr.success(results.messages);
+            //         }
+            //     });
+            // });
 
             $(document).on('click','.js-preview-rating',function(e){
                 e.preventDefault();
@@ -138,6 +155,19 @@
                     }
                 });
             });
+
+            function fetch_data(URL){
+                $.ajax({
+                    url:URL,
+                    type:"GET",
+                    success:function(results){
+                        $('#js-datas').html(results.data);
+                        if(results.messages) {
+                            toastr.success(results.messages);
+                        }         
+                    }
+                });
+            }
 
         });
     </script>
