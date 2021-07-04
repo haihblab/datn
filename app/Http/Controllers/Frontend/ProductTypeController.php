@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Models\TypeProduct;
 use Illuminate\Http\Request;
 
-class ProductTypeController extends Controller
+class ProductTypeController extends FrontendController
 {
     public function index(Request $request, $slug)
     {
@@ -35,9 +35,15 @@ class ProductTypeController extends Controller
             $type_products = TypeProduct::with('product')->where('tp_category_id', $category_check->c_parent_id)->get();
             // đưa ra các ảnh của danh muc con
             $category_Images = Category::where('c_parent_id', $category_check->c_parent_id)->get();
+
+            $attributes = Attribute::query()->select('id', 'atb_name', 'atb_slug', 'atb_type')->where('atb_category_id', $category_check->c_parent_id)->get();
+            $attributes = $this->syncAttributeGroup($attributes);
         } else {
             $type_products = TypeProduct::with('product')->where('tp_category_id', $idCategory)->get();
             $category_Images = Category::where('c_parent_id', $idCategory)->get();
+
+            $attributes = Attribute::query()->select('id', 'atb_name', 'atb_slug', 'atb_type')->where('atb_category_id', $idCategory)->get();
+            $attributes = $this->syncAttributeGroup($attributes);
         }
 
         // lấy ra sản phẩm
@@ -103,7 +109,6 @@ class ProductTypeController extends Controller
         $modelProduct = new Product();
 
         $products = $products->where('pro_active', 1)->paginate(10);
-        $attributes = Attribute::query()->select('id', 'atb_name', 'atb_slug')->get();
 
         $viewData = [
             'category_check'    => $category_check,

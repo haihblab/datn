@@ -174,34 +174,36 @@
                                 <a href="javascript://" class="closeSub"><i class="far fa-times-circle"></i></a>
                             </div>
                         </div>
-
+                        @if (!empty($attributes))
                         <div class="function odering">
                             <span class="openSubOrder">Tính năng <i class="fas fa-caret-down"></i></span>
                             <div class="sub filter">
-                                @if (isset($attributes))
+                                @foreach ($attributes as $key=> $attribute)
                                     <div class="group">
+                                        <a href="javascript://" title="" class="title">{{ $key }}</a>
                                         <ul>
-                                        @foreach ($attributes as $item)
-                                            <li>
-                                                <label>
-                                                    <span>
-                                                        @if (Request::get('attr_'.$item['id']) == $item['id'])
-                                                            <i class='fas fa-check'></i>
-                                                        @endif
-                                                        <a class=" js-param-search {{ Request::get('attr_'.$item['id']) == $item['id'] ? 'active_filter' : '' }}"
-                                                        data-param="attr_{{ $item['id'] }}={{ $item['id'] }}"
-                                                        href="{{ request()->fullUrlWithQuery(['attr_'.$item['id'] => $item['id']]) }}" title="">{{ $item['atb_name'] }}</a>
-                                                    </span>
-                                                </label>
-                                            </li>
-                                        @endforeach
+                                            @foreach ($attribute as $item)
+                                                <li>
+                                                    <label>
+                                                        <span>
+                                                            @if (Request::get('attr_'.$item['atb_type']) == $item['id'])
+                                                                <i class='fas fa-check'></i>
+                                                            @endif
+                                                            <a class=" js-param-search ajax-list {{ Request::get('attr_'.$item['atb_type']) == $item['id'] ? 'active_filter' : '' }}"
+                                                            data-param="attr_{{ $item['atb_type'] }}={{ $item['id'] }}"
+                                                            href="{{ request()->fullUrlWithQuery(['attr_'.$item['atb_type'] => $item['id']]) }}" title="">{{ $item['atb_name'] }}</a>
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
-                                @endif
+                                @endforeach
                                 <div class="cb"></div>
                                 <a href="javascript://" class="closeSub"><i class="far fa-times-circle"></i></a>
                             </div>
                         </div>
+                        @endif
                         <div class="function odering">
                             <span class="openSubOrder">Sắp xếp <i class="fas fa-caret-down"></i></span>
                             <div class="sub filter">
@@ -251,7 +253,13 @@
                                 </a>
                             </li>
                         @else
-                            <li><a href="{{ route('get.category.list',$category_check->c_slug.'-'.$category_check->id) }}" title="{{ $category_check->c_name }}">{{ $category_check->c_name }}<span class="icon"><i class="fas fa-times"></i></span></a></li>
+                            <li><a href="javascript://" title="{{ $category_check->c_name }}">{{ $category_check->c_name }}<span class="icon"><i class="fas fa-times"></i></span></a></li>
+                            @if(Request::get('price')) <li><a href="{{ request()->fullUrlWithQuery(['price'=> Request::get('price')]) }}" class="js-param-search {{ Request::get('price')  ? 'active_filter' : '' }}" data-param="price={{Request::get('price')}}" title="Giá">Giá<span class="icon"><i class="fas fa-times"></i></span></a></li> @endif
+                            @if(Request::get('country')) <li><a href="{{ request()->fullUrlWithQuery(['country'=> Request::get('country')]) }}" class="js-param-search {{ Request::get('country')  ? 'active_filter' : '' }}" data-param="country={{Request::get('country')}}" title="Quốc Gia">Quốc Gia<span class="icon"><i class="fas fa-times"></i></span></a></li> @endif
+                            @if(Request::get('sort')) <li><a href="{{ request()->fullUrlWithQuery(['sort'=> Request::get('sort')]) }}" class="js-param-search {{ Request::get('sort')  ? 'active_filter' : '' }}" data-param="sort={{Request::get('sort')}}" title="Xắp Xếp">Xắp Xếp<span class="icon"><i class="fas fa-times"></i></span></a></li> @endif
+                            @if(Request::get('attr_1')) <li><a href="{{ request()->fullUrlWithQuery(['attr_1'=> Request::get('attr_1')]) }}" class="js-param-search {{ Request::get('attr_1')  ? 'active_filter' : '' }}" data-param="attr_1={{Request::get('attr_1')}}" title="Năng Lượng">Năng Lượng<span class="icon"><i class="fas fa-times"></i></span></a></li> @endif
+                            @if(Request::get('attr_2')) <li><a href="{{ request()->fullUrlWithQuery(['attr_2'=> Request::get('attr_2')]) }}" class="js-param-search {{ Request::get('attr_2')  ? 'active_filter' : '' }}" data-param="attr_2={{Request::get('attr_2')}}" title="Loại Dây">Loại Dây<span class="icon"><i class="fas fa-times"></i></span></a></li> @endif
+                            @if(Request::get('attr_3')) <li><a href="{{ request()->fullUrlWithQuery(['attr_3'=> Request::get('attr_3')]) }}" class="js-param-search {{ Request::get('attr_3')  ? 'active_filter' : '' }}" data-param="attr_3={{Request::get('attr_3')}}" title="Đường Kính Mặt">Đường Kính Mặt<span class="icon"><i class="fas fa-times"></i></span></a></li> @endif
                             <li><a href="{{ route('get.category.list',$category_check->c_slug.'-'.$category_check->id) }}" title="" class="deleteAll">Xóa tất cả <span class="icon"><i class="fas fa-times"></i></span></a></li>
                         @endif
                     </ul>
@@ -306,7 +314,6 @@
                 let $this = $(this);
                 let param = $this.attr('data-param');
                 let link = $this.attr('href');
-                //console.log(param);
                 if($this.hasClass('active_filter')){
                     link = link.replace(param,'');
                 }
