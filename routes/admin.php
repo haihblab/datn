@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminRatingController;
 use App\Http\Controllers\Admin\AdminSlideController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\AdminTypeProductController;
+use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin-auth'], function () {
@@ -136,6 +137,13 @@ Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->grou
             Route::get('active/{id}', [AdminRatingController::class, 'active'])->name('admin.rating.active');
             Route::get('delete/{id}', [AdminRatingController::class, 'delete'])->name('admin.rating.delete');
             Route::get('view_detail/{id}', [AdminRatingController::class, 'viewDetail'])->name('admin.ajax.view.detail.rating');
+        });
+
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/', [AdminUserController::class, 'index'])->name('admin.user.index');
+            Route::get('update/{id}', [AdminUserController::class, 'edit'])->name('admin.user.update');
+            Route::post('update/{id}', [AdminUserController::class, 'update']);
+            Route::get('delete/{id}', [AdminUserController::class, 'delete'])->name('admin.user.delete');
         });
     });
 });

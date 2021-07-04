@@ -358,6 +358,11 @@
                     <i class="fa fa-circle-o text-red"></i> <span>Slide</span>
                 </a>
             </li>
+            <li class="{{ Request::is('admin-datn/user*') ? 'active' : '' }}">
+              <a href="{{ route('admin.user.index') }}">
+                  <i class="fa fa-users"></i> <span>User</span>
+              </a>
+            </li>
 
           </ul>
         </section>

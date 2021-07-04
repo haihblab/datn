@@ -5,6 +5,10 @@ return [
         'ADMIN' => 1,
         'USER' => 2,
     ],
+    'GET_NAME_ROLE' => [
+        1 => 'Admin',
+        2 => 'User',
+    ],
     'TRANSACTION' => [
         1 => 'Vừa tiếp nhận',
         2 => 'Đang vận chuyển',
