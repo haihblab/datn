@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slide;
@@ -10,7 +11,7 @@ use App\Models\TypeProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Env;
 
-class HomeController extends Controller
+class HomeController extends FrontendController
 {
     public function index()
     {
@@ -97,5 +98,128 @@ class HomeController extends Controller
             ->where('pro_active', $STATUS_ACTIVE)
             ->orderByDesc('pro_pay')->limit(6)->get();
         return $pro;
+    }
+
+    public function search(Request $request)
+    {
+        $paramAtbSearch = $request
+            ->except('price', 'page', 'search', 'country', 'sort');
+        $paramAtbSearch = array_values($paramAtbSearch);
+
+        // $arraySlug = explode('-', $slug);
+        // $idCategory = array_pop($arraySlug);
+
+        // tim kiem danh muc theo id đã cắt ở trên idCategory
+        // $category_check = Category::with('parent', 'children', 'typeproducts', 'products.images')
+        //     ->find($idCategory);
+        // dd($category_check);
+        // check xem nó thuốc danh mục cha nào
+        // if ($category_check->c_parent_id > 0) {
+        // đưa ra các type_pro (đồng hồ nam nữ,....)
+        // $type_products = TypeProduct::with('product')->where('tp_category_id', $category_check->c_parent_id)->get();
+        // đưa ra các ảnh của danh muc con
+        // $category_Images = Category::where('c_parent_id', $category_check->c_parent_id)->get();
+        //
+        // $attributes = Attribute::query()->select('id', 'atb_name', 'atb_slug', 'atb_type')->where('atb_category_id', $category_check->c_parent_id)->get();
+        // $attributes = $this->syncAttributeGroup($attributes);
+        // } else {
+        // $type_products = TypeProduct::with('product')->where('tp_category_id', $idCategory)->get();
+        // $category_Images = Category::where('c_parent_id', $idCategory)->get();
+
+        // $attributes = Attribute::query()->select('id', 'atb_name', 'atb_slug', 'atb_type')->where('atb_category_id', $idCategory)->get();
+        // $attributes = $this->syncAttributeGroup($attributes);
+        // }
+
+        $type_products = TypeProduct::with('product')->get();
+        $category_Images = Category::select('id', 'c_name', 'c_slug', 'c_parent_id', 'c_avatar')->where('c_status', (int)config('contants.STATUS.active'))->get();
+        $attributes = Attribute::query()->select('id', 'atb_name', 'atb_slug', 'atb_type')->get();
+        $attributes = $this->syncAttributeGroup($attributes);
+
+
+        // $categorySearch = Category::where('c_parent_id', $idCategory)
+        //     ->pluck('id')
+        //     ->push($idCategory)
+        //     ->all();
+        // dd($categorySearch);
+
+        // lấy ra sản phẩm
+        $products = Product::query();
+        if ($request->search) {
+            $products->where('pro_name', 'like', '%' . $request->search . '%')->orWhere('pro_slug', 'like', '%' . $request->search . '%');
+        }
+
+        // loc theo giá
+        if ($request->price) {
+            $price = $request->price;
+            switch ($price) {
+                case 1:
+                    $products->where('pro_price', '>', '40000000');
+                    break;
+                case 2:
+                    $products->where('pro_price', '<', '2500000');
+                    break;
+                case 5:
+                    $products->whereBetween('pro_price', [2500000, 5000000]);
+                    break;
+                case 10:
+                    $products->whereBetween('pro_price', [5000000, 10000000]);
+                    break;
+                case 20:
+                    $products->whereBetween('pro_price', [10000000, 20000000]);
+                    break;
+                case 40:
+                    $products->whereBetween('pro_price', [20000000, 40000000]);
+                    break;
+            }
+        }
+
+        //lọc theo quốc gia
+        if ($request->country) {
+            $products->where('pro_country', $request->country);
+        }
+        // lọc theo attribute
+        if (!empty($paramAtbSearch[0])) {
+            $products->whereHas('attributes', function ($query) use ($paramAtbSearch) {
+                $query->whereIn('ap_attribute_id', $paramAtbSearch);
+            });
+        }
+
+
+
+
+        // sắp xếp
+        if ($request->sort) {
+            $sort = $request->sort;
+            switch ($sort) {
+                case 1:
+                    $products->orderBy('id', 'DESC');
+                    break;
+                case 2:
+                    $products->orderBy('pro_price', 'ASC');
+                    break;
+                case 3:
+                    $products->orderBy('pro_price', 'DESC');
+                    break;
+            }
+        }
+
+        $modelProduct = new Product();
+
+        $products = $products->where('pro_active', 1)->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
+        // dd($products);
+        $viewData = [
+            // 'category_check'    => $category_check,
+            'products'          => $products,
+            'attributes'        => $attributes,
+            'type_products'     => $type_products,
+            'category_Images'   => $category_Images,
+            'country'           => $modelProduct->country,
+            'query'             => $request->query(),
+            'link_search'       => request()->fullUrlWithQuery(['search' => \Request::get('search')]),
+
+
+        ];
+
+        return view('frontend.pages.search.index', $viewData);
     }
 }

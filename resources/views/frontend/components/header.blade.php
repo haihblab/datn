@@ -4,9 +4,9 @@
             <img src="{{ asset('frontend/images/LogoMobile.png') }}" alt="Logo">
         </a>
         <h1 class="textLeft dnTablet-l">Đồng hồ nam, Đồng hồ Thụy Sỹ</h1>
-        <form class="frmSearch" action="/search/" method="post">
+        <form class="frmSearch" action="{{route('get.search')}}" method="get">
             <div class="flex">
-                <input type="text" name="keyword" id="keyword" value="" placeholder="Nhập từ khóa tìm kiếm..." />
+                <input type="text" name="search" id="keyword" value="{{Request::get('search')}}" placeholder="Nhập từ khóa tìm kiếm..." />
                 <button class="btnSearch">
                 <i class="fas fa-search"></i>
                 </button>
