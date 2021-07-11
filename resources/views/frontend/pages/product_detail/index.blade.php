@@ -315,15 +315,11 @@
                                 <div class="tabContent">
                                     <div id="ctsp" class="tab active">
                                         <div class="content">
-                                            <h3><span style="font-size:14px"><strong>{{ $product->pro_name }} </strong></span></h3>
-                                            <h3><span style="font-size:14px">Thiết kế hiện đại v&agrave; trẻ trung ph&ugrave; hợp với những ch&agrave;ng trai năng động. JL-1-1654.2ZD thương hiệu<span style="font-family:helvetica,arial,dejavu sans,liberation sans,freesans,sans-serif">&nbsp;</span><strong><a href="javascript://" >Jacques Lemans</a></strong>&nbsp;<span style="font-family:helvetica,arial,dejavu sans,liberation sans,freesans,sans-serif">nổi tiếng &Aacute;o, l&agrave; phụ kiện thời trang kh&ocirc;ng thể thiếu cho c&aacute;c bạn nam.</span></span></h3>
+                                            <h3><span style="font-size:14px"><strong>{{ $product->pro_name }} </strong></span></h3> <br>
+                                            <h3><span style="font-size:14px">{{ $product->pro_description }}</span></h3>
                                             <p style="text-align:center"><span style="font-size:14px"><span style="font-family:helvetica,arial,dejavu sans,liberation sans,freesans,sans-serif">
                                                 <img alt="" data-src="{{ pare_url_file($product->pro_avatar) }}"  class="lazy" src="{{ asset('frontend/images/loading1.gif') }}"/></span></span></p>
-                                            <p><span style="font-size:14px">Thiết kế thể thao năng động, phong c&aacute;ch v&agrave; khỏe khoắn<br />
-                                                Size mặt 40mm, chất liệu cường lực chống va đập tốt nhất<br />
-                                                Vỏ th&eacute;p kh&ocirc;ng gỉ nguy&ecirc;n bản 316L cao cấp mạ tĩnh điện PVD m&agrave;u v&agrave;ng, chống oxi h&oacute;a, chống ăn m&ograve;n<br />
-                                                Độ chịu nước 10 ATM: đi mưa, rửa tay, tắm v&agrave; đi bơi&nbsp;<br />
-                                                D&acirc;y da ch&iacute;nh h&atilde;ng size 20mm, m&agrave;u n&acirc;u v&acirc;n nổi</span>
+                                            <p><span style="font-size:14px">{{$product->pro_content}}</span>
                                             </p>
                                         </div>
                                         <p class="show-more" style="display:block;position:sticky;" onclick="$(this).prev('.content').addClass('active'); $(this).remove()">
@@ -332,7 +328,7 @@
                                     </div>
                                     <div id="hdsd" class="tab">
                                         <div class="content">
-                                            <h2><strong>1. Địa chỉ Trung t&acirc;m bảo h&agrave;nh của <a href="javascript://">Đăng Quang Watch</a>:</strong></h2>
+                                            <h2><strong>1. Địa chỉ Trung t&acirc;m bảo h&agrave;nh của <a href="javascript://">Hải Anh Watch</a>:</strong></h2>
                                                 <ol style="list-style-type:lower-roman">
                                                     <li><span style="font-size:14px">H&agrave; Nội: Số 55 Trần Đăng Ninh, Quận Cầu Giấy, H&agrave; Nội | Tel:&nbsp;</span>036.753.0598</li>
                                                     <li><span style="font-size:14px">Đ&agrave; Nẵng: Số 36 Ho&agrave;ng Hoa Th&aacute;m, Thanh Kh&ecirc;, TP. Đ&agrave; Nẵng |&nbsp;</span>036.753.0598</li>
@@ -340,22 +336,22 @@
                                                 </ol>
                                             <h2><strong>2.&nbsp;Thời gian nhận v&agrave; trả bảo h&agrave;nh:</strong></h2>
                                             <p>v&nbsp; Tại trung t&acirc;m bảo h&agrave;nh: Từ 8h30 đến 17h00 c&aacute;c ng&agrave;y trong tuần (trừ chủ nhật v&agrave; c&aacute;c ng&agrave;y lễ, Tết).</p>
-                                            <p>v&nbsp; Tại c&aacute;c hệ thống 100 cửa h&agrave;ng Đăng Quang Watch tr&ecirc;n to&agrave;n quốc tất cả c&aacute;c ng&agrave;y trong tuần kể cả ng&agrave;y lễ v&agrave; chủ nhật, từ 8h30 đến 21h</p>
+                                            <p>v&nbsp; Tại c&aacute;c hệ thống 100 cửa h&agrave;ng Hải Anh Watch tr&ecirc;n to&agrave;n quốc tất cả c&aacute;c ng&agrave;y trong tuần kể cả ng&agrave;y lễ v&agrave; chủ nhật, từ 8h30 đến 21h</p>
                                             <h2><strong>3. Ch&iacute;nh s&aacute;ch bảo h&agrave;nh:</strong></h2>
                                             <ol style="list-style-type:lower-roman">
                                                 <li><span style="font-size:14px">Đồng hồ được bảo h&agrave;nh từ 1-10 năm kể từ ng&agrave;y mua theo quy định của h&atilde;ng sản xuất (t&ugrave;y từng h&atilde;ng sẽ c&oacute; thời gian bảo h&agrave;nh kh&aacute;c nhau).</span></li>
-                                                <li><span style="font-size:14px">Ri&ecirc;ng kh&aacute;ch h&agrave;ng mua đồng hồ tại hệ thống Đăng Quang Watch sẽ được hưởng th&ecirc;m những quyền lợi sau:</span></li>
-                                                <li><span style="font-size:14px">Thay pin miễn ph&iacute; trọn đời sản phẩm &aacute;p dụng&nbsp;đối với 1 số thương hiệu đồng hồ khi mua tại Đăng Quang Watch</span></li>
+                                                <li><span style="font-size:14px">Ri&ecirc;ng kh&aacute;ch h&agrave;ng mua đồng hồ tại hệ thống Hải Anh Watch sẽ được hưởng th&ecirc;m những quyền lợi sau:</span></li>
+                                                <li><span style="font-size:14px">Thay pin miễn ph&iacute; trọn đời sản phẩm &aacute;p dụng&nbsp;đối với 1 số thương hiệu đồng hồ khi mua tại Hải Anh Watch</span></li>
                                             </ol>
                                             <h2><strong>4. Phạm</strong>&nbsp;<strong>vi tiếp nhận đồng hồ bảo h&agrave;nh v&agrave; sửa chữa:</strong></h2>
                                             <ol style="list-style-type:lower-roman">
-                                                <li><span style="font-size:14px">Đăng Quang Watch tiếp nhận bảo h&agrave;nh v&agrave; sửa chữa đối với tất cả c&aacute;c sản phẩm được mua tại hệ thống </span>Đăng Quang&nbsp;<span style="font-size:14px">Watch.</span></li>
-                                                <li><span style="font-size:14px">Những sản phẩm mang thương hiệu m&agrave; </span>Đăng Quang&nbsp;<span style="font-size:14px">Watch l&agrave; nh&agrave; ph&acirc;n phối độc quyền tại Việt Nam cũng sẽ tiếp nhận bảo h&agrave;nh v&agrave; sửa chữa.</span></li>
-                                                <li><span style="font-size:14px">Ngo&agrave;i những trường hợp n&ecirc;u tr&ecirc;n, </span>Đăng Quang&nbsp;<span style="font-size:14px">Watch sẽ tiếp nhận đồng hồ để bảo h&agrave;nh hoặc sửa chữa cho qu&yacute; kh&aacute;ch h&agrave;ng.</span></li>
+                                                <li><span style="font-size:14px">Hải Anh Watch tiếp nhận bảo h&agrave;nh v&agrave; sửa chữa đối với tất cả c&aacute;c sản phẩm được mua tại hệ thống </span>Hải Anh&nbsp;<span style="font-size:14px">Watch.</span></li>
+                                                <li><span style="font-size:14px">Những sản phẩm mang thương hiệu m&agrave; </span>Hải Anh&nbsp;<span style="font-size:14px">Watch l&agrave; nh&agrave; ph&acirc;n phối độc quyền tại Việt Nam cũng sẽ tiếp nhận bảo h&agrave;nh v&agrave; sửa chữa.</span></li>
+                                                <li><span style="font-size:14px">Ngo&agrave;i những trường hợp n&ecirc;u tr&ecirc;n, </span>Hải Anh&nbsp;<span style="font-size:14px">Watch sẽ tiếp nhận đồng hồ để bảo h&agrave;nh hoặc sửa chữa cho qu&yacute; kh&aacute;ch h&agrave;ng.</span></li>
                                             </ol>
                                             <h2><strong>5. Điều kiện để đồng hồ được bảo h&agrave;nh miễn ph&iacute; v&agrave; c&aacute;ch t&iacute;nh ph&iacute; đối với đồng hồ sửa chữa:</strong></h2>
                                             <ol style="list-style-type:lower-roman">
-                                                <li><span style="font-size:14px">Nếu đồng hồ mua tại </span>Đăng Quang&nbsp;<span style="font-size:14px">Watch v&agrave; c&ograve;n trong thời gian bảo h&agrave;nh, kh&aacute;ch h&agrave;ng phải xuất tr&igrave;nh được những giấy tờ li&ecirc;n quan đến sản phẩm như sổ bảo h&agrave;nh hoặc h&oacute;a đơn mua h&agrave;ng&hellip;, kh&aacute;ch h&agrave;ng sẽ được bảo h&agrave;nh miễn ph&iacute; theo như quy định của h&atilde;ng sản xuất.</span></li>
+                                                <li><span style="font-size:14px">Nếu đồng hồ mua tại </span>Hải Anh&nbsp;<span style="font-size:14px">Watch v&agrave; c&ograve;n trong thời gian bảo h&agrave;nh, kh&aacute;ch h&agrave;ng phải xuất tr&igrave;nh được những giấy tờ li&ecirc;n quan đến sản phẩm như sổ bảo h&agrave;nh hoặc h&oacute;a đơn mua h&agrave;ng&hellip;, kh&aacute;ch h&agrave;ng sẽ được bảo h&agrave;nh miễn ph&iacute; theo như quy định của h&atilde;ng sản xuất.</span></li>
                                                 <li><span style="font-size:14px">Nếu đồng hồ hết thời gian bảo h&agrave;nh hoặc Kh&aacute;ch h&agrave;ng kh&ocirc;ng mang theo giấy tờ cần thiết li&ecirc;n quan đến sản phẩm th&igrave; Kh&aacute;ch h&agrave;ng sẽ mất ph&iacute; sửa chữa.</span></li>
                                             </ol>
                                         </div>
@@ -391,7 +387,7 @@
                                 </div>
                                 <div class="lstBtn">
                                     <a href="{{ route('get.shopping.add',$product->id) }}"   title="" class="buttn muangay js-add-cart">Mua ngay</a>
-                                    <a href="javascript://"   title="" class="buttn">Mua trả góp 0%</a>
+                                    {{-- <a href="javascript://"   title="" class="buttn">Mua trả góp 0%</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -403,26 +399,56 @@
                         <div class="dntablet">
                             <div class="thongsokythuat">
                                 <div class="titleR">Thông số kỹ thuật</div>
+                                @if ($product->category->c_parent_id == config('contants.ID_CATEGORY_DEFAULT.DHCH'))
+                                    <div class="group">
+                                        <div class="item">
+                                            <p class="text1">Quốc Gia</p>
+                                            <p class="text2"><a href="javascript://" title="">{{ $product->getCountry($product->pro_country) }}</a></p>
+                                        </div>
+                                        <div class="item">
+                                            <p class="text1">Chống nước</p>
+                                            <p class="text2"><a href="javascript://" title="">{{ $product->pro_resistant }}</a></p>
+                                        </div>
+                                        <div class="item">
+                                            <p class="text1">Chất liệu mặt</p>
+                                            <p class="text2">Kính sapphire </p>
+                                        </div>
+                                        <div class="item">
+                                            <p class="text1">Năng lượng sử dụng</p>
+                                            <p class="text2">{{ $product->pro_energy }}</p>
+                                        </div>
+                                        {{-- <div class="item">
+                                            <p class="text1">Size dây</p>
+                                            <p class="text2"></p>
+                                        </div> --}}
+                                        @foreach ($product->attributes as $item)
+                                            <div class="item">
+                                                <p class="text1">{{ $item->getType($item->atb_type)['name'] }}</p>
+                                                <p class="text2">{{ $item->atb_name }}</p>
+                                            </div>
+                                        @endforeach
+                                        <div class="item">
+                                            <p class="text1">Kiểu dáng</p>
+                                            <p class="text2">{{ $product->typeproduct->tp_name }}</p>
+                                        </div>
+                                        <div class="item">
+                                            <p class="text1">Số Lượng</p>
+                                            <p class="text2">{{ $product->pro_number }}</p>
+                                        </div>
+                                        <div class="item">
+                                            <p class="text1">Lượt View</p>
+                                            <p class="text2">{{ $product->pro_view }}</p>
+                                        </div>
+                                        <div class="item">
+                                            <p class="text1">Chế độ bảo hành</p>
+                                            <p class="text2">Bảo hành quốc tế <b>02</b> năm</p>
+                                        </div>
+                                    </div>
+                                @else
                                 <div class="group">
                                     <div class="item">
                                         <p class="text1">Quốc Gia</p>
                                         <p class="text2"><a href="javascript://" title="">{{ $product->getCountry($product->pro_country) }}</a></p>
-                                    </div>
-                                    <div class="item">
-                                        <p class="text1">Chống nước</p>
-                                        <p class="text2"><a href="javascript://" title="">{{ $product->pro_resistant }}</a></p>
-                                    </div>
-                                    <div class="item">
-                                        <p class="text1">Chất liệu mặt</p>
-                                        <p class="text2">Kính sapphire </p>
-                                    </div>
-                                    <div class="item">
-                                        <p class="text1">Năng lượng sử dụng</p>
-                                        <p class="text2">{{ $product->pro_energy }}</p>
-                                    </div>
-                                    <div class="item">
-                                        <p class="text1">Size dây</p>
-                                        <p class="text2"></p>
                                     </div>
                                     @foreach ($product->attributes as $item)
                                         <div class="item">
@@ -430,10 +456,6 @@
                                             <p class="text2">{{ $item->atb_name }}</p>
                                         </div>
                                     @endforeach
-                                    <div class="item">
-                                        <p class="text1">Kiểu dáng</p>
-                                        <p class="text2">{{ $product->typeproduct->tp_name }}</p>
-                                    </div>
                                     <div class="item">
                                         <p class="text1">Số Lượng</p>
                                         <p class="text2">{{ $product->pro_number }}</p>
@@ -447,6 +469,7 @@
                                         <p class="text2">Bảo hành quốc tế <b>02</b> năm</p>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                             <div class="tuvanbanhang">
                                 <div class="titleR">Tư vấn bán hàng</div>

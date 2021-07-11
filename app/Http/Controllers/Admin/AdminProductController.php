@@ -17,6 +17,16 @@ class AdminProductController extends Controller
 {
     public function index(Request $request)
     {
+        // $categorysKM = Category::where('id', 2)->first()->delete();
+        // $categoryparentsKM = Category::where('c_parent_id', 2)->pluck('id')->all();
+        // $typeProducts = TypeProduct::where('tp_category_id', 2)->pluck('id')->all();
+        // $productsKM = Product::whereIn('pro_category_id', $categoryparentsKM)->pluck('id')->all();
+
+
+        // TypeProduct::destroy($typeProducts);
+        // dd($typeProducts);
+
+
         if ($request->ajax()) {
             if ($request->p_id) {
                 $product = Product::findOrfail((int)$request->p_id);
