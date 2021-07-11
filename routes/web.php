@@ -51,6 +51,7 @@ Route::get('auth/google/url', [GoogleController::class, 'loginUrl'])->name('logi
 Route::get('auth/google/callback', [GoogleController::class, 'loginCallback'])->name('login.google.callback');
 
 Route::get('/', [HomeController::class, 'index'])->name('get.home');
+Route::get('search', [HomeController::class, 'search'])->name('get.search');
 Route::get('danh-muc/{slug}', [CategoryController::class, 'index'])->name('get.category.list');
 Route::get('type/{slug}', [ProductTypeController::class, 'index'])->name('get.type.product.list');
 Route::get('san-pham/{slug}', [ProductDetailController::class, 'index'])->name('get.product.detail');
