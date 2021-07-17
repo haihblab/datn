@@ -23,7 +23,7 @@
         <div class="tabs">
             <ul class="tab-links">
                 <li class="active"><a href="#tab1" title="">ĐỒNG HỒ CHÍNH HÃNG</a></li>
-                <li><a href="#tab2" title="">KÍNH MẮT THỜI TRANG</a></li>
+                {{-- <li><a href="#tab2" title="">KÍNH MẮT THỜI TRANG</a></li> --}}
                 <li><a href="#tab3" title="">PHỤ KIỆN</a></li>
             </ul>
             <div class="tabContent">
@@ -42,7 +42,7 @@
                         </a>
                     </div>
                 </div>
-                <div id="tab2" class="tab">
+                {{-- <div id="tab2" class="tab">
                     <div class="group slide">
                         @foreach ($proPayKTT as $item)
                             @include('frontend.components._inc_item_product',['item'=>$item])
@@ -56,7 +56,7 @@
                         <span>Xem tất cả <i class="fas fa-angle-right"></i></span>
                         </a>
                     </div>
-                </div>
+                </div> --}}
                 <div id="tab3" class="tab">
                     <div class="group slide">
                         @foreach ($proPayPKDD as $item)
