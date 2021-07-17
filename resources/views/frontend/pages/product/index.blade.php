@@ -330,7 +330,11 @@
                     $.ajax({
                         url:URL,
                         success:function(results){
-                            toastr.success(results.messages);
+                            if(results.code == 200) {
+                                toastr.success(results.messages);
+                            } else {
+                                toastr.warning(results.messages);
+                            }
                             $('.js-update-qty').html(results.total_qty);
                         },
                         error:function(error){
