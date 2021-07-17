@@ -15,7 +15,7 @@
      <div class="row" style="margin-bottom: 20px">
 
         <div class="col-sm-8">
-            <div class="box-title">
+            {{-- <div class="box-title">
                 <form action="" method="GET" class="form-inline">
                     <select name="mt" class="form-control">
                         <option value="">_ Tháng trong năm _</option>
@@ -24,11 +24,11 @@
                         @endfor
                     </select>
                     <button type="submit" class="btn btn-success"><i class="fa fa-search"> </i> Search</button>
-                    {{--  <button type="submit" name="export" value="true" class="btn btn-info">
+                     <button type="submit" name="export" value="true" class="btn btn-info">
                         <i class="fa fa-save"> </i> Export
-                    </button>  --}}
+                    </button> 
                 </form>
-            </div><br>
+            </div><br> --}}
             <figure class="highcharts-figure">
                 <div id="container2" 
                 data-list-day="{{ $listDay }}" 
@@ -124,138 +124,6 @@
             </div>
         </div>
     </div>
-    {{-- <div class="row">
-        <div class="col-md-8">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Latest Orders</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="box-body" style="">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Info</th>
-                                    <th>Account</th>
-                                    <th>Money</th>
-                                    <th>Status</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if(isset($transactions))
-                                    @foreach ($transactions as $item)
-                                        <tr>
-                                            <td>{{ $item->id }}</td>
-                                            <td>
-                                                <ul>
-                                                    <li>Name: {{ $item->tst_name }}</li>
-                                                    <li>Email: {{ $item->tst_email }}</li>
-                                                    <li>Phone: {{ $item->tst_phone }}</li>
-                                                    <li>Address: {{ $item->tst_address }}</li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                @if ($item->tst_user_id)
-                                                    <span class="label label-warning">Thành Viên</span>
-                                                @else
-                                                    <span class="label label-default">Khách</span>
-                                                @endif
-                                            </td>
-                                            <td>{{ number_format($item->tst_total_money,0,',','.') }} </td>
-                                            <td>
-                                                <span class="label label-{{ $item->getStatus($item->tst_status)['class'] }}">
-                                                    {{ $item->getStatus($item->tst_status)['name'] }}
-                                                </span>
-                                            </td>
-                                            <td>{{ $item->created_at }}</td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="box-footer clearfix" style="">
-                     <a href="{{ route('admin.transaction.index') }}" class="btn btn-sm btn-info btn-flat pull-right">Danh Sách Đơn Hàng</a> 
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Top Sản Phẩm Bán Nhiều Nhất</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <ul class="products-list product-list-in-box">
-                        @if (isset($proPayProducts))
-                            @foreach ($proPayProducts as $item)
-                                <li class="item">
-                                    <div class="product-img">
-                                        <img src="{{ pare_url_file($item->pro_avatar) }}" alt="{{ $item->pro_name }}">
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="{{route('get.product.detail',$item->slug . '-' . $item->id)}}" target="_blank" class="product-title">{{ $item->pro_name }}
-                                        <span class="label label-warning pull-right">{{ number_format($item->pro_price,0,',','.') }} đ</span></a>
-                                        <span class="product-description">
-                                            {{ $item->pro_pay }} lượt mua
-                                        </span>
-                                    </div>
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
-                <div class="box-footer text-center">
-                     <a href="{{ route('admin.product.index') }}" class="uppercase">View All Products</a> 
-                </div>
-            </div>
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Top Sản Phẩm Xem Nhiều Nhất</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <ul class="products-list product-list-in-box">
-                    @if (isset($proPayProducts))
-                        @foreach ($topViewProducts as $item)
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="{{ pare_url_file($item->pro_avatar) }}" alt="{{ $item->pro_name }}">
-                                </div>
-                                <div class="product-info">
-                                    <a href="{{route('get.product.detail',$item->slug . '-' . $item->id)}}"  target="_blank" class="product-title">{{ $item->pro_name }}
-                                    <span class="label label-warning pull-right">{{ number_format($item->pro_price,0,',','.') }} đ</span></a>
-                                    <span class="product-description">
-                                        <i class="fa fa-eye"></i>  {{ $item->pro_view }}
-                                    </span>
-                                </div>
-                            </li>
-                        @endforeach
-                    @endif
-                    </ul>
-                </div>
-                <div class="box-footer text-center">
-                     <a href="{{ route('admin.product.index') }}" class="uppercase">View All Products</a> 
-                </div>
-            </div>
-        </div>
-    </div> --}}
 </section>
 @endsection
 

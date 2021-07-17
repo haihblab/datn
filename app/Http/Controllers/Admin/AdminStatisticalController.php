@@ -104,32 +104,33 @@ class AdminStatisticalController extends Controller
             ['Hủy bỏ', $transactionCancel, false],
         ];
 
-        if ($request->mt) {
+        if ($request->month) {
             // doanh thu moi tiep nhan
             $revenueTransactionMonthDefault = Transaction::where('tst_status', (int) $transactionStatusDefault)
-                ->whereMonth('created_at', (int) $request->mt)
+                ->whereMonth('created_at', (int) $request->month)
                 ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) day'))
                 ->groupBy('day')
                 ->get()->toArray();
             // doanh thu Đang vận chuyển
             $revenueTransactionMonthProcess = Transaction::where('tst_status', (int) $transactionStatusTransported)
-                ->whereMonth('created_at', (int) $request->mt)
+                ->whereMonth('created_at', (int) $request->month)
                 ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) day'))
                 ->groupBy('day')
                 ->get()->toArray();
             //doanh thu theo thang da xu ly
             $revenueTransactionMonthSuccess = Transaction::where('tst_status', (int) $transactionStatusSuccess)
-                ->whereMonth('created_at', (int) $request->mt)
+                ->whereMonth('created_at', (int) $request->month)
                 ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) day'))
                 ->groupBy('day')
                 ->get()->toArray();
             // doanh thu đã hủy bỏ
             $revenueTransactionMonthCancel = Transaction::where('tst_status', (int) $transactionStatusCancel)
-                ->whereMonth('created_at', (int) $request->mt)
+                ->whereMonth('created_at', (int) $request->month)
                 ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) day'))
                 ->groupBy('day')
                 ->get()->toArray();
-            $mt = $request->mt . ' năm ' . date('Y');
+            $mt = $request->month . ' năm ' . date('Y');
+            $month = $request->month;
         } else {
             // doanh thu moi tiep nhan
             $revenueTransactionMonthDefault = Transaction::where('tst_status', (int) $transactionStatusDefault)
@@ -156,9 +157,10 @@ class AdminStatisticalController extends Controller
                 ->groupBy('day')
                 ->get()->toArray();
             $mt = date('m') . ' năm ' . date('Y');
+            $month = date('m');
         }
 
-        $listDay = Date::getListDayInMonth();
+        $listDay = Date::getListDayInMonth($month);
         $arrRevenueTransactionMonthDefault = [];
         $arrRevenueTransactionMonthProcess = [];
         $arrRevenueTransactionMonthSuccess = [];
@@ -201,7 +203,7 @@ class AdminStatisticalController extends Controller
             }
             $arrRevenueTransactionMonthCancel[] = (int) $total;
         }
-        // dd($arrRevenueTransactionMonthCancel);
+        // dd($arrRevenueTransactionMonthDefault);
 
         $viewData = [
             // 'totalTransactions' => $totalTransactions,
