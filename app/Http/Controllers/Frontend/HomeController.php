@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
@@ -15,11 +14,13 @@ class HomeController extends FrontendController
 {
     public function index()
     {
-        $DHCH = (int)config('contants.ID_CATEGORY_DEFAULT.DHCH');
-        $KM = (int)config('contants.ID_CATEGORY_DEFAULT.KM');
-        $PKDH = (int)config('contants.ID_CATEGORY_DEFAULT.PKDH');
-        $STATUS_ACTIVE = (int)config('contants.STATUS.active');
-        $HOT_HOT = (int)config('contants.HOT.hot');
+        // $product = Product::with('category')->get();
+        // dd($product);
+        $DHCH = (int) config('contants.ID_CATEGORY_DEFAULT.DHCH');
+        $KM = (int) config('contants.ID_CATEGORY_DEFAULT.KM');
+        $PKDH = (int) config('contants.ID_CATEGORY_DEFAULT.PKDH');
+        $STATUS_ACTIVE = (int) config('contants.STATUS.active');
+        $HOT_HOT = (int) config('contants.HOT.hot');
 
         // lay ra 6 san pham theo đồng hồ chính hãng xắp xếp theo lượt mua
         $proPayDHCH = $this->getProPay($DHCH);
@@ -43,18 +44,16 @@ class HomeController extends FrontendController
 
         $proHot = Product::where([
             'pro_active' => $STATUS_ACTIVE,
-            'pro_hot'    => $HOT_HOT
+            'pro_hot' => $HOT_HOT,
         ])->orderByDesc('id')
             ->limit(5)
             ->get();
 
-
-
         // danh sach san pham theo category đồng hồ
         $proCate3 = Category::with([
-            'products'   => function ($q) use ($STATUS_ACTIVE) {
+            'products' => function ($q) use ($STATUS_ACTIVE) {
                 return $q->where('pro_active', $STATUS_ACTIVE)->orderByDesc('id');
-            }
+            },
         ])->where('c_parent_id', $DHCH)
             ->limit(3)
             ->get();
@@ -65,30 +64,29 @@ class HomeController extends FrontendController
         $imageCate = Category::where([['c_status', '=', $STATUS_ACTIVE], ['c_parent_id', '>', 0]])
             ->limit(6)->get();
 
-
         // $event1 = Event::where('e_position_1', 1)->first();
 
         $typeproducts = TypeProduct::where('tp_hot', $HOT_HOT)->get();
 
         $viewData = [
-            'proHot'        => $proHot,
-            'title_page'    => env('APP_NAME'),
-            'slides'        => $slides,
+            'proHot' => $proHot,
+            'title_page' => env('APP_NAME'),
+            'slides' => $slides,
             // 'event1'        => $event1,
-            'proPayDHCH'    => $proPayDHCH,
-            'proPayKTT'     => $proPayKTT,
-            'proPayPKDD'    => $proPayPKDD,
-            'proSaleAll'    => $proSaleAll,
-            'proCate3'      => $proCate3,
-            'imageCate'     => $imageCate,
-            'typeproducts'  => $typeproducts
+            'proPayDHCH' => $proPayDHCH,
+            'proPayKTT' => $proPayKTT,
+            'proPayPKDD' => $proPayPKDD,
+            'proSaleAll' => $proSaleAll,
+            'proCate3' => $proCate3,
+            'imageCate' => $imageCate,
+            'typeproducts' => $typeproducts,
         ];
         return view('frontend.pages.home.index', $viewData);
     }
 
     public function getProPay($idcate)
     {
-        $STATUS_ACTIVE = (int)config('contants.STATUS.active');
+        $STATUS_ACTIVE = (int) config('contants.STATUS.active');
         $categoryok = Category::where('c_parent_id', $idcate)
             ->where('c_status', $STATUS_ACTIVE)
             ->pluck('id')
@@ -131,10 +129,9 @@ class HomeController extends FrontendController
         // }
 
         $type_products = TypeProduct::with('product')->get();
-        $category_Images = Category::select('id', 'c_name', 'c_slug', 'c_parent_id', 'c_avatar')->where('c_status', (int)config('contants.STATUS.active'))->get();
+        $category_Images = Category::select('id', 'c_name', 'c_slug', 'c_parent_id', 'c_avatar')->where('c_status', (int) config('contants.STATUS.active'))->get();
         $attributes = Attribute::query()->select('id', 'atb_name', 'atb_slug', 'atb_type')->get();
         $attributes = $this->syncAttributeGroup($attributes);
-
 
         // $categorySearch = Category::where('c_parent_id', $idCategory)
         //     ->pluck('id')
@@ -144,9 +141,6 @@ class HomeController extends FrontendController
 
         // lấy ra sản phẩm
         $products = Product::query();
-        if ($request->search) {
-            $products->where('pro_name', 'like', '%' . $request->search . '%')->orWhere('pro_slug', 'like', '%' . $request->search . '%');
-        }
 
         // loc theo giá
         if ($request->price) {
@@ -183,12 +177,9 @@ class HomeController extends FrontendController
                 $query->whereIn('ap_attribute_id', $paramAtbSearch);
             });
         }
-
-
-
-
         // sắp xếp
         if ($request->sort) {
+
             $sort = $request->sort;
             switch ($sort) {
                 case 1:
@@ -202,21 +193,23 @@ class HomeController extends FrontendController
                     break;
             }
         }
+        if ($request->search) {
+            $products->where('pro_name', 'like', '%' . $request->search . '%');
+        }
 
         $modelProduct = new Product();
 
-        $products = $products->where('pro_active', 1)->orderBy('id', 'DESC')->paginate((int)config('contants.PER_PAGE_DEFAULT_ADMIN'));
+        $products = $products->where('pro_active', 1)->orderBy('id', 'DESC')->paginate((int) config('contants.PER_PAGE_DEFAULT_ADMIN'));
         // dd($products);
         $viewData = [
             // 'category_check'    => $category_check,
-            'products'          => $products,
-            'attributes'        => $attributes,
-            'type_products'     => $type_products,
-            'category_Images'   => $category_Images,
-            'country'           => $modelProduct->country,
-            'query'             => $request->query(),
-            'link_search'       => request()->fullUrlWithQuery(['search' => \Request::get('search')]),
-
+            'products' => $products,
+            'attributes' => $attributes,
+            'type_products' => $type_products,
+            'category_Images' => $category_Images,
+            'country' => $modelProduct->country,
+            'query' => $request->query(),
+            'link_search' => request()->fullUrlWithQuery(['search' => \Request::get('search')]),
 
         ];
 

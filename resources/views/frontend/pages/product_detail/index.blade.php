@@ -250,7 +250,7 @@
                                     </div>
                                     <div class="item">
                                         <p class="text1">Số Lượng</p>
-                                        <p class="text2">{{ $product->pro_number }}</p>
+                                        <p class="text2">{{ ($product->pro_number - $product->pro_pay) }}</p>
                                     </div>
                                     <div class="item">
                                         <p class="text1">Lượt View</p>
@@ -433,7 +433,7 @@
                                         </div>
                                         <div class="item">
                                             <p class="text1">Số Lượng</p>
-                                            <p class="text2">{{ $product->pro_number }}</p>
+                                            <p class="text2">{{ ($product->pro_number - $product->pro_pay) }}</p>
                                         </div>
                                         <div class="item">
                                             <p class="text1">Lượt View</p>
@@ -458,7 +458,7 @@
                                     @endforeach
                                     <div class="item">
                                         <p class="text1">Số Lượng</p>
-                                        <p class="text2">{{ $product->pro_number }}</p>
+                                        <p class="text2">{{ ($product->pro_number - $product->pro_pay) }}</p>
                                     </div>
                                     <div class="item">
                                         <p class="text1">Lượt View</p>
@@ -559,7 +559,11 @@
                     $.ajax({
                         url:URL,
                         success:function(results){
-                            toastr.success(results.messages);
+                            if(results.code == 200) {
+                                toastr.success(results.messages);
+                            } else {
+                                toastr.warning(results.messages);
+                            }
                             $('.js-update-qty').html(results.total_qty);
                         },
                         error:function(error){

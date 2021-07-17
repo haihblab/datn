@@ -20,8 +20,8 @@ class ShoppingCartController extends Controller
     {
         $shopping = \Cart::content();
         $viewData = [
-            'shopping'  => $shopping,
-            'title_page' => 'Danh Sách Giỏ Hàng'
+            'shopping' => $shopping,
+            'title_page' => 'Danh Sách Giỏ Hàng',
         ];
         return view('frontend.pages.shopping.index', $viewData);
     }
@@ -34,20 +34,42 @@ class ShoppingCartController extends Controller
             if (!$product) {
                 return redirect()->to('/');
             }
+            $rowID = \Cart::content()->search(function ($cartItem, $rowId) use ($product) {
+                return $cartItem->id === $product->id;
+            });
+            if ($rowID) {
+                $item = \Cart::get($rowID);
+                if (($product->pro_number - ($product->pro_pay + (int) $item->qty)) <= 0) {
+                    return response([
+                        'code' => 400,
+                        'messages' => 'Số lượng sản phẩm không đủ',
+                        'total_qty' => \Cart::count(),
+                    ]);
+                }
+
+            }
+            if (($product->pro_number - $product->pro_pay) <= 0) {
+                return response([
+                    'code' => 400,
+                    'messages' => 'Sản Phẩm đã hết hàng vui lòng chọn sản phẩm khác',
+                    'total_qty' => \Cart::count(),
+                ]);
+            }
             \Cart::add([
-                'id'        => $product->id,
-                'name'      => $product->pro_name,
-                'qty'       => 1,
-                'price'     => number_price($product->pro_price, $product->pro_sale),
-                'weight'    => 1,
-                'options'   => [
+                'id' => $product->id,
+                'name' => $product->pro_name,
+                'qty' => 1,
+                'price' => number_price($product->pro_price, $product->pro_sale),
+                'weight' => 1,
+                'options' => [
                     'sale' => $product->pro_sale,
                     'price_old' => $product->pro_price,
-                    'image' => $product->pro_avatar
-                ]
+                    'image' => $product->pro_avatar,
+                ],
             ]);
             return response([
-                'messages'  => 'Bạn Đã Thêm Thành Công !',
+                'code' => 200,
+                'messages' => 'Bạn Đã Thêm Thành Công !',
                 'total_qty' => \Cart::count(),
             ]);
         }
@@ -66,28 +88,28 @@ class ShoppingCartController extends Controller
         //2. kiem tra so luong san pham
         if (($product->pro_number - $product->pro_pay) < $sl) {
             \Session::flash('toastr', [
-                'type'      => 'error',
-                'message'   => 'Số lượng sản phẩm không đủ !'
+                'type' => 'error',
+                'message' => 'Số lượng sản phẩm không đủ !',
             ]);
             return redirect()->back();
         }
 
         //3. them san pham vao gio hang
         \Cart::add([
-            'id'        => $product->id,
-            'name'      => $product->pro_name,
-            'qty'       => $sl,
-            'price'     => number_price($product->pro_price, $product->pro_sale),
-            'weight'    => 1,
-            'options'   => [
+            'id' => $product->id,
+            'name' => $product->pro_name,
+            'qty' => $sl,
+            'price' => number_price($product->pro_price, $product->pro_sale),
+            'weight' => 1,
+            'options' => [
                 'sale' => $product->pro_sale,
                 'price_old' => $product->pro_price,
-                'image' => $product->pro_avatar
-            ]
+                'image' => $product->pro_avatar,
+            ],
         ]);
         \Session::flash('toastr', [
-            'type'      => 'success',
-            'message'   => 'Đã Thêm Mới 1 SP vào giỏ hàng !'
+            'type' => 'success',
+            'message' => 'Đã Thêm Mới 1 SP vào giỏ hàng !',
         ]);
         return redirect()->back();
     }
@@ -99,13 +121,13 @@ class ShoppingCartController extends Controller
             return response([
                 'data' => 'Bạn Xóa 1 sản phẩm thành công nhen !',
                 'total' => \Cart::subtotal(0),
-                'total_qty' => \Cart::count()
+                'total_qty' => \Cart::count(),
             ]);
         }
         \Session::flash('toastr', [
-            'type'      => 'error',
-            'message'   => 'Bạn Đã Xóa 1 SP Trong Giỏ Hàng !',
-            'total'     => \Cart::subtotal(0),
+            'type' => 'error',
+            'message' => 'Bạn Đã Xóa 1 SP Trong Giỏ Hàng !',
+            'total' => \Cart::subtotal(0),
         ]);
 
         return redirect()->back();
@@ -114,18 +136,22 @@ class ShoppingCartController extends Controller
     public function update(Request $request, $id)
     {
         if ($request->ajax()) {
-            $qty            = $request->number ?? 1;
-            $productID      = $request->productID;
-            $product        = Product::find($productID);
+            $qty = $request->number ?? 1;
+            $productID = $request->productID;
+            $product = Product::find($productID);
 
             if (!$product) {
                 return response(['data' => 'không tòn tại sp cần update !']);
             }
             if (($product->pro_number - $product->pro_pay) < $qty) {
+                \Cart::update($id, 1);
                 return response(
                     [
                         'data' => 'Số lượng không có đủ nhá !',
-                        'error' => true
+                        'error' => true,
+                        'total' => \Cart::subtotal(0),
+                        'total_qty' => \Cart::count(),
+                        'totalitem' => number_format(number_price($product->pro_price, $product->pro_sale) * 1, 0, ',', '.'),
                     ]
                 );
             }
@@ -135,7 +161,7 @@ class ShoppingCartController extends Controller
                     'data' => 'Thành công nhen !',
                     'total' => \Cart::subtotal(0),
                     'total_qty' => \Cart::count(),
-                    'totalitem' => number_format(number_price($product->pro_price, $product->pro_sale) * $qty, 0, ',', '.')
+                    'totalitem' => number_format(number_price($product->pro_price, $product->pro_sale) * $qty, 0, ',', '.'),
                 ]
             );
         }
@@ -145,8 +171,8 @@ class ShoppingCartController extends Controller
     {
         if (\Cart::count() <= 0) {
             $request->session()->flash('toastr', [
-                'type'      => 'warning',
-                'message'   => 'Không có sản phẩm nào để thanh toán !'
+                'type' => 'warning',
+                'message' => 'Không có sản phẩm nào để thanh toán !',
             ]);
             return redirect('/');
         }
@@ -185,11 +211,11 @@ class ShoppingCartController extends Controller
                 try {
                     // luu chitietdonhang
                     Order::create([
-                        'od_transaction_id'     => $transaction->id,
-                        'od_product_id'         => $item->id,
-                        'od_sale'               => $item->options->sale,
-                        'od_qty'                => $item->qty,
-                        'od_price'              => $item->price
+                        'od_transaction_id' => $transaction->id,
+                        'od_product_id' => $item->id,
+                        'od_sale' => $item->options->sale,
+                        'od_qty' => $item->qty,
+                        'od_price' => $item->price,
                     ]);
                     //pro_pay luot mua
                     DB::table('products')->where('id', $item->id)->increment('pro_pay', $item->qty);
@@ -213,12 +239,12 @@ class ShoppingCartController extends Controller
 
     public function success()
     {
-        $cart       = \Cart::content();
-        $total      = \Cart::subtotal(0);
+        $cart = \Cart::content();
+        $total = \Cart::subtotal(0);
         $viewData = [
-            'cart'      => $cart,
-            'total'     => $total,
-            'title_page' => 'Cảm ơn bạn đã tin tưởng bên mình'
+            'cart' => $cart,
+            'total' => $total,
+            'title_page' => 'Cảm ơn bạn đã tin tưởng bên mình',
         ];
         return view('frontend.pages.shopping.success', $viewData);
     }

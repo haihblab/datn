@@ -225,7 +225,8 @@
                     },
                     success:function(results){
                         //console.log(typeof results.total);
-                        if(typeof results.total !== "undefined"){
+                        // if(typeof results.total !== "undefined"){
+                        if(!results.error){
                             $this.val(number);
                             $('#payOrder').text(results.total);
                             toastr.success(results.data);
@@ -234,6 +235,9 @@
                         }else{
                             $this.val(1);
                             toastr.error(results.data);
+                            $('#payOrder').text(results.total);
+                            $('.js-update-qty').text(results.total_qty);
+                            $this.parents('form').find('.js-total-item-'+rowId).text(results.totalitem);
                         }
                     },
                     error:function(error){
