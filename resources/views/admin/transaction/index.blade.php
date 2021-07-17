@@ -23,11 +23,11 @@
                         <form action="" method="GET" class="form-inline">
                             <input type="text" value="{{ Request::get('id') }}" class="form-control" name="id" placeholder="ID">
                             <input type="text" value="{{ Request::get('email') }}" class="form-control" name="email" placeholder="Email ...">
-                            <select name="type" class="form-control">
+                            {{-- <select name="type" class="form-control">
                                 <option value="0">__Phân Loại Khách__</option>
                                 <option value="1" {{ Request::get('type') == 1 ? "selected='selected'" : "" }}>Thành Viên</option>
                                 <option value="2" {{ Request::get('type') == 2 ? "selected='selected'" : "" }}>Khách</option>
-                            </select>
+                            </select> --}}
                             <select name="status" class="form-control">
                                 <option value="0">__Trạng Thái__</option>
                                 <option value="1" {{ Request::get('status') == 1 ? "selected='selected'" : "" }}>Tiếp Nhận</option>
@@ -46,7 +46,7 @@
                     <tr>
                       <th>ID</th>
                       <th>Info</th>
-                      <th>Account</th>
+                      {{-- <th>Account</th> --}}
                       <th>Money</th>
                       <th>Status</th>
                       <th>Time</th>
@@ -64,13 +64,13 @@
                                         <li>Address: {{ $item->tst_address }}</li>
                                     </ul>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     @if ($item->tst_user_id)
                                         <span class="label label-warning">Thành Viên</span>
                                     @else
                                         <span class="label label-default">Khách</span>
                                     @endif
-                                </td>
+                                </td> --}}
                                 <td>{{ number_format($item->tst_total_money,0,',','.') }}</td>
                                 <td>
                                     <span class="label label-{{ $item->getStatus($item->tst_status)['class'] }}">
