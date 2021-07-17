@@ -2,4 +2,5 @@
 - cp .env.example .env
 - php artisan config:clear
 - php artisan key:generate
-- php artisan migrate
+- import file sql
+- 
