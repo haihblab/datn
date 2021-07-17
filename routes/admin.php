@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminMenuController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminRatingController;
 use App\Http\Controllers\Admin\AdminSlideController;
+use App\Http\Controllers\Admin\AdminStatisticalController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\AdminTypeProductController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -95,7 +96,6 @@ Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->grou
             Route::get('delete-image/{id}', [AdminSlideController::class, 'deleteImage'])->name('admin.slide.delete_image');
         });
 
-
         Route::group(['prefix' => 'menu'], function () {
             Route::get('/', [AdminMenuController::class, 'index'])->name('admin.menu.index');
             Route::get('create', [AdminMenuController::class, 'create'])->name('admin.menu.create');
@@ -144,6 +144,10 @@ Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->grou
             Route::get('update/{id}', [AdminUserController::class, 'edit'])->name('admin.user.update');
             Route::post('update/{id}', [AdminUserController::class, 'update']);
             Route::get('delete/{id}', [AdminUserController::class, 'delete'])->name('admin.user.delete');
+        });
+
+        Route::group(['prefix' => 'statistical'], function () {
+            Route::get('/', [AdminStatisticalController::class, 'index'])->name('admin.statistical.index');
         });
     });
 });

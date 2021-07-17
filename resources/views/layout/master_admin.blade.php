@@ -357,6 +357,13 @@
             </li>
 
             <li class="header">Hệ Thống</li>
+
+            <li class="{{ Request::is('admin-datn/statistical*') ? 'active' : '' }}">
+              <a href="{{ route('admin.statistical.index') }}">
+                  <i class="fa fa-circle-o text-red"></i> <span>Thống Kê</span>
+              </a>
+            </li>
+            
             <li class="{{ Request::is('admin-datn/slide*') ? 'active' : '' }}">
                 <a href="{{ route('admin.slide.index') }}">
                     <i class="fa fa-circle-o text-red"></i> <span>Slide</span>

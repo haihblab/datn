@@ -3,61 +3,41 @@
 
 <section class="content-header">
   <h1>
-    Dashboard
-    <small>Control panel</small>
+    Thống Kê
+    <small>website</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
+    <li class="active">thống kê</li>
   </ol>
 </section>
 <section class="content">
-    <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+     <div class="row" style="margin-bottom: 20px">
 
-            <div class="info-box-content">
-              <span class="info-box-text">Tổng Số Đơn Hàng</span>
-               <span class="info-box-number">{{ $totalTransactions }} <small><a href="{{ route('admin.transaction.index') }}">(Chi Tiết)</a></small></span> 
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Thành Viên</span>
-               <span class="info-box-number">{{ $totalUsers }} <small><a href="{{ route('admin.user.index') }}">(Chi Tiết)</a></small></span> 
-            </div>
-          </div>
-        </div>
-        <div class="clearfix visible-sm-block"></div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
-            <div class="info-box-content">
-              <span class="info-box-text">Sản Phẩm</span>
-               <span class="info-box-number">{{ $totalProducts }} <small><a href="{{ route('admin.product.index') }}">(Chi Tiết)</a></small></span> 
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Fix Bug</span>
-              <span class="info-box-number">++</span>
-            </div>
-          </div>
-        </div>
-    </div>
-     {{-- <div class="row" style="margin-bottom: 20px">
         <div class="col-sm-8">
+            <div class="box-title">
+                <form action="" method="GET" class="form-inline">
+                    <select name="mt" class="form-control">
+                        <option value="">_ Tháng trong năm _</option>
+                        @for ($i = 1; $i <=12; $i++)
+                            <option value="{{$i}}" {{ Request::get('mt') == $i ? "selected='selected'" : "" }}>Tháng {{$i}}</option>
+                        @endfor
+                    </select>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-search"> </i> Search</button>
+                    {{--  <button type="submit" name="export" value="true" class="btn btn-info">
+                        <i class="fa fa-save"> </i> Export
+                    </button>  --}}
+                </form>
+            </div><br>
             <figure class="highcharts-figure">
-                <div id="container2" data-list-day="{{ $listDay }}" data-money-default="{{ $arrRevenueTransactionMonthDefault }}" data-money="{{ $arrRevenueTransactionMonth }}"></div>
+                <div id="container2" 
+                data-list-day="{{ $listDay }}" 
+                data-money-default="{{ $arrRevenueTransactionMonthDefault }}"
+                data-money-process="{{ $arrRevenueTransactionMonthProcess }}"
+                data-money-success="{{ $arrRevenueTransactionMonthSuccess }}"
+                data-money-cancel="{{ $arrRevenueTransactionMonthCancel }}"
+                data-mt = "{{ $mt }}"
+                ></div>
             </figure>
         </div>
         <div class="col-sm-4">
@@ -65,12 +45,12 @@
                 <div id="container" data-json="{{ $statusTransaction }}"></div>
             </figure>
         </div>
-    </div>  --}}
-    {{-- <div class="row" style="margin-bottom: 20px">
+    </div> 
+    <div class="row" style="margin-bottom: 20px">
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Doanh Thu</h3>
+                    <h3 class="box-title">Doanh Số</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -103,9 +83,9 @@
                                     <option value="2023" {{ Request::get('year') == 2023 ? "selected='selected'" : "" }}>Năm 2023</option>
                                 </select>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-search"> </i> Search</button>
-                                 <button type="submit" name="export" value="true" class="btn btn-info">
+                                {{--  <button type="submit" name="export" value="true" class="btn btn-info">
                                     <i class="fa fa-save"> </i> Export
-                                </button> 
+                                </button>  --}}
                             </form>
                         </div>
                         <table class="table no-margin">
@@ -143,8 +123,8 @@
                 </div>
             </div>
         </div>
-    </div> --}}
-    <div class="row">
+    </div>
+    {{-- <div class="row">
         <div class="col-md-8">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -275,7 +255,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </section>
 @endsection
 
@@ -316,21 +296,30 @@
         let listday = $('#container2').attr('data-list-day');
         listday = JSON.parse(listday);
 
-        let listMoneyMonth = $('#container2').attr('data-money');
-        listMoneyMonth = JSON.parse(listMoneyMonth);
-
         let listMoneyMonthDefault = $('#container2').attr('data-money-default');
         listMoneyMonthDefault = JSON.parse(listMoneyMonthDefault);
+
+        let listMoneyMonthProcess = $('#container2').attr('data-money-process');
+        listMoneyMonthProcess = JSON.parse(listMoneyMonthProcess);
+
+        let listMoneyMonthSuccess = $('#container2').attr('data-money-success');
+        listMoneyMonthSuccess = JSON.parse(listMoneyMonthSuccess);
+
+        let listMoneyMonthCancel = $('#container2').attr('data-money-cancel');
+        listMoneyMonthCancel = JSON.parse(listMoneyMonthCancel);
+
+        let mt = $('#container2').attr('data-mt');
+
 
         Highcharts.chart('container2', {
             chart: {
                 type: 'spline'
             },
             title: {
-                text: 'Biểu đồ doanh thu các ngày trong tháng'
+                text: 'Biểu đồ doanh số các ngày trong tháng ' + mt
             },
             subtitle: {
-                text: 'hải mập mạp'
+                text: 'Hải Anh Watch'
             },
             xAxis: {
                 categories: listday
@@ -360,17 +349,32 @@
             },
             series: [
                 {
-                    name: 'Đã Bàn Giao',
-                    marker: {
-                        symbol: 'square'
-                    },
-                    data:listMoneyMonth
-                },{
                     name: 'Tiếp Nhận',
                     marker: {
                         symbol: 'square'
                     },
                     data:listMoneyMonthDefault
+                },
+                {
+                    name: 'Đang vận chuyển',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data:listMoneyMonthProcess
+                },
+                {
+                    name: 'Đã Bàn Giao',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data:listMoneyMonthSuccess
+                },
+                {
+                    name: 'Đã hủy',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data:listMoneyMonthCancel
                 }
             ]
         });
