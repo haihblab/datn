@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\HelpersClass\Date;
 use App\Http\Controllers\Controller;
+// use App\Http\Requests\AdminStatisticalRequest;
 // use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -36,57 +37,85 @@ class AdminStatisticalController extends Controller
         //san pham mua nhieu
         // $proPayProducts = Product::orderByDesc('pro_pay')->limit(5)->get();
 
+        //user mua nhieu nhat
+        $userTransaction = TransacTion::query()
+            ->with('user')
+        // ->whereYear('created_at', '2021')
+            ->select(DB::raw('sum(tst_total_money) as totalMoney'), 'tst_user_id')
+            ->groupBy('tst_user_id')
+            ->orderBy('totalMoney', 'DESC')
+            ->get();
+
         $moneyTransaction = Transaction::query();
-
-        $message = '';
-        if ($request->day) {
-            $moneyTransaction->whereDay('created_at', (int) $request->day);
-        }
-        if ($request->month) {
-            $moneyTransaction->whereMonth('created_at', (int) $request->month);
-        }
-        if ($request->year) {
-            if (!($request->day) && !($request->month)) {
-                // ngay va thang k co du lieu. group theo thang trong nam
-                $moneyTransaction = $moneyTransaction
-                    ->whereYear('created_at', (int) $request->year)
-                    ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('MONTH(created_at) as day'))
-                    ->groupBy('day')
-                    ->distinct()
-                    ->get();
+        // dd(!($request->dateAfter > $request->dateBefore));
+        if (!($request->dateBefore && $request->dateAfter)) {
+            $message = '';
+            if ($request->day) {
+                $moneyTransaction->whereDay('created_at', (int) $request->day);
+            }
+            if ($request->month) {
+                $moneyTransaction->whereMonth('created_at', (int) $request->month);
+            }
+            if ($request->year) {
+                if (!($request->day) && !($request->month)) {
+                    // ngay va thang k co du lieu. group theo thang trong nam
+                    $moneyTransaction = $moneyTransaction
+                        ->whereYear('created_at', (int) $request->year)
+                        ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('MONTH(created_at) as day'))
+                        ->groupBy('day')
+                        ->distinct()
+                        ->get();
+                } else {
+                    //nguoc lai ngay thang co du lieu group theo ngay
+                    $moneyTransaction = $moneyTransaction
+                        ->whereYear('created_at', (int) $request->year)
+                        ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
+                        ->groupBy('day')
+                        ->get();
+                }
             } else {
-                //nguoc lai ngay thang co du lieu group theo ngay
+                if ($request->day || $request->month)
+                //ngay hoac thang co du lieu va nam k co du lieu nhay vao day query
+                {
+                    $moneyTransaction = $moneyTransaction
+                        ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
+                        ->groupBy('day')
+                        ->get();
+                }
+
+            }
+            if (!($request->day) && !($request->month) && !($request->year)) {
+                // $moneyTransaction->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'));
                 $moneyTransaction = $moneyTransaction
-                    ->whereYear('created_at', (int) $request->year)
+                    ->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
                     ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
                     ->groupBy('day')
                     ->get();
             }
+
+            // $moneyTransaction = $moneyTransaction
+            //     ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
+            //     ->groupBy('day')
+            //     ->get();
+            $totalMoneyTransaction = $moneyTransaction->sum('totalMoney');
         } else {
-            if ($request->day || $request->month)
-            //ngay hoac thang co du lieu va nam k co du lieu nhay vao day query
-            {
+            if ($request->dateAfter >= $request->dateBefore) {
                 $moneyTransaction = $moneyTransaction
+                    ->whereBetween(DB::raw('DATE(created_at)'), [$request->dateBefore, $request->dateAfter])
                     ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
                     ->groupBy('day')
                     ->get();
+                $totalMoneyTransaction = $moneyTransaction->sum('totalMoney');
+                // dd($moneyTransaction);
+            } else {
+                $request->session()->flash('toastr', [
+                    'type' => 'error',
+                    'message' => 'chọn ngày sai !',
+                ]);
+
+                return redirect()->back();
             }
-
         }
-        if (!($request->day) && !($request->month) && !($request->year)) {
-            // $moneyTransaction->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'));
-            $moneyTransaction = $moneyTransaction
-                ->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))
-                ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
-                ->groupBy('day')
-                ->get();
-        }
-
-        // $moneyTransaction = $moneyTransaction
-        //     ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
-        //     ->groupBy('day')
-        //     ->get();
-        $totalMoneyTransaction = $moneyTransaction->sum('totalMoney');
 
         //thong ke don hang
         //tiep nhan
@@ -212,6 +241,7 @@ class AdminStatisticalController extends Controller
             // 'transactions' => $transactions,
             // 'topViewProducts' => $topViewProducts,
             // 'proPayProducts' => $proPayProducts,
+            'userTransaction' => $userTransaction,
             'mt' => $mt,
             'moneyTransaction' => $moneyTransaction,
             'totalMoneyTransaction' => $totalMoneyTransaction,

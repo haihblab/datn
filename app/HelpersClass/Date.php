@@ -17,7 +17,12 @@ class Date
                 $arrayDay[] = date('Y-m-d', $time);
             }
         }
-
         return $arrayDay;
+    }
+
+    public static function getListDayInDate($dateBefore, $dateAfter)
+    {
+        $arrDay = [];
+
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +23,7 @@ class User extends Authenticatable
         'address',
         'avatar',
         'role',
-        'email_verified_at'
+        'email_verified_at',
     ];
 
     /**
@@ -49,5 +48,10 @@ class User extends Authenticatable
     public function ratings()
     {
         return $this->hasMany(Rating::class, 'r_user_id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'tst_user_id');
     }
 }

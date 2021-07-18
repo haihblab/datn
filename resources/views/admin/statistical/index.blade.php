@@ -47,7 +47,7 @@
         </div>
     </div> 
     <div class="row" style="margin-bottom: 20px">
-        <div class="col-md-12">
+        <div class="col-md-7">
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Doanh Số</h3>
@@ -62,6 +62,11 @@
                         <span style="color: red">Không chọn gì mặc định lấy các ngày trong tháng và năm hiện tại.</span>
                         <div class="box-title">
                             <form action="" method="GET" class="form-inline">
+                                <input type="date" value="{{Request::get('dateBefore')}}" name="dateBefore" class="form-control" id="validationCustom01">
+                                <input type="date" value="{{Request::get('dateAfter')}}" name="dateAfter" class="form-control {{ $errors->first('dateAfter') ? 'is-valid' : '' }}" id="validationCustom01">
+                                @if ($errors->first('dateAfter'))
+                                    <span class="text-danger">{{ $errors->first('dateAfter') }}</span>
+                                @endif
                                 <select name="day" class="form-control">
                                     <option value="" >_ Ngày trong tháng _</option>
                                     @for ($i = 1; $i <=31; $i++)
@@ -123,6 +128,52 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-5">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Top 10 khách hàng mua chi nhiều tiền nhất</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body" style="">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Info</th>
+                                    <th>Money</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(isset($userTransaction))
+                                    @foreach ($userTransaction as $key =>$item)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Name: {{ $item->user->name }}</li>
+                                                    <li>Email: {{ $item->user->email }}</li>
+                                                    <li>Phone: {{ $item->user->phone }}</li>
+                                                    <li>Address: {{ $item->user->address }}</li>
+                                                </ul>
+                                            </td>
+                                            <td>{{ number_format($item->totalMoney , 0, ',', '.') }} vnđ</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {{-- <div class="box-footer clearfix" style="">
+                     <a href="{{ route('admin.transaction.index') }}" class="btn btn-sm btn-info btn-flat pull-right">Danh Sách</a> 
+                </div> --}}
+            </div>
+        </div>
     </div>
 </section>
 @endsection
@@ -142,7 +193,7 @@
             },
 
             title: {
-                text: 'Pie point CSS'
+                text: 'Biểu đồ số đơn hàng'
             },
 
             xAxis: {
