@@ -54,13 +54,16 @@
                                 @endif
                             </div>
 
-                            <div class="form-group" >
+                            <div class="form-group" {{ $errors->first('pro_sale') ? 'has-error' : '' }}>
                                 <label for="pro_sale">% Giảm Giá</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">$</span>
-                                        <input type="number" value="{{ old('pro_sale') }}" name="pro_sale" class="form-control">
+                                        <input type="number" value="{{ old('pro_sale') ?? 0 }}" name="pro_sale" class="form-control">
                                         <span class="input-group-addon"><i class="fa fa-check"></i></span>
                                   </div>
+                                @if ($errors->first('pro_sale'))
+                                    <span class="text-danger">{{ $errors->first('pro_sale') }}</span>
+                                @endif
                             </div>
 
                             <div class="form-group {{ $errors->first('pro_description') ? 'has-error' : '' }}">
@@ -161,6 +164,9 @@
                                 <div style="margin-bottom:10px" >
                                     <img id="image_preview_container" src="{{ asset('admin/product.jpg') }}" class="img-thumbnail" style="width: 220px;height:200px" alt=""></div>
                                 <input type="file" name="pro_avatar" id="image"  class="js-upload">
+                                @if ($errors->first('pro_avatar'))
+                                    <span class="text-danger">{{ $errors->first('pro_avatar') }}</span>
+                                @endif
                             </div>
                         </div>
                       </div>
@@ -174,10 +180,12 @@
                                 <div class="file-loading">
                                     <input type="file" name="file[]" id="images" multiple class="file" data-overwrite-initial="false" data-min-file-count="0">
                                 </div>
+                                @if ($errors->first('file.*'))
+                                    <span class="text-danger">{{ $errors->first('file.*') }}</span>
+                                @endif
                             </div>
                         </div>
                       </div>
-
                 </div>
                 <div class="col-md-7">
 

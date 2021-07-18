@@ -43,13 +43,16 @@
                                     <span class="text-danger">{{ $errors->first('pro_price') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group" >
+                            <div class="form-group" {{ $errors->first('pro_sale') ? 'has-error' : '' }}>
                                 <label for="pro_sale">% Giảm Giá</label>
                                 <div class="input-group">
                                     <span class="input-group-addon">$</span>
                                         <input type="number" value="{{ $product->pro_sale }}" name="pro_sale" class="form-control">
                                         <span class="input-group-addon"><i class="fa fa-check"></i></span>
                                   </div>
+                                @if ($errors->first('pro_sale'))
+                                    <span class="text-danger">{{ $errors->first('pro_sale') }}</span>
+                                @endif
                             </div>
                             <div>
 
@@ -163,6 +166,9 @@
                                 </div>
                                 <input type="file" name="pro_avatar" id="image" class="js-upload">
                             </div>
+                            @if ($errors->first('pro_avatar'))
+                                <span class="text-danger">{{ $errors->first('pro_avatar') }}</span>
+                            @endif
                         </div>
                       </div>
                         <div class="box box-info">
@@ -186,6 +192,9 @@
                                         <input type="file" name="file[]" id="images" multiple class="file" data-overwrite-initial="false" data-min-file-count="0">
                                     </div>
                                 </div>
+                                @if ($errors->first('file.*'))
+                                    <span class="text-danger">{{ $errors->first('file.*') }}</span>
+                                @endif
                             </div>
                         </div>
 
