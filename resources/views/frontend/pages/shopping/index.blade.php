@@ -98,7 +98,7 @@
                     <div class="group">
                         @if (Auth::check())
                             @if (Auth::user()->email_verified_at)
-                                <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">BẠN ĐÃ ĐĂNG NHẬP</div>
+                                {{-- <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">BẠN ĐÃ ĐĂNG NHẬP</div>
                                 <p class="fsti pb10 tac">Nên Chúng Tôi Đã Lấy Thông Tin Theo Tài Khoản Bạn Đăng Ký</p>
                                 <div class="form">
                                     <form class="from_cart_register" action="{{ route('post.shopping.pay') }}" method="post">
@@ -113,9 +113,48 @@
                                                 <p class="ttu fHelveticaNeueB fs15">ĐẶT HÀNG THANH TOÁN SAU</p>
                                                 <p>(Trả tiền khi nhận hàng tại nhà)</p>
                                             </button>
-                                            <button class="tac"  type="submit">
+                                            <button class="tac"  type="submit" value="online">
                                                 <p class="ttu fHelveticaNeueB fs15">Thanh toán online</p>
                                                 <p>(Bằng thẻ ATM, Visa, Master)</p>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div> --}}
+                                <div class="c000 fSFUHelveticaCondensedBold ttu fs20 pb20" style="text-align: center;color: #288ad6;">BẠN ĐÃ ĐĂNG NHẬP</div>
+                                <p class="fsti pb10 tac">Nên Chúng Tôi Đã Lấy Thông Tin Theo Tài Khoản Bạn Đăng Ký</p>
+                                <p class="fsti pb10 tac">Lưu ý: Các ô có dấu <span class="cRed">(*)</span> cần điền đầy đủ thông tin</p>
+                                <div class="form">
+                                    <form class="from_cart_register" action="{{ route('post.shopping.pay') }}" method="post">
+                                        @csrf
+                                            <div class="item">
+                                                <p class="label">Họ và tên <span class="cRed">(*)</span></p>
+                                                <input type="text" name="tst_name" id="txt_name" placeholder="Nhập họ tên" value="{{Auth::user()->name}}" required oninvalid="this.setCustomValidity('Vui lòng nhập họ tên!')" oninput="setCustomValidity('')" />
+                                            </div>
+                                            <div class="item">
+                                                <p class="label">Điện thoại <span class="cRed">(*)</span></p>
+                                                <input type="text" name="tst_phone" id="txt_phone" placeholder="Nhập điện thoại" value="{{Auth::user()->phone}}" required oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại')" oninput="setCustomValidity('')" />
+                                            </div>
+                                            <div class="item">
+                                                <p class="label">Địa chỉ <span class="cRed">(*)</span></p>
+                                                <input type="text" value="{{Auth::user()->address}}" name="tst_address" id="txt_address" placeholder="Nhập địa chỉ" required oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ!')" oninput="setCustomValidity('')" />
+                                            </div>
+                                            <div class="item">
+                                                <p class="label">Email</p>
+                                                <input type="text" name="tst_email" value="{{Auth::user()->email}}" readonly/>
+                                            </div>
+                                        <div class="item">
+                                            <p class="label">Nội dung</p>
+                                            <textarea style="min-height: 60px;" name="tst_note" cols="" rows="2"></textarea>
+                                        </div>
+                                        <div class="cb h10"></div>
+                                        <div class="btnThanhToan">
+                                            <button class="tac"  type="submit" name="pay" value="1">
+                                                <p class="ttu fHelveticaNeueB fs15">ĐẶT HÀNG THANH TOÁN SAU</p>
+                                                <p>(Trả tiền khi nhận hàng tại nhà)</p>
+                                            </button>
+                                            <button class="tac"  type="submit" name="pay" value="2">
+                                                <p class="ttu fHelveticaNeueB fs15">Thanh toán online</p>
+                                                <p>(Thông qua VNPAY-QR-CODE)</p>
                                             </button>
                                         </div>
                                     </form>

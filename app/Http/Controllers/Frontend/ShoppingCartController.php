@@ -6,12 +6,14 @@ use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\TransactionSuccess;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ShoppingCartController extends Controller
@@ -169,72 +171,92 @@ class ShoppingCartController extends Controller
 
     public function postPay(Request $request)
     {
-        if (\Cart::count() <= 0) {
-            $request->session()->flash('toastr', [
-                'type' => 'warning',
-                'message' => 'Không có sản phẩm nào để thanh toán !',
-            ]);
-            return redirect('/');
-        }
-        DB::beginTransaction();
-        $data = $request->except('_token');
-        if (isset(Auth::user()->id)) {
-            $data['tst_user_id'] = Auth::user()->id;
-
-            $email = Auth::user()->email;
-            $name = Auth::user()->name;
-            $phone = Auth::user()->phone;
-            $address = Auth::user()->address;
-
-            $data['tst_total_money'] = str_replace(',', '', \Cart::subtotal(0));
-            $data['tst_name'] = $name;
-            $data['tst_email'] = $email;
-            $data['tst_phone'] = $phone;
-            $data['tst_address'] = $address;
-        } else {
-            $email = $request->tst_email;
-            $name = $request->tst_name;
-            $phone = $request->tst_phone;
-            $address = $request->tst_address;
-            $data['tst_total_money'] = str_replace(',', '', \Cart::subtotal(0));
-        }
-        try {
-            $transaction = Transaction::query()->create($data);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return redirect()->route('get.home');
-        }
-        if ($transaction) {
-            $shopping = \Cart::content();
-
-            foreach ($shopping as $key => $item) {
-                try {
-                    // luu chitietdonhang
-                    Order::create([
-                        'od_transaction_id' => $transaction->id,
-                        'od_product_id' => $item->id,
-                        'od_sale' => $item->options->sale,
-                        'od_qty' => $item->qty,
-                        'od_price' => $item->price,
-                    ]);
-                    //pro_pay luot mua
-                    DB::table('products')->where('id', $item->id)->increment('pro_pay', $item->qty);
-                    // DB::table('products')->where('id',$item->id)->decrement('pro_number',$item->qty);
-                } catch (\Throwable $th) {
-                    DB::rollBack();
-                    return redirect()->route('get.home');
-                }
+        if ($request->pay == 1) {
+            if (\Cart::count() <= 0) {
+                $request->session()->flash('toastr', [
+                    'type' => 'warning',
+                    'message' => 'Không có sản phẩm nào để thanh toán !',
+                ]);
+                return redirect('/');
             }
-            Mail::to($email)->send(new TransactionSuccess($shopping, $name));
+            DB::beginTransaction();
+            $data = $request->except('_token');
+            if (isset(Auth::user()->id)) {
+                $data['tst_user_id'] = Auth::user()->id;
+
+                $email = Auth::user()->email;
+                $name = Auth::user()->name;
+                $phone = Auth::user()->phone;
+                $address = Auth::user()->address;
+
+                $data['tst_total_money'] = str_replace(',', '', \Cart::subtotal(0));
+                $data['tst_name'] = $name;
+                $data['tst_email'] = $email;
+                $data['tst_phone'] = $phone;
+                $data['tst_address'] = $address;
+            } else {
+                $email = $request->tst_email;
+                $name = $request->tst_name;
+                $phone = $request->tst_phone;
+                $address = $request->tst_address;
+                $data['tst_total_money'] = str_replace(',', '', \Cart::subtotal(0));
+            }
+
+            $dataInsert['tst_user_id'] = Auth::user()->id;
+            $dataInsert['tst_total_money'] = str_replace(',', '', \Cart::subtotal(0));
+            $dataInsert['tst_name'] = $request->tst_name;
+            $dataInsert['tst_email'] = $request->tst_email;
+            $dataInsert['tst_phone'] = $request->tst_phone;
+            $dataInsert['tst_address'] = $request->tst_address;
+            $dataInsert['tst_note'] = $request->tst_note;
+
+            try {
+                $transaction = Transaction::query()->create($dataInsert);
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                return redirect()->route('get.home');
+            }
+            if ($transaction) {
+                $shopping = \Cart::content();
+
+                foreach ($shopping as $key => $item) {
+                    try {
+                        // luu chitietdonhang
+                        Order::create([
+                            'od_transaction_id' => $transaction->id,
+                            'od_product_id' => $item->id,
+                            'od_sale' => $item->options->sale,
+                            'od_qty' => $item->qty,
+                            'od_price' => $item->price,
+                        ]);
+                        //pro_pay luot mua
+                        DB::table('products')->where('id', $item->id)->increment('pro_pay', $item->qty);
+                        // DB::table('products')->where('id',$item->id)->decrement('pro_number',$item->qty);
+                    } catch (\Throwable $th) {
+                        DB::rollBack();
+                        return redirect()->route('get.home');
+                    }
+                }
+                Mail::to($email)->send(new TransactionSuccess($shopping, $name));
+            }
+            DB::commit();
+            $dataMessage = [
+                'name' => $name,
+                'message' => 'Vừa mua sản phẩm.',
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+            ];
+            event(new NotificationEvent($dataMessage));
+            $tt = 'Thanh toán khi giao hàng (COD)';
+            return redirect()->route('get.success.list')->with(['success' => 'ok', 'email' => $email, 'address' => $address, 'name' => $name, 'phone' => $phone, 'tt' => $tt]);
+        } else {
+            $tst_total_money = str_replace(',', '', \Cart::subtotal(0));
+            $data = $request->except('_token', 'pay');
+            $data['tst_user_id'] = Auth::user()->id;
+            $data['tst_total_money'] = str_replace(',', '', \Cart::subtotal(0));
+            $data['tst_type'] = 2;
+            session(['data_customer' => $data]);
+            return view('frontend.pages.vnpay.index', compact('tst_total_money'));
         }
-        DB::commit();
-        $dataMessage = [
-            'name' => $name,
-            'message' => 'Vừa mua sản phẩm.',
-            'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-        ];
-        event(new NotificationEvent($dataMessage));
-        return redirect()->route('get.success.list')->with(['success' => 'ok', 'email' => $email, 'address' => $address, 'name' => $name, 'phone' => $phone]);
     }
 
     public function success()
@@ -252,5 +274,144 @@ class ShoppingCartController extends Controller
     public function delete_all_shopping()
     {
         \Cart::destroy();
+    }
+
+    public function createPayment(Request $request)
+    {
+        // dd($request->all());
+        $vnp_TxnRef = rand(111111111, 999999999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = $request->order_desc;
+        $vnp_OrderType = $request->order_type;
+        $vnp_Amount = str_replace(',', '', \Cart::subtotal(0)) * 100;
+        $vnp_Locale = $request->language;
+        $vnp_BankCode = $request->bank_code;
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+
+        $vnp_TmnCode = env('VNP_TMNCODE');
+        $vnp_Returnurl = route('shopping.payment.online.return');
+        $vnp_Url = env('VNP_URL');
+        $vnp_HashSecret = env('VNP_HASHSECRET');
+
+        $inputData = array(
+            "vnp_Version" => "2.0.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef,
+        );
+
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . $key . "=" . $value;
+            } else {
+                $hashdata .= $key . "=" . $value;
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
+            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+        }
+        // $returnData = array('code' => '00'
+        //     , 'message' => 'success'
+        //     , 'data' => $vnp_Url);
+        // echo json_encode($returnData);
+
+        return redirect($vnp_Url);
+    }
+
+    public function vnpayReturn(Request $request)
+    {
+        // dd($request->all());
+        if (session()->has('data_customer') && $request->vnp_ResponseCode == '00') {
+            DB::beginTransaction();
+            try {
+                $data_vnpay = $request->all();
+                $data_customer = session()->get('data_customer');
+                // dd($data_customer);
+                $transaction = Transaction::create($data_customer);
+                $shopping = \Cart::content();
+
+                $shopping = \Cart::content();
+
+                foreach ($shopping as $key => $item) {
+                    // luu chitietdonhang
+                    Order::create([
+                        'od_transaction_id' => $transaction->id,
+                        'od_product_id' => $item->id,
+                        'od_sale' => $item->options->sale,
+                        'od_qty' => $item->qty,
+                        'od_price' => $item->price,
+                    ]);
+                    //pro_pay luot mua
+                    DB::table('products')->where('id', $item->id)->increment('pro_pay', $item->qty);
+                    // DB::table('products')->where('id',$item->id)->decrement('pro_number',$item->qty);
+                }
+                $dataMessage = [
+                    'name' => $data_customer['tst_name'],
+                    'message' => 'Vừa mua sản phẩm.',
+                    'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+                ];
+                $dataPayment = [
+                    'p_transaction_id' => $transaction->id,
+                    'p_transaction_code' => $data_vnpay['vnp_TxnRef'],
+                    'p_user_id' => $data_customer['tst_user_id'],
+                    'p_money' => $data_customer['tst_total_money'],
+                    'p_note' => $data_vnpay['vnp_OrderInfo'],
+                    'p_vnp_response_code' => $data_vnpay['vnp_ResponseCode'],
+                    'p_code_vnp' => $data_vnpay['vnp_TransactionNo'],
+                    'p_code_bank' => $data_vnpay['vnp_BankCode'],
+                    'p_time' => date('Y-m-d H:i', strtotime($data_vnpay['vnp_PayDate'])),
+                ];
+                // dd($dataPayment);
+
+                Payment::create($dataPayment);
+                event(new NotificationEvent($dataMessage));
+                Mail::to($data_customer['tst_email'])->send(new TransactionSuccess($shopping, $data_customer['tst_name']));
+                DB::commit();
+
+                return redirect()->route('get.success.list')->with([
+                    'success' => 'ok',
+                    'email' => $data_customer['tst_email'],
+                    'address' => $data_customer['tst_address'],
+                    'name' => $data_customer['tst_name'],
+                    'phone' => $data_customer['tst_phone'],
+                    'tt' => 'Thanh Toán Qua VNPAY-QR-CODE',
+                ]);
+
+            } catch (\Exception $e) {
+                Log::info($e->getMessage());
+                $request->session()->flash('toastr', [
+                    'type' => 'warning',
+                    'message' => 'lỗi không thể thanh toán !',
+                ]);
+                DB::rollBack();
+                return redirect('/');
+            }
+        } else {
+            $request->session()->flash('toastr', [
+                'type' => 'warning',
+                'message' => 'lỗi không thể thanh toán !',
+            ]);
+            return redirect('/');
+        }
     }
 }

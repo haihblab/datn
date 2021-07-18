@@ -175,7 +175,7 @@
                         </h2>
                       </div>
                       <div class="summary-section no-border no-padding-top">
-                        <span>Thanh toán khi giao hàng (COD)</span>
+                        <span>{{Session('tt')}}</span>
                       </div>
                     </div>
                   </div>

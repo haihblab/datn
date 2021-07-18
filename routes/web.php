@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 // Route::get('/', function () {
 //     // return view('welcome');
@@ -46,7 +46,6 @@ Route::post('forgot-password', [ForgotPasswordController::class, 'postForgot'])-
 Route::get('forgot-change-password', [ForgotPasswordController::class, 'getChangeForgotPassword'])->name('get.ChangeForgotPassword');
 Route::post('forgot-change-password', [ForgotPasswordController::class, 'postChangeForgotPassword'])->name('post.ChangeForgotPassword');
 
-
 Route::get('auth/google/url', [GoogleController::class, 'loginUrl'])->name('login.google');
 Route::get('auth/google/callback', [GoogleController::class, 'loginCallback'])->name('login.google.callback');
 
@@ -62,7 +61,6 @@ Route::get('bai-viet', [BlogBaseController::class, 'getIndex'])->name('get.artic
 Route::get('bai-viet/{slug}', [BlogController::class, 'index'])->name('get.blog.index');
 Route::get('article/{slug}', [ArticleDetailController::class, 'index'])->name('get.article.detail.index');
 
-
 //giohang
 Route::get('don-hang', [ShoppingCartController::class, 'index'])->name('get.shopping.list');
 Route::get('success', [ShoppingCartController::class, 'success'])->name('get.success.list');
@@ -72,7 +70,9 @@ Route::group(['prefix' => 'shopping'], function () {
     Route::get('delete/{id}', [ShoppingCartController::class, 'delete'])->name('get.shopping.delete');
     Route::get('update/{id}', [ShoppingCartController::class, 'update'])->name('ajax_get.shopping.update');
     Route::post('pay', [ShoppingCartController::class, 'postPay'])->name('post.shopping.pay');
+    Route::post('payment/online', [ShoppingCartController::class, 'createPayment'])->name('shopping.payment.online.create');
+    Route::get('payment/online/return', [ShoppingCartController::class, 'vnpayReturn'])->name('shopping.payment.online.return');
 });
 
-include('admin.php');
-include('user.php');
+include 'admin.php';
+include 'user.php';
