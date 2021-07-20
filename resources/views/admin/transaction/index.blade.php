@@ -49,6 +49,7 @@
                       {{-- <th>Account</th> --}}
                       <th>Money</th>
                       <th>Status</th>
+                      <th>Phương thức TT</th>
                       <th>Time</th>
                       <th>Action</th>
                     </tr>
@@ -75,6 +76,11 @@
                                 <td>
                                     <span class="label label-{{ $item->getStatus($item->tst_status)['class'] }}">
                                         {{ $item->getStatus($item->tst_status)['name'] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="label label-{{ $item->tst_type == config('contants.PTTT.THUONG') ? 'info' : 'success' }}">
+                                        {{ $item->tst_type == config('contants.PTTT.THUONG') ? 'Thường' : 'Online' }}
                                     </span>
                                 </td>
                                 <td>{{ $item->created_at }}</td>
