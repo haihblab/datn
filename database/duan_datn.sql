@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 17, 2021 lúc 04:55 PM
+-- Thời gian đã tạo: Th7 21, 2021 lúc 03:50 AM
 -- Phiên bản máy phục vụ: 10.4.20-MariaDB
 -- Phiên bản PHP: 7.4.21
 
@@ -80,7 +80,8 @@ INSERT INTO `attributes` (`id`, `atb_name`, `atb_slug`, `atb_type`, `atb_categor
 (4, 'Thép không gỉ', 'thep-khong-gi', 2, 1, '2021-07-06 15:34:51', '2021-07-06 15:34:51'),
 (5, 'Mạ vàng', 'ma-vang', 2, 1, '2021-07-06 15:35:02', '2021-07-06 15:35:02'),
 (6, 'Mạ đồng', 'ma-dong', 2, 1, '2021-07-06 15:35:14', '2021-07-06 15:35:14'),
-(7, 'Cao su', 'cao-su', 2, 1, '2021-07-06 15:35:25', '2021-07-06 15:35:25');
+(7, 'Cao su', 'cao-su', 2, 1, '2021-07-06 15:35:25', '2021-07-06 15:35:25'),
+(8, '123123', '123123', 3, 3, '2021-07-18 03:50:20', '2021-07-18 03:50:20');
 
 -- --------------------------------------------------------
 
@@ -280,7 +281,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (91, '2021_05_19_152534_add_multiple_column_attribute_in_table_users', 1),
 (92, '2021_06_15_202729_create_jobs_table', 1),
 (93, '2021_06_16_210249_add_column_role_to_users_table', 1),
-(94, '2021_07_02_115319_create_notifications_table', 1);
+(94, '2021_07_02_115319_create_notifications_table', 1),
+(97, '2021_07_18_164447_create_payments_table', 2),
+(98, '2021_07_18_181331_add_column_p_transaction_code_to_payments_table', 2);
 
 -- --------------------------------------------------------
 
@@ -304,21 +307,38 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('11febf87-3f09-47dd-af56-8d5bae06729b', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-17T15:06:00.415439Z\"}', '2021-07-17 15:06:29', '2021-07-17 15:06:00', '2021-07-17 15:06:00'),
+('1de84192-f320-4714-8080-de112902a7ca', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:40:32.072741Z\"}', '2021-07-18 11:51:20', '2021-07-18 11:40:32', '2021-07-18 11:40:32'),
+('2347fe67-2d80-4298-a8a7-f54ec39c9ce5', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:47:14.869319Z\"}', '2021-07-18 11:51:29', '2021-07-18 11:47:14', '2021-07-18 11:47:14'),
 ('2aeffd1e-1eec-465f-9b5a-4f6de5d12876', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"map hari\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-06T16:31:05.534104Z\"}', '2021-07-11 11:01:18', '2021-07-06 16:31:05', '2021-07-06 16:31:05'),
+('5ed36f36-35d8-4c87-a77c-58ce14876148', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:47:55.948020Z\"}', '2021-07-18 11:51:26', '2021-07-18 11:47:55', '2021-07-18 11:47:55'),
 ('5f7b947b-1c90-42b3-9dfe-577504e47963', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-13T16:10:41.428251Z\"}', '2021-07-16 10:46:20', '2021-07-13 16:10:41', '2021-07-13 16:10:41'),
 ('617e8e93-52e2-404f-b099-974464a96d9f', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-07T04:26:29.451255Z\"}', '2021-07-11 11:01:26', '2021-07-07 04:26:30', '2021-07-07 04:26:30'),
+('6392500f-e120-4caf-b9ec-b660a7c6e8da', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:49:30.102877Z\"}', '2021-07-18 11:51:24', '2021-07-18 11:49:30', '2021-07-18 11:49:30'),
+('647c2871-7389-4e31-abce-1692069f6c74', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:41:52.283831Z\"}', '2021-07-18 11:51:37', '2021-07-18 11:41:52', '2021-07-18 11:41:52'),
 ('67c33ce5-ef94-438e-81cc-ef0b9f5d50e9', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-17T04:31:01.939239Z\"}', '2021-07-17 06:33:02', '2021-07-17 04:31:01', '2021-07-17 04:31:01'),
 ('6c567231-473b-4a36-a98b-bfebf461adf3', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-16T11:10:53.016419Z\"}', '2021-07-16 14:21:28', '2021-07-16 11:10:53', '2021-07-16 11:10:53'),
+('7806fc3a-c3b5-46a1-8cca-3a5e8ebead86', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T03:44:59.991204Z\"}', '2021-07-18 06:35:38', '2021-07-18 03:45:00', '2021-07-18 03:45:00'),
 ('7fb83b95-081b-4942-a160-b187bf00e12a', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-17T06:32:49.669710Z\"}', '2021-07-17 06:33:10', '2021-07-17 06:32:49', '2021-07-17 06:32:49'),
+('7ff8c23c-a92a-4abb-94ab-71f0935b2f8d', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T03:45:10.259160Z\"}', '2021-07-18 06:35:36', '2021-07-18 03:45:10', '2021-07-18 03:45:10'),
 ('8436fb4b-98e5-4b3b-a8c2-9303e00847a0', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-06T16:22:22.533636Z\"}', '2021-07-06 16:22:43', '2021-07-06 16:22:22', '2021-07-06 16:22:22'),
+('92c94c5d-9a74-463e-9d82-0195ec6892ac', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T03:38:27.904859Z\"}', '2021-07-18 03:43:57', '2021-07-18 03:38:27', '2021-07-18 03:38:27'),
 ('9a3a7d77-8079-41f0-920d-4e9af4922eb5', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-17T06:32:41.559335Z\"}', '2021-07-17 06:33:08', '2021-07-17 06:32:41', '2021-07-17 06:32:41'),
 ('9e29086d-1ccc-4f7f-828f-19e09fa6758a', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-16T10:47:46.650542Z\"}', '2021-07-16 14:21:30', '2021-07-16 10:47:46', '2021-07-16 10:47:46'),
 ('a5712372-35d3-4874-8484-14c8c9fa6dbb', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-06T16:07:41.860006Z\"}', '2021-07-06 16:20:04', '2021-07-06 16:07:42', '2021-07-06 16:07:42'),
 ('ae532e61-1297-4ebc-9c68-6303a033032d', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-07T04:26:43.445846Z\"}', '2021-07-11 11:01:23', '2021-07-07 04:26:43', '2021-07-07 04:26:43'),
+('ae99bddf-35a2-4938-aff6-e5b5dade50ca', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:44:06.684187Z\"}', '2021-07-18 11:51:35', '2021-07-18 11:44:06', '2021-07-18 11:44:06'),
+('b6a88cce-df42-43bf-8cce-92f325b97d7c', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:46:13.128643Z\"}', '2021-07-18 11:51:32', '2021-07-18 11:46:13', '2021-07-18 11:46:13'),
+('bade7d12-1872-4456-8c48-6de3b06e3277', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T03:42:36.925192Z\"}', '2021-07-18 03:44:00', '2021-07-18 03:42:36', '2021-07-18 03:42:36'),
 ('c4971cea-5f66-42be-bc81-9bb687877bee', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-17T04:31:15.243386Z\"}', '2021-07-17 06:33:05', '2021-07-17 04:31:15', '2021-07-17 04:31:15'),
+('d9709a9b-8f35-4028-8161-a714f2f2837b', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-17T15:05:50.869221Z\"}', '2021-07-17 15:06:32', '2021-07-17 15:05:50', '2021-07-17 15:05:50'),
+('dd93c6c6-9c5b-4bd7-9f8f-ade059658dfc', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T10:17:56.217762Z\"}', '2021-07-18 11:51:15', '2021-07-18 10:17:56', '2021-07-18 10:17:56'),
 ('e76df58a-d5a1-4993-9222-35f963dd2f8d', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"\\u0110\\u1ea1i H\\u1ea3i\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-07T03:39:18.023882Z\"}', '2021-07-07 04:24:57', '2021-07-07 03:39:18', '2021-07-07 03:39:18'),
+('ed4c5af9-d372-42a4-9f50-ceebf9a77dac', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-20T12:39:29.499167Z\"}', '2021-07-20 12:42:17', '2021-07-20 12:39:29', '2021-07-20 12:39:29'),
 ('eece3231-45b5-4815-9a29-35941d9ab8ad', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-06T16:19:49.111892Z\"}', '2021-07-06 16:22:47', '2021-07-06 16:19:49', '2021-07-06 16:19:49'),
-('f76f21f9-74e7-4290-911d-0855c3c8299e', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-06T16:04:02.000088Z\"}', '2021-07-06 16:22:36', '2021-07-06 16:04:04', '2021-07-06 16:04:04');
+('f10cbe5b-b048-4242-aae2-3a2f8a028c3b', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:26:46.012263Z\"}', '2021-07-18 11:51:17', '2021-07-18 11:26:46', '2021-07-18 11:26:46'),
+('f76f21f9-74e7-4290-911d-0855c3c8299e', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-06T16:04:02.000088Z\"}', '2021-07-18 03:45:04', '2021-07-06 16:04:04', '2021-07-06 16:04:04'),
+('fadaa272-8e94-4d6c-9072-409001b00ea0', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:58:44.072541Z\"}', '2021-07-20 12:42:20', '2021-07-18 11:58:44', '2021-07-18 11:58:44');
 
 -- --------------------------------------------------------
 
@@ -350,7 +370,22 @@ INSERT INTO `orders` (`id`, `od_transaction_id`, `od_product_id`, `od_sale`, `od
 (6, 5, 9, 0, 78936, 450000, '2021-07-16 10:47:46', '2021-07-16 10:47:46'),
 (7, 6, 9, 0, 3, 450000, '2021-07-16 11:10:52', '2021-07-16 11:10:52'),
 (8, 7, 9, 0, 1, 450000, '2021-07-17 04:31:01', '2021-07-17 04:31:01'),
-(9, 8, 9, 0, 1, 450000, '2021-07-17 04:31:15', '2021-07-17 04:31:15');
+(9, 8, 9, 0, 1, 450000, '2021-07-17 04:31:15', '2021-07-17 04:31:15'),
+(10, 9, 4, 15, 1, 72250000, '2021-07-18 03:42:36', '2021-07-18 03:42:36'),
+(11, 10, 4, 15, 1, 72250000, '2021-07-18 10:17:56', '2021-07-18 10:17:56'),
+(12, 11, 2, 15, 1, 16065000, '2021-07-18 11:26:45', '2021-07-18 11:26:45'),
+(23, 17, 2, 15, 1, 16065000, '2021-07-18 11:40:32', '2021-07-18 11:40:32'),
+(24, 17, 6, 0, 1, 58000, '2021-07-18 11:40:32', '2021-07-18 11:40:32'),
+(25, 18, 2, 15, 1, 16065000, '2021-07-18 11:41:52', '2021-07-18 11:41:52'),
+(26, 18, 6, 0, 1, 58000, '2021-07-18 11:41:52', '2021-07-18 11:41:52'),
+(27, 19, 2, 15, 2, 16065000, '2021-07-18 11:44:06', '2021-07-18 11:44:06'),
+(28, 19, 6, 0, 2, 58000, '2021-07-18 11:44:06', '2021-07-18 11:44:06'),
+(29, 20, 6, 0, 1, 58000, '2021-07-18 11:46:13', '2021-07-18 11:46:13'),
+(30, 21, 6, 0, 1, 58000, '2021-07-18 11:47:14', '2021-07-18 11:47:14'),
+(31, 22, 6, 0, 2, 58000, '2021-07-18 11:47:55', '2021-07-18 11:47:55'),
+(32, 23, 4, 15, 2, 72250000, '2021-07-18 11:49:30', '2021-07-18 11:49:30'),
+(36, 27, 11, 12, 1, 88000, '2021-07-18 11:58:44', '2021-07-18 11:58:44'),
+(37, 28, 4, 15, 1, 72250000, '2021-07-20 12:39:29', '2021-07-20 12:39:29');
 
 -- --------------------------------------------------------
 
@@ -363,6 +398,46 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('user@gmail.com', '8ea3ea02-2ee9-432d-9778-f1f6eb1c4dc6', '2021-07-18 03:39:47');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `p_transaction_id` int(11) NOT NULL,
+  `p_user_id` int(11) NOT NULL,
+  `p_money` int(11) NOT NULL COMMENT 'số tiền thanh toán',
+  `p_note` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ghi chú',
+  `p_vnp_response_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'mã phản hồi',
+  `p_code_vnp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'mã giao dịch vnp',
+  `p_code_bank` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'mã ngân hàng',
+  `p_time` datetime NOT NULL COMMENT 'thòi gian chuyển khoản',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `p_transaction_code` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `payments`
+--
+
+INSERT INTO `payments` (`id`, `p_transaction_id`, `p_user_id`, `p_money`, `p_note`, `p_vnp_response_code`, `p_code_vnp`, `p_code_bank`, `p_time`, `created_at`, `updated_at`, `p_transaction_code`) VALUES
+(1, 17, 2, 16123000, 'Noi dung thanh toan', '00', '13546982', 'NCB', '2021-07-18 18:38:00', NULL, NULL, 895729430),
+(2, 18, 2, 16123000, 'Noi dung thanh toan', '00', '13546982', 'NCB', '2021-07-18 18:38:00', NULL, NULL, 895729430),
+(3, 19, 2, 32246000, '123zxczxczxc', '00', '13546983', 'NCB', '2021-07-18 18:44:00', NULL, NULL, 714595433),
+(4, 23, 2, 144500000, 'Noi dung thanh toan', '00', '13546984', 'NCB', '2021-07-18 18:49:00', NULL, NULL, 762399609),
+(5, 27, 1, 88000, 'Noi dung thanh toan', '00', '13546989', 'NCB', '2021-07-18 18:58:00', '2021-07-18 11:58:44', '2021-07-18 11:58:44', 720968962),
+(6, 28, 2, 72250000, 'assdqwezxc', '00', '13548518', 'NCB', '2021-07-20 19:39:00', '2021-07-20 12:39:29', '2021-07-20 12:39:29', 260848425);
 
 -- --------------------------------------------------------
 
@@ -401,15 +476,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `pro_name`, `pro_slug`, `pro_category_id`, `pro_type_product_id`, `pro_user_id`, `pro_price`, `pro_sale`, `pro_avatar`, `pro_view`, `pro_hot`, `pro_active`, `pro_pay`, `pro_description`, `pro_content`, `pro_review_total`, `pro_review_star`, `pro_number`, `pro_country`, `pro_energy`, `pro_resistant`, `created_at`, `updated_at`) VALUES
-(1, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'dong-ho-philippe-augustejl-11-16542zh', 4, 1, 0, 6900000, 10, '2021-07-06__974268866-donghophienbangioihan2.jpg', 5, 0, 1, 0, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 0, 0, 9999, 1, 'Quartz/Pin', '10 ATM', '2021-07-06 15:40:21', '2021-07-06 15:40:21'),
-(2, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'dong-ho-philippe-auguste-pa-5551', 4, 1, 0, 18900000, 15, '2021-07-06__72429618-1034985426-donghokimnguu2.jpg', 9, 0, 1, 1, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 0, 0, 7898, 3, 'Automatic (Cơ tự động)', '5ATM', '2021-07-06 15:44:42', '2021-07-06 15:44:42'),
-(3, 'Đồng hồ Philippe Auguste PA5001B', 'dong-ho-philippe-auguste-pa5001b', 4, 1, 0, 2800000, 0, '2021-07-06__202451360-dong-ho-nhap-khau2.jpg', 1, 0, 1, 0, 'Đồng hồ Philippe Auguste PA5001B', 'Đồng hồ Philippe Auguste PA5001B', 0, 0, 123, 1, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:47:20', '2021-07-06 15:47:20'),
-(4, 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 'dong-ho-epos-swiss-e-3387152222832', 5, 1, 0, 85000000, 15, '2021-07-06__364723213-untitled-56.jpg', 4, 0, 1, 0, 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 1, 1, 53, 3, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:52:36', '2021-07-07 03:39:17'),
+(1, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'dong-ho-philippe-augustejl-11-16542zh', 4, 1, 0, 6900000, 10, '2021-07-06__974268866-donghophienbangioihan2.jpg', 6, 0, 1, 0, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 0, 0, 9999, 1, 'Quartz/Pin', '10 ATM', '2021-07-06 15:40:21', '2021-07-06 15:40:21'),
+(2, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'dong-ho-philippe-auguste-pa-5551', 4, 1, 0, 18900000, 15, '2021-07-06__72429618-1034985426-donghokimnguu2.jpg', 11, 0, 1, 6, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 0, 0, 7898, 3, 'Automatic (Cơ tự động)', '5ATM', '2021-07-06 15:44:42', '2021-07-06 15:44:42'),
+(3, 'Đồng hồ Philippe Auguste PA5001B', 'dong-ho-philippe-auguste-pa5001b', 4, 1, 0, 2800000, 0, '2021-07-06__202451360-dong-ho-nhap-khau2.jpg', 2, 0, 1, 0, 'Đồng hồ Philippe Auguste PA5001B', 'Đồng hồ Philippe Auguste PA5001B', 0, 0, 123, 1, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:47:20', '2021-07-06 15:47:20'),
+(4, 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 'dong-ho-epos-swiss-e-3387152222832', 5, 1, 0, 85000000, 15, '2021-07-06__364723213-untitled-56.jpg', 9, 0, 1, 5, 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 1, 1, 53, 3, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:52:36', '2021-07-07 03:39:17'),
 (5, 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 'dong-ho-epos-swiss-e-3426132222032e-4426132222032', 5, 3, 0, 35000000, 0, '2021-07-06__96439908-48.jpg', 4, 0, 1, 0, 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 2, 10, 52, 2, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:54:16', '2021-07-17 06:32:49'),
-(6, 'Đồng hồ Aries Gold QQ-M137J003Y', 'dong-ho-aries-gold-qq-m137j003y', 7, 4, 0, 58000, 0, '2021-07-06__m137j003y.jpg', 2, 0, 1, 2, 'Đồng hồ Aries Gold QQ-M137J003Y', 'Đồng hồ Aries Gold QQ-M137J003Y', 0, 0, 7777, 3, 'Automatic (Cơ tự động)', '1 ATM', '2021-07-06 15:56:03', '2021-07-06 15:56:03'),
+(6, 'Đồng hồ Aries Gold QQ-M137J003Y', 'dong-ho-aries-gold-qq-m137j003y', 7, 4, 0, 58000, 0, '2021-07-06__m137j003y.jpg', 4, 0, 1, 10, 'Đồng hồ Aries Gold QQ-M137J003Y', 'Đồng hồ Aries Gold QQ-M137J003Y', 2, 10, 7777, 3, 'Automatic (Cơ tự động)', '1 ATM', '2021-07-06 15:56:03', '2021-07-18 03:45:10'),
 (9, 'Dây da Diamond D D DM W 12', 'day-da-diamond-d-d-dm-w-12', 12, 7, 0, 450000, 0, '2021-07-06__1905887238-d-dm-w-12.jpg', 7, 0, 1, 78936, 'Dây da Diamond D D DM W 12', 'Dây da Diamond D D DM W 12', 0, 0, 78936, 4, NULL, NULL, '2021-07-06 16:00:04', '2021-07-17 13:15:32'),
-(10, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'dong-ho-atlantic-swiss-at-223464513', 6, 1, 0, 25000000, 0, '2021-07-06__1029860979-dng-h-chnh-hng-32.jpg', 10, 0, 1, 7, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'Đồng hồ Atlantic Swiss AT-22346.45.13', 4, 16, 8547, 1, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 16:01:48', '2021-07-17 13:15:38'),
-(11, 'test create product', 'test-create-product', 5, 1, 0, 100000, 2, '2021-07-13__add-cart.png', 3, 0, 1, 0, 'test create product', 'test create product', 0, 0, 123, 3, '123', '123', '2021-07-13 16:24:02', '2021-07-13 16:24:02');
+(10, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'dong-ho-atlantic-swiss-at-223464513', 6, 1, 0, 25000000, 0, '2021-07-06__1029860979-dng-h-chnh-hng-32.jpg', 12, 0, 1, 7, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'Đồng hồ Atlantic Swiss AT-22346.45.13', 5, 21, 8547, 1, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 16:01:48', '2021-07-18 03:38:27'),
+(11, 'test create product', 'test-create-product', 5, 1, 0, 100000, 12, '2021-07-13__add-cart.png', 5, 0, 1, 1, 'test create product', 'test create product', 2, 9, 123, 3, '123', '123', '2021-07-13 16:24:02', '2021-07-18 05:57:27');
 
 -- --------------------------------------------------------
 
@@ -439,7 +514,12 @@ INSERT INTO `ratings` (`id`, `r_user_id`, `r_product_id`, `r_number`, `r_status`
 (4, 1, 10, 5, 1, '123123123', '2021-07-07 04:26:29', '2021-07-07 04:26:29'),
 (5, 1, 10, 1, 1, '123', '2021-07-07 04:26:43', '2021-07-07 04:26:43'),
 (6, 1, 5, 5, 1, '333333', '2021-07-17 06:32:41', '2021-07-17 06:32:41'),
-(7, 1, 5, 5, 1, '123321123', '2021-07-17 06:32:49', '2021-07-17 06:32:49');
+(7, 1, 5, 5, 1, '123321123', '2021-07-17 06:32:49', '2021-07-17 06:32:49'),
+(8, 1, 11, 5, 1, 'đánh giá', '2021-07-17 15:05:50', '2021-07-17 15:05:50'),
+(9, 1, 11, 4, 1, '4 sao', '2021-07-17 15:06:00', '2021-07-17 15:06:00'),
+(10, 2, 10, 5, 1, 'test sp', '2021-07-18 03:38:27', '2021-07-18 03:38:27'),
+(11, 2, 6, 5, 1, '123', '2021-07-18 03:44:59', '2021-07-18 03:44:59'),
+(12, 2, 6, 5, 1, '321123123', '2021-07-18 03:45:10', '2021-07-18 03:45:10');
 
 -- --------------------------------------------------------
 
@@ -499,7 +579,19 @@ INSERT INTO `transactions` (`id`, `tst_user_id`, `tst_total_money`, `tst_name`, 
 (5, 1, 35521200, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', '1234t5r6yu', 1, 1, '2021-07-16 10:47:46', '2021-07-16 10:47:46'),
 (6, 1, 1350000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', 'aaa', 1, 1, '2021-07-16 11:10:52', '2021-07-16 11:10:52'),
 (7, 2, 450000, 'user', 'user@gmail.com', '0355578896', NULL, '123123', -1, 1, '2021-07-17 04:31:01', '2021-07-17 14:27:51'),
-(8, 1, 450000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', '1', 3, 1, '2021-07-17 04:31:15', '2021-07-17 13:42:11');
+(8, 1, 450000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', '1', 3, 1, '2021-07-17 04:31:15', '2021-07-17 13:42:11'),
+(9, 2, 72250000, 'user', 'user@gmail.com', '0355578896', NULL, '123', -1, 1, '2021-07-18 03:42:36', '2021-07-18 03:49:14'),
+(10, 1, 72250000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', NULL, 1, 1, '2021-07-18 10:17:56', '2021-07-18 10:17:56'),
+(11, 2, 16065000, 'user', 'user@gmail.com', '0367530598', 'bacninh', '123', 1, 1, '2021-07-18 11:26:45', '2021-07-18 11:26:45'),
+(17, 2, 16123000, 'user', 'user@gmail.com', '0355578896', 'yên lãng', '123', 1, 2, '2021-07-18 11:52:12', NULL),
+(18, 2, 16123000, 'user', 'user@gmail.com', '0355578896', 'yên lãng', '123', -1, 2, '2021-07-11 11:52:16', '2021-07-20 12:59:14'),
+(19, 2, 32246000, 'user', 'user@gmail.com', '0355578896', '123123123123', '123123123', 1, 2, '2021-07-18 11:52:20', NULL),
+(20, 2, 58000, 'user', 'user@gmail.com', '0355578896', 'yên lãng', '123', 1, 1, '2021-07-18 11:46:13', '2021-07-18 11:46:13'),
+(21, 2, 58000, 'user', 'user@gmail.com', '0355578896', '123', '123', 3, 1, '2021-07-18 11:47:14', '2021-07-20 12:59:10'),
+(22, 2, 116000, 'user', 'user@gmail.com', '0355578896', '123123123123', '123', 1, 1, '2021-07-18 11:47:55', '2021-07-18 11:47:55'),
+(23, 2, 144500000, 'user', 'user@gmail.com', '0355578896', 'yên lãng', '123', 2, 2, '2021-07-18 11:52:24', '2021-07-20 12:59:05'),
+(27, 1, 88000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', '123', 1, 2, '2021-07-18 11:58:44', '2021-07-18 11:58:44'),
+(28, 2, 72250000, 'user', 'user@gmail.com', '0355578896', 'aaaaaa', NULL, 3, 2, '2021-07-20 12:39:29', '2021-07-20 12:59:21');
 
 -- --------------------------------------------------------
 
@@ -560,9 +652,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `phone`, `address`, `avatar`, `role`) VALUES
 (1, 'Admin Supper', 'admin@gmail.com', '2021-07-06 15:15:31', '$2y$10$HAbLRd3jaXJer.bhKculjeelJfRSg5KMX2Y0H.yn1dkmL/.qoLj5q', NULL, '2021-07-06 16:27:35', '2021-07-11 11:35:12', '0377708868', 'bac ninh', NULL, 1),
-(2, 'user', 'user@gmail.com', '2021-07-17 04:29:53', '$2y$10$aysdWsjtbGREMO5a83HtGOIilQ6i3kNYMHX.qkKfb6Cc.rMNvjara', NULL, '2021-07-06 16:28:16', '2021-07-17 04:29:53', '0355578896', NULL, NULL, 2),
+(2, 'user', 'user@gmail.com', '2021-07-18 10:27:02', '$2y$10$DL/stEotNM6iaBXm/MlCluhKFwWZ.A8X0rhXkU.ELvjOBsQURfy9e', NULL, '2021-07-06 16:28:16', '2021-07-18 05:28:12', '0355578896', NULL, NULL, 2),
 (3, 'map hari', 'laravel1998bn@gmail.com', '2021-07-06 16:26:50', '$2y$10$gXPg/uTQdmmV4E2qtkla4upHZrCHjt37u6zNYOoGlJowvv.RQWs2a', NULL, '2021-07-06 16:26:50', '2021-07-06 16:26:50', '556533201', NULL, NULL, 2),
-(4, 'Đại Hải', 'hai1998bn@gmail.com', '2021-07-07 03:38:29', '$2y$10$yMtLxfLZZlopxHZzL/qjUOQ0D5YqkGVV4PGpHUroF0sDfbuO7OpSq', NULL, '2021-07-07 03:38:29', '2021-07-07 03:38:29', '201805490', NULL, NULL, 2);
+(4, 'Đại Hải', 'hai1998bn@gmail.com', '2021-07-07 03:38:29', '$2y$10$yMtLxfLZZlopxHZzL/qjUOQ0D5YqkGVV4PGpHUroF0sDfbuO7OpSq', NULL, '2021-07-07 03:38:29', '2021-07-07 03:38:29', '201805490', NULL, NULL, 2),
+(5, 'Hai Ngo Van', 'hainv@hblab.vn', '2021-07-18 03:36:27', '$2y$10$jJgKzsS1lbSU7uuUc6nZ4e4UbaGZuNiNjcdhnj4nkkINkeY7ZJS0G', NULL, '2021-07-18 03:36:27', '2021-07-18 03:36:27', '300062304', NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -684,6 +777,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Chỉ mục cho bảng `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
@@ -752,7 +851,7 @@ ALTER TABLE `articles`
 -- AUTO_INCREMENT cho bảng `attributes`
 --
 ALTER TABLE `attributes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `attribute_product`
@@ -782,7 +881,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT cho bảng `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT cho bảng `menus`
@@ -794,25 +893,31 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT cho bảng `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `slides`
@@ -824,7 +929,7 @@ ALTER TABLE `slides`
 -- AUTO_INCREMENT cho bảng `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT cho bảng `type_products`
@@ -836,7 +941,7 @@ ALTER TABLE `type_products`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `user_favourite`
