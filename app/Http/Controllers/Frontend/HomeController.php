@@ -194,7 +194,7 @@ class HomeController extends FrontendController
             }
         }
         if ($request->search) {
-            $products->where('pro_name', 'like', '%' . $request->search . '%');
+            $products->where('pro_name', 'like', '%' . $request->search . '%')->orWhere('pro_price', 'like', '%' . $request->search . '%');
         }
 
         $modelProduct = new Product();

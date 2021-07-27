@@ -49,7 +49,7 @@ class AdminProductController extends Controller
             $products->where('id', $id);
         }
         if ($name = strtolower($this->stripVN($request->name))) {
-            $products->where('pro_name', 'like', "%{$name}%");
+            $products->where('pro_name', 'like', '%' . $request->name . '%');
         }
         if ($idCategory = $request->category) {
             $categorySearch = Category::where('c_parent_id', $parentId = Category::where('id', $idCategory)
@@ -202,37 +202,47 @@ class AdminProductController extends Controller
     public function delete(Request $request, $id)
     {
         DB::beginTransaction();
-        $product = Product::with('images', 'attributes', 'ratings')->findOrfail($id);
+        $product = Product::with('images', 'attributes', 'ratings', 'orders')->findOrfail($id);
         if ($product) {
-            try {
-                foreach ($product->images as $item) {
-                    $this->deleteImage($request, $item->id);
+            // dd(empty($product->orders[0]));
+
+            if (empty($product->orders[0])) {
+                try {
+                    foreach ($product->images as $item) {
+                        $this->deleteImage($request, $item->id);
+                    }
+                    foreach ($product->attributes as $item) {
+                        $product->attributes()->detach($item->id);
+                    }
+                    foreach ($product->ratings as $item) {
+                        $item->delete();
+                    }
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    $request->session()->flash('toastr', [
+                        'type'      => 'error',
+                        'message'   => 'Có lỗi xảy ra, liên hệ Admin !'
+                    ]);
+                    return redirect()->back();
                 }
-                foreach ($product->attributes as $item) {
-                    $product->attributes()->detach($item->id);
-                }
-                foreach ($product->ratings as $item) {
-                    $item->delete();
-                }
-            } catch (\Exception $e) {
-                DB::rollBack();
+                // $attributeOld=DB::table('attribute_product')
+                //     ->where('ap_product_id',$id)
+                //     ->pluck('id')
+                //     ->toArray();
+                $product->delete();
+                DB::commit();
                 $request->session()->flash('toastr', [
-                    'type'      => 'error',
-                    'message'   => 'Có lỗi xảy ra, liên hệ Admin !'
+                    'type'      => 'success',
+                    'message'   => 'Delete thành công !'
                 ]);
                 return redirect()->back();
             }
-            // $attributeOld=DB::table('attribute_product')
-            //     ->where('ap_product_id',$id)
-            //     ->pluck('id')
-            //     ->toArray();
-            $product->delete();
+            $request->session()->flash('toastr', [
+                'type'      => 'error',
+                'message'   => 'Do sản phẩm đang thuộc một đơn hàng !'
+            ]);
+            return redirect()->back();
         }
-        DB::commit();
-        $request->session()->flash('toastr', [
-            'type'      => 'success',
-            'message'   => 'Delete thành công !'
-        ]);
         return redirect()->back();
     }
 
