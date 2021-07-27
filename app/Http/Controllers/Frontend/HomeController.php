@@ -141,7 +141,9 @@ class HomeController extends FrontendController
 
         // lấy ra sản phẩm
         $products = Product::query();
-
+        if ($request->search) {
+            $products->where('pro_name', 'like', '%' . $request->search . '%')->orWhere('pro_price', 'like', '%' . $request->search . '%');
+        }
         // loc theo giá
         if ($request->price) {
             $price = $request->price;
@@ -193,9 +195,7 @@ class HomeController extends FrontendController
                     break;
             }
         }
-        if ($request->search) {
-            $products->where('pro_name', 'like', '%' . $request->search . '%')->orWhere('pro_price', 'like', '%' . $request->search . '%');
-        }
+
 
         $modelProduct = new Product();
 
