@@ -249,6 +249,13 @@ class ShoppingCartController extends Controller
             $tt = 'Thanh toán khi giao hàng (COD)';
             return redirect()->route('get.success.list')->with(['success' => 'ok', 'email' => $email, 'address' => $address, 'name' => $name, 'phone' => $phone, 'tt' => $tt]);
         } else {
+            if (\Cart::count() <= 0) {
+                $request->session()->flash('toastr', [
+                    'type' => 'warning',
+                    'message' => 'Không có sản phẩm nào để thanh toán !',
+                ]);
+                return redirect('/');
+            }
             $tst_total_money = str_replace(',', '', \Cart::subtotal(0));
             $data = $request->except('_token', 'pay');
             $data['tst_user_id'] = Auth::user()->id;
