@@ -50,15 +50,29 @@ class HomeController extends FrontendController
             ->get();
 
         // danh sach san pham theo category đồng hồ
-        $proCate3 = Category::with([
-            'products' => function ($q) use ($STATUS_ACTIVE) {
-                return $q->where('pro_active', $STATUS_ACTIVE)->orderByDesc('id');
-            },
-        ])->where('c_parent_id', $DHCH)
-            ->limit(3)
-            ->get();
+        // \DB::enableQueryLog();
+        // $proCate3 = Category::with([
+        //     'products' => function ($q) use ($STATUS_ACTIVE) {
+        //         return $q->where('pro_active', $STATUS_ACTIVE)->orderByDesc('id');
+        //     }
+        // ])->where('c_parent_id', $DHCH)
+        //     ->limit(3)
+        //     ->get();
 
+        $proCate3 = Category::where('c_parent_id', $DHCH)->take(3)->get()->map(function($result) {
+            $result->setRelation('products', $result->products->take(2));
+            return $result;
+        });
+        // ->orderByDesc('id')
+    //         return Feed::whereUserId($user_id)->take(10)->get()->map(function($feed) {
+    //             $feed->setRelation('comments', $feed->comments->take(5));
+    //             return $feed;
+    //    });
+            // dd(\DB::getQueryLog());
         // dd($proCate3);
+
+        // ->sortByDesc('id'))
+        // ->where('pro_active',$STATUS_ACTIVE)
 
         // lấy ra image đồng hồ có
         $imageCate = Category::where([['c_status', '=', $STATUS_ACTIVE], ['c_parent_id', '>', 0]])

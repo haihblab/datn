@@ -23,7 +23,7 @@
             @endif
         </div>
         <div class="count">
-            <div class="bg" style="width: {{ (($item->pro_number - $item->pro_pay) * 100) / $item->pro_number }}%"></div>
+            <div class="bg" style="width: {{ $item->pro_number ? (($item->pro_number - $item->pro_pay) * 100) / $item->pro_number : 0 }}%"></div>
             <span class="text">Còn lại {{ $item->pro_number - $item->pro_pay }}</span>
         </div>
     </div>

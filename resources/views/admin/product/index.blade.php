@@ -86,13 +86,14 @@
 <script>
     $(document).ready(function(){
   
-        $(document).on('click', '.page-link', function(event){
-            event.preventDefault(); 
-            var page = $(this).attr('href').split('page=')[1];
-            let URL = $(this).attr('href');
-            console.log(URL)
-            fetch_data(URL);
-        });
+        // $(document).on('click', '.page-link', function(event){
+        //     event.preventDefault(); 
+        //     var page = $(this).attr('href').split('page=')[1];
+        //     let URL = $(this).attr('href');
+
+        //     console.log(URL);
+        //     // fetch_data(URL);
+        // });
         $(document).on('click','.status-actives',function(e){
             e.preventDefault();
             var URL = $(this).attr('href');
@@ -112,8 +113,6 @@
                 }
             });
         }
-
-
   
   });
   </script> 

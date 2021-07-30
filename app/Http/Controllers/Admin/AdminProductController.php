@@ -42,6 +42,34 @@ class AdminProductController extends Controller
                 $product->save();
             }
         }
+        // $products = Product::with('category:id,c_name')->select(DB::raw('(pro_price*(100-pro_sale)/100) as total, id, pro_name'));
+        // dd($products->orderBy('total', 'DESC')->get());
+        // $products = DB::table('products')->select(DB::raw('(pro_price*(100-pro_sale)/100) as total, id, pro_name'))
+        // $select = DB::raw('(pro_price*(100-pro_sale)/100) as total,
+        //     id,
+        //     pro_name,
+        //     pro_category_id,
+        //     pro_type_product_id,
+        //     pro_user_id,
+        //     pro_price,
+        //     pro_sale,
+        //     pro_avatar,
+        //     pro_view,
+        //     pro_hot,
+        //     pro_active
+        //     pro_pay,
+        //     pro_description,
+        //     pro_content,
+        //     pro_review_total,
+        //     pro_review_star,
+        //     pro_number,
+        //     pro_country,
+        //     pro_energy,
+        //     pro_resistant,
+        //     created_at,
+        //     updated_at
+        // ');
+        // $products = Product::with('category:id,c_name')->select($select);
         $products = Product::with('category:id,c_name');
         $categorys = Category::all();
 
@@ -49,7 +77,7 @@ class AdminProductController extends Controller
             $products->where('id', $id);
         }
         if ($name = strtolower($this->stripVN($request->name))) {
-            $products->where('pro_name', 'like', '%' . $request->name . '%');
+            $products->where('pro_name', 'like', '%' . $request->name . '%')->orWhere('pro_price', 'like', '%' . $request->name . '%');
         }
         if ($idCategory = $request->category) {
             $categorySearch = Category::where('c_parent_id', $parentId = Category::where('id', $idCategory)
@@ -79,10 +107,12 @@ class AdminProductController extends Controller
                     $products->orderBy('id', 'DESC');
                     break;
                 case 3:
-                    $products->orderBy('pro_price', 'DESC');
+                    // $products->orderBy('total', 'ASC');
+                    $products->orderBy('pro_price', 'ASC');
                     break;
                 case 4:
-                    $products->orderBy('pro_price', 'ASC');
+                    // $products->orderBy('total', 'DESC');
+                    $products->orderBy('pro_price', 'DESC');
                     break;
             }
         } else {
