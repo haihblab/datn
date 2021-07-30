@@ -14,16 +14,34 @@ class AdminRatingController extends Controller
     {
         if ($request->ajax()) {
             if ($request->has('r_status')) {
-                $id = $request->r_id;
-                $rating = Rating::find($id);
-                if ($request->r_status == 1) {
-                    $rating->r_status = 0;
-                    $rating->save();
+                DB::beginTransaction();
+                try {
+                    $id = $request->r_id;
+                    $rating = Rating::find($id);
+                    $product = Product::find($rating->r_product_id);
+    
+                    if ($request->r_status == 1) {
+                        $rating->r_status = 0;
+                        $rating->save();
+                        $product->pro_review_total = $product->pro_review_total-1;
+                        $product->pro_review_star = $product->pro_review_star - $rating->r_number;
+                        $product->save();
+                    }
+                    if ($request->r_status == 2) {
+                        $rating->r_status = 1;
+                        $product->pro_review_total = $product->pro_review_total + 1;
+                        $product->pro_review_star = $product->pro_review_star + $rating->r_number;
+                        $product->save();
+                        $rating->save();
+                    }
+                    DB::commit();
+                } catch (\Exception $e) {
+                    return response([
+                        'error' => $e->getMessage()
+                    ]);
+                    DB::rollBack();
                 }
-                if ($request->r_status == 2) {
-                    $rating->r_status = 1;
-                    $rating->save();
-                }
+                
             }
 
             $ratings     = Rating::with('product:id,pro_name,pro_slug', 'user:id,name')
