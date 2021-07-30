@@ -29,7 +29,7 @@ class UserTransactionController extends Controller
         if ($status = $request->status) {
             $transactions->where('tst_status', $status);
         }
-        $transactions = $transactions->orderByDesc('id')->paginate(10);
+        $transactions = $transactions->orderByDesc('id')->get();
         // if ($request->export) {
         //     return Excel::download(new TransactionExport($transactions),'don-hang.xlsx');
         // }
