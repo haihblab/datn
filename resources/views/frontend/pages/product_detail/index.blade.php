@@ -141,10 +141,10 @@
                                     <span class="text">Độ chịu nước</span>
                                     <span class="num">{{ $product->pro_resistant }}</span>
                                 </div>
-                                <div class="item">
+                                {{-- <div class="item">
                                     <span class="text">Chất liệu mặt</span>
                                     <span class="num">Kính sapphire </span>
-                                </div>
+                                </div> --}}
                                 <div class="item">
                                     <span class="text">Năng lượng sử dụng</span>
                                     <span class="num">{{ $product->pro_energy }}</span>
@@ -226,10 +226,10 @@
                                         <p class="text1">Chống nước</p>
                                         <p class="text2"><a href="javascript://" title="">{{ $product->pro_resistant }}</a></p>
                                     </div>
-                                    <div class="item">
+                                    {{-- <div class="item">
                                         <p class="text1">Chất liệu mặt</p>
                                         <p class="text2">Kính sapphire </p>
-                                    </div>
+                                    </div> --}}
                                     <div class="item">
                                         <p class="text1">Năng lượng sử dụng</p>
                                         <p class="text2">{{ $product->pro_energy }}</p>
@@ -409,10 +409,10 @@
                                             <p class="text1">Chống nước</p>
                                             <p class="text2"><a href="javascript://" title="">{{ $product->pro_resistant }}</a></p>
                                         </div>
-                                        <div class="item">
+                                        {{-- <div class="item">
                                             <p class="text1">Chất liệu mặt</p>
                                             <p class="text2">Kính sapphire </p>
-                                        </div>
+                                        </div> --}}
                                         <div class="item">
                                             <p class="text1">Năng lượng sử dụng</p>
                                             <p class="text2">{{ $product->pro_energy }}</p>

@@ -83,11 +83,12 @@ class CategoryController extends FrontendController
         }
 
         // lọc theo attribute
-        if (!empty($paramAtbSearch)) {
-            $products->whereHas('attributes', function ($query) use ($paramAtbSearch) {
-                $query->whereIn('ap_attribute_id', $paramAtbSearch);
-            });
-        }
+        // if (!empty($paramAtbSearch)) {
+        //     $products->whereHas('attributes', function ($query) use ($paramAtbSearch) {
+        //         $query->whereIn('ap_attribute_id', $paramAtbSearch);
+        //     });
+        // }
+
 
         // if($request->search){
         //     $products->where('pro_name','like','%'.$request->search.'%');
@@ -108,6 +109,13 @@ class CategoryController extends FrontendController
                     break;
             }
         }
+        // if (!empty($paramAtbSearch)) {
+        //     foreach ($paramAtbSearch as $key => $value) {
+        //         $products->whereHas('attributes', function ($query) use ($value) {
+        //             $query->where('ap_attribute_id', (int)$value);
+        //         });
+        //     }
+        // }
 
         $modelProduct = new Product();
 

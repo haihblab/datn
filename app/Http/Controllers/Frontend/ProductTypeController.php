@@ -106,6 +106,14 @@ class ProductTypeController extends FrontendController
             }
         }
 
+        // if (!empty($paramAtbSearch)) {
+        //     foreach ($paramAtbSearch as $key => $value) {
+        //         $products->whereHas('attributes', function ($query) use ($value) {
+        //             $query->where('ap_attribute_id', (int)$value);
+        //         });
+        //     }
+        // }
+
         $modelProduct = new Product();
 
         $products = $products->where('pro_active', 1)->paginate(10);

@@ -60,7 +60,7 @@ class HomeController extends FrontendController
         //     ->get();
 
         $proCate3 = Category::where('c_parent_id', $DHCH)->take(3)->get()->map(function($result) {
-            $result->setRelation('products', $result->products->take(2));
+            $result->setRelation('products', $result->products->take(6));
             return $result;
         });
         // ->orderByDesc('id')
