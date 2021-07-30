@@ -291,7 +291,6 @@
                 let $this = $(this);
                 let $input = $this.parent().prev();
                 let number = parseInt($input.val());
-
                 //let price = $this.parent().attr('data-price');
                 let rowId = $this.parent().attr('data-id-item');
                 let URL = $this.parent().attr('data-url');
@@ -306,16 +305,30 @@
                         productID:productID
                     },
                     success:function(results){
-                        //console.log(typeof results.total);
-                        if(typeof results.total !== "undefined"){
+                        // console.log(results);
+                        // if(typeof results.total !== "undefined"){
+                        //     $input.val(number);
+                        //     $('#payOrder').text(results.total);
+                        //     toastr.success(results.data);
+                        //     $('.js-update-qty').text(results.total_qty);
+                        //     $this.parents('form').find('.js-total-item-'+rowId).text(results.totalitem);
+                        // }else{
+                        //     $input.val(number -1);
+                        //     toastr.error(results.data);
+                        // }
+                        console.log(results);
+                        if(!results.error){
                             $input.val(number);
                             $('#payOrder').text(results.total);
                             toastr.success(results.data);
                             $('.js-update-qty').text(results.total_qty);
                             $this.parents('form').find('.js-total-item-'+rowId).text(results.totalitem);
                         }else{
-                            $input.val(number -1);
+                            $input.val(1);
                             toastr.error(results.data);
+                            $('#payOrder').text(results.total);
+                            $('.js-update-qty').text(results.total_qty);
+                            $this.parents('form').find('.js-total-item-'+rowId).text(results.totalitem);
                         }
                     },
                     error:function(error){
