@@ -27,6 +27,11 @@ Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->grou
     Route::group(['prefix' => 'admin-datn'], function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('admin.index');
         Route::get('ajax-read-notify/{id}', [AdminHomeController::class, 'readNotify'])->name('ajax.read.notify');
+        
+        
+        
+        
+        // Route::get('ajax-read-notify-all', [AdminHomeController::class, 'readNotifyAll'])->name('ajax.read.notify.all');
 
         Route::group(['prefix' => 'category'], function () {
             Route::get('/', [AdminCategoryController::class, 'index'])->name('admin.category.index');

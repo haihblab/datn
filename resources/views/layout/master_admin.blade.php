@@ -96,7 +96,7 @@
                     @endforeach
                     </ul>
                   </li>
-                  <li class="footer"><a href="#">See All Messages</a></li>
+                  <li class="footer"><a href="" class="" >Read aLL Messages</a></li>
                 </ul>
               </li>
               <!-- Notifications: style can be found in dropdown.less -->
@@ -547,19 +547,41 @@
                         url:URL,
                         type:"GET",
                         success:function(results){
-                            if(results.messages){
-                                toastr.info(results.messages);
-                                totals -= 1;
-                                if (totals == 0) {
-                                    $('.total-message').css("display", "none");
-                                }
-                                $('.total-message').html(totals);
+                            if (results) {
+                              // toastr.info(results.messages);
+                              totals -= 1;
+                              if (totals == 0) {
+                                  $('.total-message').css("display", "none");
+                              }
+                              $('.total-message').html(totals);
                             }
                         }
                     });
                 }
             });
         });
+
+        // $(document).ready(function(){
+        //     $(document).on('click','.ajax-read-notify-all',function(e){
+        //         e.preventDefault();
+        //         let URL = $(this).attr('href');
+        //         $(this).css("background-color", "#ffffff");
+        //         var totals = parseInt($('.total-message').html());
+        //         if(totals > 0) {
+        //             console.log(totals);
+        //             $.ajax({
+        //                 url:URL,
+        //                 type:"GET",
+        //                 success:function(res){
+        //                     if (res) {
+        //                       // toastr.info(results.messages);
+        //                       $('.total-message').css("display", "none");
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
 
     </script>
     <script>

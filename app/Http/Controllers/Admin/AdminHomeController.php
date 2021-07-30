@@ -163,9 +163,21 @@ class AdminHomeController extends Controller
     {
         if ($request->ajax()) {
             $notify = DB::table('notifications')->where('id', $id)->update(['read_at' => Carbon::now()]);
-            return response([
-                'messages' => 'Read notify !'
-            ]);
+            return true;
         }
     }
+
+    // public function readNotifyAll(Request $request)
+    // {
+    //     if($request->ajax()) {
+    //         $notifies = DB::table('notifications')->where('read_at', NULL)->update(array('read_at' => Carbon::now()));
+    //         // return response([
+    //         //     'notifies' => $notifies
+    //         // ]);
+    //         // foreach($notifies as $notify) {
+    //         //     $notify->update(['read_at' => Carbon::now()]);
+    //         // }
+    //         return true;
+    //     }
+    // }
 }
