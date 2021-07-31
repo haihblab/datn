@@ -83,7 +83,7 @@
                                         {{ $item->tst_type == config('contants.PTTT.THUONG') ? 'Thường' : 'Online' }}
                                     </span>
                                 </td>
-                                <td>{{ $item->created_at }}</td>
+                                <td>{{ date("d/m/Y H:i:s", strtotime($item->created_at)) }}</td>
                                 <td>
                                     <a href="{{ route('admin.transaction.detail',$item->id) }}" class="btn btn-xs btn-info js-preview-transaction"><i class="fa fa-eye"></i>View</a>
 
