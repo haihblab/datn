@@ -57,7 +57,7 @@
                                         </span>
                                     </td>
                                     <td>{{ $item->created_at }}</td>
-                                    <td></td>
+                                    <td><a href="{{route('get.user.transaction.detail', $item->id)}}">xem</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

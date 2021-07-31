@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
 class UserTransactionController extends Controller
 {
     public function index(Request $request)
@@ -38,5 +39,15 @@ class UserTransactionController extends Controller
             'query'         =>  $request->query()
         ];
         return view('frontend.user.transaction', $viewData);
+    }
+
+    public function detail(Request $request, $id)
+    {
+        $transaction = Transaction::where([
+            'tst_user_id' => Auth::id(),
+            'id' => $id
+        ])->first();
+        $orders = Order::where('od_transaction_id', $transaction->id)->get();
+        return view('frontend.user.detail_transaction', compact('transaction', 'orders'));
     }
 }

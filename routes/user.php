@@ -16,6 +16,7 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
     Route::post('change-password', [UserInfoController::class, 'postChangePassword']);
 
     Route::get('transaction', [UserTransactionController::class, 'index'])->name('get.user.transaction');
+    Route::get('transaction-detail/{id}', [UserTransactionController::class, 'detail'])->name('get.user.transaction.detail');
 
     Route::get('favourite', [UserFavouriteController::class, 'index'])->name('get.user.favourite');
     Route::post('ajax-favourite/{id}', [UserFavouriteController::class, 'addFavourite'])->name('ajax_get.user.add');
