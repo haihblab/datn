@@ -82,6 +82,11 @@ class HomeController extends FrontendController
 
         $typeproducts = TypeProduct::where('tp_hot', $HOT_HOT)->get();
 
+        $productNews = Product::whereMonth('created_at', date('m'))->where('pro_active', $STATUS_ACTIVE)->take(2)->orderBy('created_at', 'DESC')->get();
+
+        // dd($productNews);
+
+
         $viewData = [
             'proHot' => $proHot,
             'title_page' => env('APP_NAME'),
@@ -94,6 +99,7 @@ class HomeController extends FrontendController
             'proCate3' => $proCate3,
             'imageCate' => $imageCate,
             'typeproducts' => $typeproducts,
+            'productNews' => $productNews,
         ];
         return view('frontend.pages.home.index', $viewData);
     }

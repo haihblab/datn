@@ -170,6 +170,24 @@
     </div>
 </div>
 
+<div class="product product2">
+    <div class="wrp">
+        <div class="left">
+            <a href="/flash-sale.html" title="Khuyến mại" class="titleCate">Sản phẩm mới</a>
+            {{-- <div class="contCate">
+                Những mẫu đồng hồ đang hot năm 2020 với giá tốt. Chương trình diễn ra hàng ngày với các sản phẩm khác nhau. Nhanh tay sở hữu ngay!!!
+            </div> --}}
+        </div>
+        <div class="right">
+            <div class="group slide2">
+                @foreach ($productNews as $item)
+                    @include('frontend.components._inc_item_product',['item'=>$item])
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="cb"></div>
 @foreach ($proCate3 as $catepro)
     <div class="product">
