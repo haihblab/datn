@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,18 +52,32 @@ class AdminTransactionController extends Controller
     {
         $transaction = Transaction::find($id);
         if ($transaction) {
-            switch ($action) {
-                case 'process':
-                    $transaction->tst_status = 2;
-                    break;
-                case 'success':
-                    $transaction->tst_status = 3;
-                    break;
-                case 'cancel':
-                    $transaction->tst_status = -1;
-                    break;
+            if($transaction->tst_status != -1) {
+                switch ($action) {
+                    case 'process':
+                        $transaction->tst_status = 2;
+                        break;
+                    case 'success':
+                        $transaction->tst_status = 3;
+                        break;
+                    case 'cancel':
+                        $transaction->tst_status = -1;
+                        DB::beginTransaction();
+                        try {
+                            $orders = Order::where('od_transaction_id', $id)->get();
+                            foreach ($orders as $order) {
+                                Product::where('id',$order->od_product_id)->decrement('pro_pay', $order->od_qty);
+                                // Product::where('id',$order->od_product_id)->decrement('pro_number', $order->od_qty);
+                            }
+                        } catch (\Exception $e) {
+                            DB::rollBack();
+                            return redirect()->back();
+                        }
+                        DB::commit();
+                        break;
+                }
+                $transaction->save();
             }
-            $transaction->save();
         }
         return redirect()->back();
     }
@@ -105,4 +120,32 @@ class AdminTransactionController extends Controller
         }
         return redirect()->back();
     }
+
+
+    // if($transaction->tst_status != -1) {
+    //     switch ($action) {
+    //         case 'process':
+    //             $transaction->tst_status = 2;
+    //             break;
+    //         case 'success':
+    //             $transaction->tst_status = 3;
+    //             break;
+    //         case 'cancel':
+    //             $transaction->tst_status = -1;
+    //             DB::beginTransaction();
+    //             try {
+    //                 $orders = Order::where('od_transaction_id', $id)->get();
+    //                 foreach ($orders as $order) {
+    //                     Product::where('id',$order->od_product_id)->decrement('pro_pay', $order->od_qty);
+    //                     // Product::where('id',$order->od_product_id)->decrement('pro_number', $order->od_qty);
+    //                 }
+    //             } catch (\Exception $e) {
+    //                 DB::rollBack();
+    //                 return redirect()->back();
+    //             }
+    //             DB::commit();
+    //             break;
+    //     }
+    //     $transaction->save();
+    // }
 }

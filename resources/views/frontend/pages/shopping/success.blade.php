@@ -197,12 +197,12 @@
                 <a href="{{ url('/') }}" class="btn btn-primary cartDestroy">
                   Tiếp tục mua hàng
                 </a>
-                <a onclick="window.print()" class="nounderline print-link" href="javascript:void(0)">
+                {{-- <a onclick="window.print()" class="nounderline print-link" href="javascript:void(0)">
                   <div class="print-link__block clearfix">
                     <i class="fa fa-print icon-print" aria-hidden="true"></i>
                     In
                   </div>
-                </a>
+                </a> --}}
               </div>
             </div>
           </div>
