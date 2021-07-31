@@ -4,7 +4,7 @@
     </style>
 @section('content')
     <section class="py-4 py-lg-5" style="background: white;padding: 20px">
-        <h2>Danh Sách Sản Phẩm Yêu Thích</h2>
+        <h2>Trang chi tiết đơn hàng</h2>
         <div class="row mb-5">
             <div class="col-sm-12">
                 <form role="form" action="" method="POST" enctype="multipart/form-data">
