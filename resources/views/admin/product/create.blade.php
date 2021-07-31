@@ -47,8 +47,9 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
                                         <input type="number" name="pro_price" class="form-control" value="{{ old('pro_price') }}">
-                                        <span class="input-group-addon">.00</span>
+                                        <span class="input-group-addon"></span>
                                 </div>
+                                <small id="emailHelp" class="form-text text-muted "></small>
                                 @if ($errors->first('pro_price'))
                                     <span class="text-danger">{{ $errors->first('pro_price') }}</span>
                                 @endif
@@ -272,7 +273,6 @@
             }
 
 
-
             $('.js-check-type').change(function(){
                 let $this = $(this);
                 let idCategory = this.value;
@@ -293,6 +293,13 @@
                     });
                 }
             });
+
+            // $(document).on('keyup','.pro_price_js',function(e){
+            //     e.preventDefault();
+            //     var res = $(this).val();
+            //     res = new Intl.NumberFormat('en-IN').format(res);
+            //     $('.convert-price-js').html(res + ' vnd');
+            // });
         });
 
     </script>
