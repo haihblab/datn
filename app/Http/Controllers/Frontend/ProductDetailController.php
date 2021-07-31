@@ -51,10 +51,11 @@ class ProductDetailController extends Controller
                 ->get();
 
             $ratingsDashboard = Rating::groupBy('r_number')
-                ->where('r_product_id', $id)
+                ->where(['r_product_id' => $id, 'r_status' => 1])
                 ->select(DB::raw('count(r_number) as count_number'), DB::raw('sum(r_number) as total'))
                 ->addSelect('r_number')
                 ->get()->toArray();
+                // dd($ratingsDashboard);
 
             $ratingDefault = $this->mapRatingDefault();
             // dd($ratingDefault);

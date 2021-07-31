@@ -377,6 +377,12 @@ class AdminProductController extends Controller
                 ->toArray();
         }
 
+        if($categoryId == config('contants.ID_CATEGORY_DEFAULT.DHCH')) {
+            $data_include = view('admin.product.include.data_dh')->render();
+        } else {
+            $data_include = view('admin.product.include.data_pk')->render();
+        }
+
         $typeproducts = TypeProduct::where('tp_category_id', $categoryId)->get();
         $attributes = $this->AttributeGroup(Attribute::where('atb_category_id', $categoryId)->get());
         $type_product = view('admin.product.data_type_product', compact('typeproducts'))->render();
@@ -385,7 +391,8 @@ class AdminProductController extends Controller
         return response([
             'type_product' => $type_product ?? null,
             'attribute' => $attribute ?? null,
-            'id' => $idProduct ?? null
+            'id' => $idProduct ?? null,
+            'data_include' => $data_include ?? null
         ]);
     }
 

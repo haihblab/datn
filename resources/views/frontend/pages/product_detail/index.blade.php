@@ -618,12 +618,13 @@
                     data:$('#form-review').serialize(),
                     success:function(results){
                         $('#form-review')[0].reset();
-                        console.log(results.html);
+                        console.log(results);
                         if(results.html){
                             if($('.ratingLst .par').length > 4) {
                                 $('.ratingLst .par').last().remove();
                             }
                             $('.ratingLst').prepend(results.html);
+                            $('#data-start-rating').html(results.data_start_rating);
                             $('#form-review').hide(1000);
                         }
                         toastr.success(results.messages);
