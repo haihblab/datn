@@ -24,6 +24,7 @@ class RegisterController extends Controller
             'password' => bcrypt($request->input('password')),
             'role' => config('contants.ROLE.USER'),
             'phone' => $request->input('phone'),
+            'address' => $request->input('address'),
         ]);
         $user->notify(new VerifyEmail());
         Auth::login($user);

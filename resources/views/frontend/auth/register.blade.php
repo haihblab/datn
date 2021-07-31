@@ -58,6 +58,13 @@
                                         <span class="text-danger cRed">{{ $errors->first('password') }}</span>
                                     @endif --}}
                                 </div>
+                                <div class="item">
+                                    <p class="label">Địa chỉ <span class="cRed">(*)</span></p>
+                                    <input type="address" name="address" value=""   placeholder="nhập địa chỉ" required  />
+                                    {{-- @if ($errors->first('address'))
+                                        <span class="text-danger cRed">{{ $errors->first('address') }}</span>
+                                    @endif --}}
+                                </div>
                                 <div class="cb h10"></div>
                                 <div class="btnThanhToan">
                                     <button class="tac"  type="submit" style="margin: auto;">
