@@ -174,6 +174,46 @@
                 </div> --}}
             </div>
         </div>
+        <div class="col-md-5">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">top sản phẩm bán trong tháng 7</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body" style="">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(isset($productsT7))
+                                    @foreach ($productsT7 as $key =>$item)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Name: {{ $item->product->pro_name }}</li>
+                                                    {{-- <li>Email: {{ $$item->product->pro_price }}</li> --}}
+                                                    <li>tổng sô: {{$item->total}}</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 @endsection

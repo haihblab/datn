@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\HelpersClass\Date;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Product;
 // use App\Http\Requests\AdminStatisticalRequest;
 // use App\Models\Product;
 use App\Models\Transaction;
@@ -233,6 +235,21 @@ class AdminStatisticalController extends Controller
             $arrRevenueTransactionMonthCancel[] = (int) $total;
         }
         // dd($arrRevenueTransactionMonthDefault);
+        // $moneyTransaction = $moneyTransaction
+        // ->whereBetween(DB::raw('DATE(created_at)'), [$request->dateBefore, $request->dateAfter])
+        // ->select(DB::raw('sum(tst_total_money) as totalMoney'), DB::raw('DATE(created_at) as day'))
+        // ->groupBy('day')
+        // ->get();
+        // top product t7
+        $productsT7 = Order::with('product')->whereMonth('created_at', 7)
+            ->select(DB::raw('sum(od_qty) as total, od_product_id'))
+            ->groupBy('od_product_id')
+            ->orderBy('total', 'DESC')
+            ->take(5)
+            ->get();
+
+            // dd($products);
+
 
         $viewData = [
             // 'totalTransactions' => $totalTransactions,
@@ -251,6 +268,7 @@ class AdminStatisticalController extends Controller
             'arrRevenueTransactionMonthProcess' => json_encode($arrRevenueTransactionMonthProcess),
             'arrRevenueTransactionMonthSuccess' => json_encode($arrRevenueTransactionMonthSuccess),
             'arrRevenueTransactionMonthCancel' => json_encode($arrRevenueTransactionMonthCancel),
+            'productsT7' => $productsT7,
         ];
         return view('admin.statistical.index', $viewData);
     }

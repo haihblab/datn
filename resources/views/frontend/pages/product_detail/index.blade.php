@@ -179,10 +179,17 @@
                             <span>(8:30 - 21:30)</span>
                         </div>
                         <div class="btnCart">
+                            @if ($product->pro_number - $product->pro_pay > 0)
+                                <a href="{{ route('get.shopping.add',$product->id) }}" title="Add to cart"  class="muangay js-add-cart">
+                                    <span>Mua ngay</span>
+                                    <span>Giao hàng miễn phí - Thanh toán tại nhà</span>
+                                </a>
+                            @else
                             <a href="{{ route('get.shopping.add',$product->id) }}" title="Add to cart"  class="muangay js-add-cart">
-                                <span>Mua ngay</span>
-                                <span>Giao hàng miễn phí - Thanh toán tại nhà</span>
+                                <span>Đã hết hàng</span>
+                                <span>liên hệ Admin</span>
                             </a>
+                            @endif
                             <a href="{{ route('ajax_get.user.add',$product->id) }}" title=""  class="muatragop {{ !Auth::id() ? 'js-show-login' : 'js-add-favourite' }}">
                                 <span>Yêu Thích</span>
                                 <span>Thêm Sản Phẩm Vào BST Yêu Thích</span>
