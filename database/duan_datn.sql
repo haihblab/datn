@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 27, 2021 lúc 06:49 PM
+-- Thời gian đã tạo: Th1 08, 2022 lúc 11:15 PM
 -- Phiên bản máy phục vụ: 10.4.20-MariaDB
 -- Phiên bản PHP: 7.3.29
 
@@ -293,6 +293,13 @@ CREATE TABLE `jobs` (
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
+(71, 'default', '{\"uuid\":\"d84daabe-702b-483c-8b5d-dfb9483d667a\",\"displayName\":\"App\\\\Notifications\\\\VerifyEmail\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":\"\",\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":16:{s:11:\\\"notifiables\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":4:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";a:1:{i:0;i:9;}s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";}s:12:\\\"notification\\\";O:29:\\\"App\\\\Notifications\\\\VerifyEmail\\\":11:{s:2:\\\"id\\\";s:36:\\\"68cd39ae-ea5b-47a2-9836-f93658afcbb7\\\";s:6:\\\"locale\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}s:8:\\\"channels\\\";a:1:{i:0;s:4:\\\"mail\\\";}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;s:17:\\\"shouldBeEncrypted\\\";b:0;s:3:\\\"job\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}\"}}', 0, NULL, 1630422874, 1630422874);
+
 -- --------------------------------------------------------
 
 --
@@ -382,10 +389,12 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('00fda29f-35a0-44fc-8585-85bca5b9ada7', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-08-28T09:08:53.734586Z\"}', '2021-08-29 10:52:01', '2021-08-28 09:08:53', '2021-08-28 09:08:53'),
 ('11febf87-3f09-47dd-af56-8d5bae06729b', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-17T15:06:00.415439Z\"}', '2021-07-17 15:06:29', '2021-07-17 15:06:00', '2021-07-17 15:06:00'),
 ('1de84192-f320-4714-8080-de112902a7ca', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:40:32.072741Z\"}', '2021-07-18 11:51:20', '2021-07-18 11:40:32', '2021-07-18 11:40:32'),
 ('2347fe67-2d80-4298-a8a7-f54ec39c9ce5', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:47:14.869319Z\"}', '2021-07-18 11:51:29', '2021-07-18 11:47:14', '2021-07-18 11:47:14'),
 ('2aeffd1e-1eec-465f-9b5a-4f6de5d12876', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"map hari\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-06T16:31:05.534104Z\"}', '2021-07-11 11:01:18', '2021-07-06 16:31:05', '2021-07-06 16:31:05'),
+('538e7088-d83a-4edc-83db-f2ffce52e1c5', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-08-29T10:52:30.745171Z\"}', '2021-08-29 10:52:50', '2021-08-29 10:52:30', '2021-08-29 10:52:30'),
 ('5ed36f36-35d8-4c87-a77c-58ce14876148', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"user\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-18T11:47:55.948020Z\"}', '2021-07-18 11:51:26', '2021-07-18 11:47:55', '2021-07-18 11:47:55'),
 ('5f7b947b-1c90-42b3-9dfe-577504e47963', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba mua s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-13T16:10:41.428251Z\"}', '2021-07-16 10:46:20', '2021-07-13 16:10:41', '2021-07-13 16:10:41'),
 ('617e8e93-52e2-404f-b099-974464a96d9f', 'App\\Notifications\\NotificationDatabase', 'App\\Models\\User', 1, '{\"name\":\"Admin Supper\",\"message\":\"V\\u1eeba comment s\\u1ea3n ph\\u1ea9m.\",\"created_at\":\"2021-07-07T04:26:29.451255Z\"}', '2021-07-11 11:01:26', '2021-07-07 04:26:30', '2021-07-07 04:26:30'),
@@ -442,7 +451,9 @@ INSERT INTO `orders` (`id`, `od_transaction_id`, `od_product_id`, `od_sale`, `od
 (32, 23, 4, 15, 2, 72250000, '2021-07-18 11:49:30', '2021-07-18 11:49:30'),
 (36, 27, 11, 12, 1, 88000, '2021-07-18 11:58:44', '2021-07-18 11:58:44'),
 (37, 28, 4, 15, 1, 72250000, '2021-07-20 12:39:29', '2021-07-20 12:39:29'),
-(38, 29, 2, 15, 1, 16065000, '2021-07-23 07:04:22', '2021-07-23 07:04:22');
+(38, 29, 2, 15, 1, 16065000, '2021-07-23 07:04:22', '2021-07-23 07:04:22'),
+(39, 30, 10, 0, 8540, 25000000, '2021-08-28 09:08:53', '2021-08-28 09:08:53'),
+(40, 31, 26, 60, 1, 26666666, '2021-08-29 10:52:30', '2021-08-29 10:52:30');
 
 -- --------------------------------------------------------
 
@@ -495,7 +506,8 @@ INSERT INTO `payments` (`id`, `p_transaction_id`, `p_user_id`, `p_money`, `p_not
 (4, 23, 2, 144500000, 'Noi dung thanh toan', '00', '13546984', 'NCB', '2021-07-18 18:49:00', NULL, NULL, 762399609),
 (5, 27, 1, 88000, 'Noi dung thanh toan', '00', '13546989', 'NCB', '2021-07-18 18:58:00', '2021-07-18 11:58:44', '2021-07-18 11:58:44', 720968962),
 (6, 28, 2, 72250000, 'assdqwezxc', '00', '13548518', 'NCB', '2021-07-20 19:39:00', '2021-07-20 12:39:29', '2021-07-20 12:39:29', 260848425),
-(7, 29, 1, 16065000, 'Noi dung thanh toan', '00', '13550673', 'NCB', '2021-07-23 14:04:00', '2021-07-23 07:04:22', '2021-07-23 07:04:22', 659250609);
+(7, 29, 1, 16065000, 'Noi dung thanh toan', '00', '13550673', 'NCB', '2021-07-23 14:04:00', '2021-07-23 07:04:22', '2021-07-23 07:04:22', 659250609),
+(8, 31, 2, 26666666, 'Noi dung thanh toan', '00', '13576026', 'NCB', '2021-08-29 17:49:00', '2021-08-29 10:52:30', '2021-08-29 10:52:30', 209170414);
 
 -- --------------------------------------------------------
 
@@ -534,14 +546,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `pro_name`, `pro_slug`, `pro_category_id`, `pro_type_product_id`, `pro_user_id`, `pro_price`, `pro_sale`, `pro_avatar`, `pro_view`, `pro_hot`, `pro_active`, `pro_pay`, `pro_description`, `pro_content`, `pro_review_total`, `pro_review_star`, `pro_number`, `pro_country`, `pro_energy`, `pro_resistant`, `created_at`, `updated_at`) VALUES
-(1, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'dong-ho-philippe-augustejl-11-16542zh', 4, 1, 0, 6900000, 10, '2021-07-06__974268866-donghophienbangioihan2.jpg', 6, 0, 1, 0, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 0, 0, 9999, 1, 'Quartz/Pin', '10 ATM', '2021-07-06 15:40:21', '2021-07-27 16:46:18'),
-(2, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'dong-ho-philippe-auguste-pa-5551', 4, 1, 0, 18900000, 15, '2021-07-06__72429618-1034985426-donghokimnguu2.jpg', 12, 0, 1, 7, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 0, 0, 7898, 3, 'Automatic (Cơ tự động)', '5ATM', '2021-07-06 15:44:42', '2021-07-06 15:44:42'),
+(1, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'dong-ho-philippe-augustejl-11-16542zh', 4, 1, 0, 6900000, 10, '2021-07-06__974268866-donghophienbangioihan2.jpg', 7, 0, 1, 0, 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 'Đồng hồ Philippe AugusteJL-11-1654.2ZH', 0, 0, 9999, 1, 'Quartz/Pin', '10 ATM', '2021-07-06 15:40:21', '2021-07-27 16:46:18'),
+(2, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'dong-ho-philippe-auguste-pa-5551', 4, 1, 0, 18900000, 15, '2021-07-06__72429618-1034985426-donghokimnguu2.jpg', 13, 0, 1, 7, 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 'ĐỒNG HỒ PHILIPPE AUGUSTE PA-555.1', 0, 0, 7898, 3, 'Automatic (Cơ tự động)', '5ATM', '2021-07-06 15:44:42', '2021-07-06 15:44:42'),
 (3, 'Đồng hồ Philippe Auguste PA5001B', 'dong-ho-philippe-auguste-pa5001b', 4, 1, 0, 2800000, 0, '2021-07-06__202451360-dong-ho-nhap-khau2.jpg', 2, 0, 1, 0, 'Đồng hồ Philippe Auguste PA5001B', 'Đồng hồ Philippe Auguste PA5001B', 0, 0, 123, 1, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:47:20', '2021-07-06 15:47:20'),
 (4, 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 'dong-ho-epos-swiss-e-3387152222832', 5, 1, 0, 85000000, 15, '2021-07-06__364723213-untitled-56.jpg', 9, 0, 1, 5, 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 'Đồng hồ Epos Swiss E-3387.152.22.28.32', 1, 1, 53, 3, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:52:36', '2021-07-07 03:39:17'),
-(5, 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 'dong-ho-epos-swiss-e-3426132222032e-4426132222032', 5, 3, 0, 35000000, 0, '2021-07-06__96439908-48.jpg', 4, 0, 1, 0, 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 2, 10, 52, 2, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:54:16', '2021-07-17 06:32:49'),
+(5, 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 'dong-ho-epos-swiss-e-3426132222032e-4426132222032', 5, 3, 0, 35000000, 0, '2021-07-06__96439908-48.jpg', 5, 0, 1, 0, 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 'Đồng hồ Epos Swiss E-3426.132.22.20.32+E-4426.132.22.20.32', 2, 10, 52, 2, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 15:54:16', '2021-07-17 06:32:49'),
 (6, 'Đồng hồ Aries Gold QQ-M137J003Y', 'dong-ho-aries-gold-qq-m137j003y', 7, 4, 0, 58000, 0, '2021-07-06__m137j003y.jpg', 4, 0, 1, 10, 'Đồng hồ Aries Gold QQ-M137J003Y', 'Đồng hồ Aries Gold QQ-M137J003Y', 2, 10, 7777, 3, 'Automatic (Cơ tự động)', '1 ATM', '2021-07-06 15:56:03', '2021-07-18 03:45:10'),
 (9, 'Dây da Diamond D D DM W 12', 'day-da-diamond-d-d-dm-w-12', 12, 7, 0, 450000, 0, '2021-07-06__1905887238-d-dm-w-12.jpg', 7, 0, 1, 78936, 'Dây da Diamond D D DM W 12', 'Dây da Diamond D D DM W 12', 0, 0, 78936, 4, NULL, NULL, '2021-07-06 16:00:04', '2021-07-17 13:15:32'),
-(10, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'dong-ho-atlantic-swiss-at-223464513', 6, 1, 0, 25000000, 0, '2021-07-06__1029860979-dng-h-chnh-hng-32.jpg', 13, 0, 1, 7, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'Đồng hồ Atlantic Swiss AT-22346.45.13', 5, 21, 8547, 1, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 16:01:48', '2021-07-18 03:38:27'),
+(10, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'dong-ho-atlantic-swiss-at-223464513', 6, 1, 0, 25000000, 0, '2021-07-06__1029860979-dng-h-chnh-hng-32.jpg', 14, 0, 1, 7, 'Đồng hồ Atlantic Swiss AT-22346.45.13', 'Đồng hồ Atlantic Swiss AT-22346.45.13', 5, 21, 8557, 1, 'Automatic (Cơ tự động)', '10 ATM', '2021-07-06 16:01:48', '2021-08-28 09:12:51'),
 (11, 'test create product', 'test-create-product', 5, 1, 0, 100000, 12, '2021-07-13__add-cart.png', 6, 0, 0, 1, 'test create product', 'test create product', 2, 9, 123, 3, '123', '123', '2021-07-13 16:24:02', '2021-07-27 15:57:28'),
 (16, 'Đồng hồ Philippe Auguste PA5001E', 'dong-ho-philippe-auguste-pa5001e', 4, 1, 0, 11359000, 20, '2021-07-27__2132524758-dong-ho-nhap-khau5.jpg', 0, 0, 1, 0, 'Đồng hồ Philippe Auguste PA5001E', 'Đồng hồ Philippe Auguste PA5001E', 0, 0, 8547, 3, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:15:55', '2021-07-27 16:15:55'),
 (17, 'Đồng hồ Philippe Auguste PA5002C', 'dong-ho-philippe-auguste-pa5002c', 4, 1, 0, 1200000, 25, '2021-07-27__1432153761-dong-ho-nhap-khau9.jpg', 0, 0, 1, 0, 'Đồng hồ Philippe Auguste PA5002C', 'Đồng hồ Philippe Auguste PA5002C', 0, 0, 50789, 2, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:17:49', '2021-07-27 16:17:49'),
@@ -550,10 +562,10 @@ INSERT INTO `products` (`id`, `pro_name`, `pro_slug`, `pro_category_id`, `pro_ty
 (20, 'Đồng hồ Epos Swiss E-8000.700.22.65.15', 'dong-ho-epos-swiss-e-8000700226515', 5, 2, 0, 15300000, 15, '2021-07-27__2015096233-dong-ho-chinh-hang-8.jpg', 0, 0, 1, 0, 'Đồng hồ Epos Swiss E-8000.700.22.65.15', 'Đồng hồ Epos Swiss E-8000.700.22.65.15', 0, 0, 15791, 3, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:25:16', '2021-07-27 16:25:16'),
 (21, 'Đồng hồ Epos Swiss E-3387.152.22.28.15', 'dong-ho-epos-swiss-e-3387152222815', 5, 2, 0, 33500000, 0, '2021-07-27__677822869-untitled-57.jpg', 1, 0, 1, 0, 'Đồng hồ Epos Swiss E-3387.152.22.28.15', 'Đồng hồ Epos Swiss E-3387.152.22.28.15', 0, 0, 9871, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:26:48', '2021-07-27 16:26:48'),
 (22, 'Đồng hồ Atlantic Swiss AT-20335.43.28G', 'dong-ho-atlantic-swiss-at-203354328g', 6, 2, 0, 17000000, 0, '2021-07-27__1953389537-203354328g.jpg', 0, 0, 1, 0, 'Đồng hồ Atlantic Swiss AT-20335.43.28G', 'Đồng hồ Atlantic Swiss AT-20335.43.28G', 0, 0, 9874, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:29:27', '2021-07-27 16:29:27'),
-(23, 'Đồng hồ Atlantic Swiss AT-29038.45.27MB', 'dong-ho-atlantic-swiss-at-290384527mb', 6, 2, 0, 22222222, 50, '2021-07-27__1908630676-atlanweb.jpg', 0, 0, 1, 0, 'Đồng hồ Atlantic Swiss AT-29038.45.27MB', 'Đồng hồ Atlantic Swiss AT-29038.45.27MB', 0, 0, 75324, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:31:09', '2021-07-27 16:31:09'),
+(23, 'Đồng hồ Atlantic Swiss AT-29038.45.27MB', 'dong-ho-atlantic-swiss-at-290384527mb', 6, 2, 0, 22222222, 50, '2021-07-27__1908630676-atlanweb.jpg', 1, 0, 1, 0, 'Đồng hồ Atlantic Swiss AT-29038.45.27MB', 'Đồng hồ Atlantic Swiss AT-29038.45.27MB', 0, 0, 75324, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:31:09', '2021-07-27 16:31:09'),
 (24, 'Đồng hồ Atlantic Swiss AT-29035.41.21', 'dong-ho-atlantic-swiss-at-290354121', 6, 2, 0, 4800000, 0, '2021-07-27__1900541705-dong-ho-chinh-hang-2.jpg', 0, 0, 1, 0, 'Đồng hồ Atlantic Swiss AT-29035.41.21', 'Đồng hồ Atlantic Swiss AT-29035.41.21', 0, 0, 4568, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:32:37', '2021-07-27 16:32:54'),
-(25, 'Đồng hồ Aries Gold AG-G9005A G-BK', 'dong-ho-aries-gold-ag-g9005a-g-bk', 7, 1, 0, 77777777, 70, '2021-07-27__509733038-1834539574-428578218-dong-ho-chinh-hang-14.jpg', 0, 0, 1, 0, 'Đồng hồ Aries Gold AG-G9005A G-BK', 'Đồng hồ Aries Gold AG-G9005A G-BK', 0, 0, 8521, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:34:51', '2021-07-27 16:34:51'),
-(26, 'Đồng hồ Aries Gold AG-G7016 BKRG-BKRG', 'dong-ho-aries-gold-ag-g7016-bkrg-bkrg', 7, 1, 0, 66666666, 60, '2021-07-27__1665899185-dong-ho-chinh-hang-76.jpg', 0, 0, 1, 0, 'Đồng hồ Aries Gold AG-G7016 BKRG-BKRG', 'Đồng hồ Aries Gold AG-G7016 BKRG-BKRG', 0, 0, 7895, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:36:32', '2021-07-27 16:36:32'),
+(25, 'Đồng hồ Aries Gold AG-G9005A G-BK', 'dong-ho-aries-gold-ag-g9005a-g-bk', 7, 1, 0, 77777777, 70, '2021-07-27__509733038-1834539574-428578218-dong-ho-chinh-hang-14.jpg', 1, 0, 1, 0, 'Đồng hồ Aries Gold AG-G9005A G-BK', 'Đồng hồ Aries Gold AG-G9005A G-BK', 0, 0, 8521, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:34:51', '2021-07-27 16:34:51'),
+(26, 'Đồng hồ Aries Gold AG-G7016 BKRG-BKRG', 'dong-ho-aries-gold-ag-g7016-bkrg-bkrg', 7, 1, 0, 66666666, 60, '2021-07-27__1665899185-dong-ho-chinh-hang-76.jpg', 0, 0, 1, 1, 'Đồng hồ Aries Gold AG-G7016 BKRG-BKRG', 'Đồng hồ Aries Gold AG-G7016 BKRG-BKRG', 0, 0, 7895, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:36:32', '2021-07-27 16:36:32'),
 (27, 'Dây da Diamond D D DM R 12', 'day-da-diamond-d-d-dm-r-12', 12, 7, 0, 450000, 0, '2021-07-27__1752070534-d-dm-r-12.jpg', 0, 0, 1, 0, 'Dây da Diamond D D DM R 12', 'Dây da Diamond D D DM R 12', 0, 0, 7598, 1, 'Automatic (Cơ tự động)', '10ATM', '2021-07-27 16:38:31', '2021-07-27 16:38:31'),
 (28, 'Dây da Diamond D D DM B 12', 'day-da-diamond-d-d-dm-b-12', 12, 7, 0, 300000, 0, '2021-07-27__1876477849-d-dm-b-12.jpg', 0, 0, 1, 0, 'Dây da Diamond D D DM B 12', 'Dây da Diamond D D DM B 12', 0, 0, 78965, 1, NULL, NULL, '2021-07-27 16:39:15', '2021-07-27 16:39:15'),
 (29, 'Dây da Diamond D D DM W 16', 'day-da-diamond-d-d-dm-w-16', 12, 7, 0, 300000, 0, '2021-07-27__816219224-d-dm-w-16.jpg', 0, 0, 1, 0, 'Dây da Diamond D D DM W 16', 'Dây da Diamond D D DM W 16', 0, 0, 75385, 1, NULL, NULL, '2021-07-27 16:40:22', '2021-07-27 16:40:22'),
@@ -668,7 +680,9 @@ INSERT INTO `transactions` (`id`, `tst_user_id`, `tst_total_money`, `tst_name`, 
 (23, 2, 144500000, 'user', 'user@gmail.com', '0355578896', 'yên lãng', '123', 2, 2, '2021-07-18 11:52:24', '2021-07-20 12:59:05'),
 (27, 1, 88000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', '123', 1, 2, '2021-07-18 11:58:44', '2021-07-18 11:58:44'),
 (28, 2, 72250000, 'user', 'user@gmail.com', '0355578896', 'aaaaaa', NULL, 3, 2, '2021-07-20 12:39:29', '2021-07-20 12:59:21'),
-(29, 1, 16065000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', NULL, 1, 2, '2021-07-23 07:04:22', '2021-07-23 07:04:22');
+(29, 1, 16065000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', NULL, 1, 2, '2021-07-23 07:04:22', '2021-07-23 07:04:22'),
+(30, 1, 213500000000, 'Admin Supper', 'admin@gmail.com', '0377708868', 'bac ninh', '1123123', -1, 1, '2021-08-28 09:08:53', '2021-08-28 09:12:51'),
+(31, 2, 26666666, 'user', 'user@gmail.com', '0355578896', '213123123', '123123123', 1, 2, '2021-08-29 10:52:30', '2021-08-29 10:52:30');
 
 -- --------------------------------------------------------
 
@@ -729,11 +743,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `phone`, `address`, `avatar`, `role`) VALUES
 (1, 'Admin Supper', 'admin@gmail.com', '2021-07-06 15:15:31', '$2y$10$HAbLRd3jaXJer.bhKculjeelJfRSg5KMX2Y0H.yn1dkmL/.qoLj5q', NULL, '2021-07-06 16:27:35', '2021-07-11 11:35:12', '0377708868', 'bac ninh', NULL, 1),
-(2, 'user', 'user@gmail.com', '2021-07-18 10:27:02', '$2y$10$DL/stEotNM6iaBXm/MlCluhKFwWZ.A8X0rhXkU.ELvjOBsQURfy9e', NULL, '2021-07-06 16:28:16', '2021-07-18 05:28:12', '0355578896', NULL, NULL, 2),
+(2, 'user', 'user@gmail.com', NULL, '$2y$10$DL/stEotNM6iaBXm/MlCluhKFwWZ.A8X0rhXkU.ELvjOBsQURfy9e', NULL, '2021-07-06 16:28:16', '2021-07-18 05:28:12', '0355578896', NULL, NULL, 2),
 (3, 'map hari', 'laravel1998bn@gmail.com', '2021-07-06 16:26:50', '$2y$10$gXPg/uTQdmmV4E2qtkla4upHZrCHjt37u6zNYOoGlJowvv.RQWs2a', NULL, '2021-07-06 16:26:50', '2021-07-06 16:26:50', '556533201', NULL, NULL, 2),
 (4, 'Đại Hải', 'hai1998bn@gmail.com', '2021-07-07 03:38:29', '$2y$10$yMtLxfLZZlopxHZzL/qjUOQ0D5YqkGVV4PGpHUroF0sDfbuO7OpSq', NULL, '2021-07-07 03:38:29', '2021-07-07 03:38:29', '201805490', NULL, NULL, 2),
 (5, 'Hai Ngo Van', 'hainv@hblab.vn', '2021-07-18 03:36:27', '$2y$10$jJgKzsS1lbSU7uuUc6nZ4e4UbaGZuNiNjcdhnj4nkkINkeY7ZJS0G', NULL, '2021-07-18 03:36:27', '2021-07-18 03:36:27', '300062304', NULL, NULL, 2),
-(7, 'béo béo', 'beobeo1998bn@gmail.com', '2021-07-26 17:15:59', '$2y$10$HZTTKQoWtNymhaHlfQErgOot7pqSbwueJrVU7Na/nFSuEAGiYTTfq', NULL, '2021-07-26 17:15:59', '2021-07-26 17:15:59', '587446634', NULL, NULL, 2);
+(7, 'béo béo', 'beobeo1998bn@gmail.com', '2021-07-26 17:15:59', '$2y$10$HZTTKQoWtNymhaHlfQErgOot7pqSbwueJrVU7Na/nFSuEAGiYTTfq', NULL, '2021-07-26 17:15:59', '2021-07-26 17:15:59', '587446634', NULL, NULL, 2),
+(14, '123', 'daihai1998bn@gmail.com', NULL, '$2y$10$DuHO3fcgHEWZH84yofYxa.OTDwm6MTiQdPELjkqrD9CQTKIcTD3DG', NULL, '2021-08-31 15:26:09', '2021-08-31 15:26:09', '123', '123', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -959,7 +974,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT cho bảng `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT cho bảng `menus`
@@ -977,13 +992,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT cho bảng `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -1007,7 +1022,7 @@ ALTER TABLE `slides`
 -- AUTO_INCREMENT cho bảng `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `type_products`
@@ -1019,7 +1034,7 @@ ALTER TABLE `type_products`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `user_favourite`
