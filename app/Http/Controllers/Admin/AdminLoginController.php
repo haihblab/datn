@@ -13,10 +13,10 @@ class AdminLoginController extends Controller
         return view('admin.auth.login');
     }
 
-    public function postLoginAdmin(Request $request)
+    public function postLoginAdmin(Request $request): \Illuminate\Http\RedirectResponse
     {
         $data = $request->only('email', 'password');
-        if (Auth::attempt($data)) {
+        if (Auth::guard('admin')->attempt($data)) {
             $request->session()->regenerate();
             return redirect()->intended('/admin-datn');
         }
@@ -25,7 +25,7 @@ class AdminLoginController extends Controller
 
     public function getLogoutAdmin()
     {
-        Auth::logout();
+        Auth::guard('admin')->logout();
         return redirect('/admin-auth/login');
     }
 }

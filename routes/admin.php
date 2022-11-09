@@ -16,19 +16,20 @@ use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin-auth'], function () {
-    Route::get('login', [AdminLoginController::class, 'index'])->middleware('guest');
-    Route::post('login', [AdminLoginController::class, 'postLoginAdmin'])->name('post.login.admin')->middleware('guest');
+    Route::get('login', [AdminLoginController::class, 'index'])->middleware('guest:admin');
+    Route::post('login', [AdminLoginController::class, 'postLoginAdmin'])->name('post.login.admin')->middleware('guest:admin');
     Route::get('logout', [AdminLoginController::class, 'getLogoutAdmin'])->name('get.logout.admin');
 });
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'check_role:' . config('contants.ROLE.ADMIN')]], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->group(function () {
+//Route::middleware(['auth', 'check_role:' . config('contants.ROLE.ADMIN')])->group(function () {
+Route::middleware(['auth:admin'])->group(function () {
     Route::group(['prefix' => 'admin-datn'], function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('admin.index');
         Route::get('ajax-read-notify/{id}', [AdminHomeController::class, 'readNotify'])->name('ajax.read.notify');
-        
-        
+
+
         
         
         // Route::get('ajax-read-notify-all', [AdminHomeController::class, 'readNotifyAll'])->name('ajax.read.notify.all');

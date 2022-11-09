@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequestArticle;
 use App\Models\Article;
 use App\Models\Menu;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -24,14 +25,20 @@ class AdminArticleController extends Controller
 
         return view('admin.article.index', $viewData);
     }
-    public function create()
-    {
-        $menus = Menu::all();
-        $viewData = [
-            'menus'  => $menus
-        ];
 
-        return view('admin.article.create', $viewData);
+    /**
+     * @throws AuthorizationException
+     */
+    public function create(Request $request)
+    {
+        if($this->authorize('create', Article::class)) {
+            $menus = Menu::all();
+            $viewData = [
+                'menus'  => $menus
+            ];
+
+            return view('admin.article.create', $viewData);
+        }
     }
     public function store(AdminRequestArticle $request)
     {

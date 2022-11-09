@@ -462,44 +462,44 @@
         //    $('#popup-messages').modal();
         //});
     </script>
-    <script type="text/javascript">
+{{--    <script type="text/javascript">--}}
 
-    //   Pusher.logToConsole = true;
-      var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
-      encrypted: true,
-      cluster: '{{ env('PUSHER_APP_CLUSTER') }}'
-      });
+{{--    //   Pusher.logToConsole = true;--}}
+{{--      var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {--}}
+{{--      encrypted: true,--}}
+{{--      cluster: '{{ env('PUSHER_APP_CLUSTER') }}'--}}
+{{--      });--}}
 
-      // console.log(totals);
-      var totals = parseInt($('.total-message').html());
-      if(totals == 0) {
-        $('.total-message').css("display", "none");
-      }
-      var channel = pusher.subscribe('NotificationEvent');
-          
-      channel.bind('send-message', function(data) {
-          console.log(data);
-        var totals = parseInt($('.total-message').html());
-          var newNotificationHtml = `
-          <li >
-            <a href="{{route('ajax.read.notify',$item->id)}}" class="ajax-read-notify" style="background-color: #dedede;">
-              <div class="pull-left">
-                <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">
-              </div>
-              <h4>
-                ${data.dataMessage.name}
-                <small><i class="fa fa-clock-o"></i> ${data.dataMessage.created_at}</small>
-              </h4>
-              <p>${data.dataMessage.message}</p>
-            </a>
-          </li>
-          `;
-          totals += 1;
-          $('#js-menu-messages').prepend(newNotificationHtml);
-          $('.total-message').html(totals);
-          $('.total-message').css("display", "block");
-      });
-  </script>
+{{--      // console.log(totals);--}}
+{{--      var totals = parseInt($('.total-message').html());--}}
+{{--      if(totals == 0) {--}}
+{{--        $('.total-message').css("display", "none");--}}
+{{--      }--}}
+{{--      var channel = pusher.subscribe('NotificationEvent');--}}
+{{--          --}}
+{{--      channel.bind('send-message', function(data) {--}}
+{{--          console.log(data);--}}
+{{--        var totals = parseInt($('.total-message').html());--}}
+{{--          var newNotificationHtml = `--}}
+{{--          <li >--}}
+{{--            <a href="{{route('ajax.read.notify',$item->id)}}" class="ajax-read-notify" style="background-color: #dedede;">--}}
+{{--              <div class="pull-left">--}}
+{{--                <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" class="img-circle" alt="User Image">--}}
+{{--              </div>--}}
+{{--              <h4>--}}
+{{--                ${data.dataMessage.name}--}}
+{{--                <small><i class="fa fa-clock-o"></i> ${data.dataMessage.created_at}</small>--}}
+{{--              </h4>--}}
+{{--              <p>${data.dataMessage.message}</p>--}}
+{{--            </a>--}}
+{{--          </li>--}}
+{{--          `;--}}
+{{--          totals += 1;--}}
+{{--          $('#js-menu-messages').prepend(newNotificationHtml);--}}
+{{--          $('.total-message').html(totals);--}}
+{{--          $('.total-message').css("display", "block");--}}
+{{--      });--}}
+{{--  </script>--}}
 
     <script>
         $(document).ready(function(){

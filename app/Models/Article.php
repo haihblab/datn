@@ -13,4 +13,9 @@ class Article extends Model
     {
         return $this->belongsTo(Menu::class, 'a_menu_id');
     }
+
+    public function admin(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
 }
